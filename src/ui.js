@@ -1,4 +1,4 @@
-import DEVICE from "./model";
+import MODEL from "./model";
 import {displayPreset, setPresetNumber, setupPresetSelectors} from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
@@ -89,13 +89,13 @@ export function updateControl(control_type, control_number, value, mappedValue) 
 }
 
 /**
- * Set value of the controls (input and select) from the DEVICE values
+ * Set value of the controls (input and select) from the MODEL values
  */
 function updateControls() {
     if (TRACE) console.groupCollapsed("updateControls()");
-    for (let i=0; i < DEVICE.control.length; i++) {
-        if (typeof DEVICE.control[i] === "undefined") continue;
-        updateControl(DEVICE.control[i].cc_type, i, DEVICE.getControlValue(DEVICE.control[i]), DEVICE.getMappedControlValue(DEVICE.control[i]));
+    for (let i=0; i < MODEL.control.length; i++) {
+        if (typeof MODEL.control[i] === "undefined") continue;
+        updateControl(MODEL.control[i].cc_type, i, MODEL.getControlValue(MODEL.control[i]), MODEL.getMappedControlValue(MODEL.control[i]));
     }
     if (TRACE) console.groupEnd();
 } // updateControls()
@@ -104,14 +104,14 @@ function updateControls() {
  * Update the patch number and patch name displayed in the header.
  */
 function updateMeta() {
-    if (DEVICE.meta.preset_id.value) {
-        setPresetNumber(DEVICE.meta.preset_id.value);
+    if (MODEL.meta.preset_id.value) {
+        setPresetNumber(MODEL.meta.preset_id.value);
         displayPreset();
     }
 }
 
 /**
- * Update the UI from the DEVICE controls values.
+ * Update the UI from the MODEL controls values.
  */
 export function updateUI() {
     updateMeta();
@@ -120,7 +120,7 @@ export function updateUI() {
 }
 
 /**
- * Update DEVICE and associated on-screen control from CC value.
+ * Update MODEL and associated on-screen control from CC value.
  *
  * @param control_type
  * @param control_number
@@ -136,23 +136,23 @@ export function updateModelAndUI(control_type, control_number, value) {
         return;
     }
 
-    if (DEVICE.control[control_number]) {
+    if (MODEL.control[control_number]) {
         // update the model:
-        DEVICE.setControlValue(control_type, control_number, value);
+        MODEL.setControlValue(control_type, control_number, value);
         // update the UI:
         updateControl(control_type, control_number, value);
     } else {
-        log(`the DEVICE does not support this control: ${control_number}`)
+        log(`the MODEL does not support this control: ${control_number}`)
     }
 }
 
 /*
 function getCurrentPatchAsLink() {
     // window.location.href.split("?")[0] is the current URL without the query-string if any
-    // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(DEVICE.getSysEx());
-    // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(DEVICE.getSysEx());
-    // window.location.hash = "" + URL_PARAM_SYSEX + "=" + toHexString(DEVICE.getSysEx())
-    const h = toHexString(DEVICE.getSysEx());
+    // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx());
+    // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx());
+    // window.location.hash = "" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx())
+    const h = toHexString(MODEL.getSysEx());
     log(`getCurrentPatchAsLink: set hash to ${h}`);
     window.location.hash = h;
 }
@@ -200,7 +200,7 @@ function setupMenu() {
 
 /**
  * Initial setup of the UI.
- * Does a DEVICE.init() too, but only the virtual DEVICE; does not send any CC to the connected device.
+ * Does a MODEL.init() too, but only the virtual MODEL; does not send any CC to the connected device.
  */
 export function setupUI(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback) {
     if (TRACE) console.groupCollapsed("setupUI");

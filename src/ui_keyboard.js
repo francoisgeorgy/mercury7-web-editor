@@ -4,7 +4,7 @@ import {log} from "./debug";
 import {animateCC} from "./animate_cc";
 import {handleUserAction, showDefaultPanel, updateControl, updateModelAndUI} from "./ui";
 import {sendPC, updateDevice} from "./midi_out";
-import DEVICE from "./model";
+import MODEL from "./model";
 import {displayPreset, presetDec, presetInc, setPresetNumber} from "./ui_presets";
 import {init, randomize} from "./presets";
 import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
@@ -14,44 +14,44 @@ import {closeSettingsPanel} from "./ui_global_settings";
 
 
 function toggleBypass() {
-    const c = DEVICE.control[DEVICE.control_id.bypass];
-    const v = DEVICE.getControlValue(c) === 0 ? 127 : 0;
+    const c = MODEL.control[MODEL.control_id.bypass];
+    const v = MODEL.getControlValue(c) === 0 ? 127 : 0;
     updateDevice(c.cc_type, c.cc_number, v);
     updateBypassSwitch(v);
 }
 
 function selectSquarewave() {
-    const c = DEVICE.control[DEVICE.control_id.synth_waveshape];
+    const c = MODEL.control[MODEL.control_id.synth_waveshape];
     updateDevice(c.cc_type, c.cc_number, WAVESHAPES.square);
     updateControl(c.cc_type, c.cc_number, WAVESHAPES.square);
 }
 
 function selectSawtooth() {
-    const c = DEVICE.control[DEVICE.control_id.synth_waveshape];
+    const c = MODEL.control[MODEL.control_id.synth_waveshape];
     updateDevice(c.cc_type, c.cc_number, WAVESHAPES.sawtooth);
     updateControl(c.cc_type, c.cc_number, WAVESHAPES.sawtooth);
 }
 
 function selectDry() {
-    const c = DEVICE.control[DEVICE.control_id.synth_mode];
+    const c = MODEL.control[MODEL.control_id.synth_mode];
     updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.dry);
     updateControl(c.cc_type, c.cc_number, SYNTH_MODES.dry);
 }
 
 function selectMono() {
-    const c = DEVICE.control[DEVICE.control_id.synth_mode];
+    const c = MODEL.control[MODEL.control_id.synth_mode];
     updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.mono);
     updateControl(c.cc_type, c.cc_number, SYNTH_MODES.mono);
 }
 
 function selectPoly() {
-    const c = DEVICE.control[DEVICE.control_id.synth_mode];
+    const c = MODEL.control[MODEL.control_id.synth_mode];
     updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.poly);
     updateControl(c.cc_type, c.cc_number, SYNTH_MODES.poly);
 }
 
 function selectArp() {
-    const c = DEVICE.control[DEVICE.control_id.synth_mode];
+    const c = MODEL.control[MODEL.control_id.synth_mode];
     updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.arp);
     updateControl(c.cc_type, c.cc_number, SYNTH_MODES.arp);
 }
@@ -90,8 +90,8 @@ function animateFromTo(cc, from, to) {
 }
 
 function animateTo(cc, to) {
-    animateFromTo(cc, DEVICE.getControlValue(DEVICE.getControl(cc)), to);
-    // animateCC(cc, DEVICE.getControlValue(DEVICE.getControl(cc)), to, function (v) {
+    animateFromTo(cc, MODEL.getControlValue(MODEL.getControl(cc)), to);
+    // animateCC(cc, MODEL.getControlValue(MODEL.getControl(cc)), to, function (v) {
     //     dispatch("cc", cc, v);
     //     updateDevice("cc", cc, v);
     // });
@@ -119,67 +119,67 @@ function keyDown(code, alt, shift) {
             $(".header-shortcut").removeClass("hidden");
             break;
         case 67:                // C
-            animateTo(DEVICE.control_id.pitch, shift ? 63 : 0);
-            // animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), shift ? 63 : 0, animate_callback);
+            animateTo(MODEL.control_id.pitch, shift ? 63 : 0);
+            // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), shift ? 63 : 0, animate_callback);
             break;
         case 86:                // V
-            animateTo(DEVICE.control_id.pitch, shift ? 63 : 127);
-            // animateCC(DEVICE.control_id.pitch, DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.pitch)), shift ? 63 : 127);
+            animateTo(MODEL.control_id.pitch, shift ? 63 : 127);
+            // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), shift ? 63 : 127);
             break;
         case 70:                // F
-            animateTo(DEVICE.control_id.filter, shift ? 63 : 0);
+            animateTo(MODEL.control_id.filter, shift ? 63 : 0);
             break;
         case 71:                // G
-            animateTo(DEVICE.control_id.filter, shift ? 63 : 127);
+            animateTo(MODEL.control_id.filter, shift ? 63 : 127);
             break;
         case 72:                // H
-            animateTo(DEVICE.control_id.filter_bandwidth, shift ? 63 : 0);
+            animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 0);
             break;
         case 74:                // J
-            animateTo(DEVICE.control_id.filter_bandwidth, shift ? 63 : 127);
+            animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 127);
             break;
         case 75:                // K    delay level
-            animateTo(DEVICE.control_id.delay_level, shift ? 63 : 0);
+            animateTo(MODEL.control_id.delay_level, shift ? 63 : 0);
             break;
         case 76:                // L    delay level
-            animateTo(DEVICE.control_id.delay_level, shift ? 63 : 127);
+            animateTo(MODEL.control_id.delay_level, shift ? 63 : 127);
             break;
         case 89:                // Y    min mix
-            animateTo(DEVICE.control_id.mix, shift ? 63 : 0);
+            animateTo(MODEL.control_id.mix, shift ? 63 : 0);
             break;
         case 88:                // X    max mix
-            animateTo(DEVICE.control_id.mix, shift ? 63 : 127);
+            animateTo(MODEL.control_id.mix, shift ? 63 : 127);
             break;
         case 8:                 // DEL  min sustain
-            animateTo(DEVICE.control_id.sustain, 0);
+            animateTo(MODEL.control_id.sustain, 0);
             break;
         case 66:                // B    min sustain
-            animateTo(DEVICE.control_id.sustain, shift ? 63 : 0);
+            animateTo(MODEL.control_id.sustain, shift ? 63 : 0);
             break;
         case 78:                // N    max sustain
-            animateTo(DEVICE.control_id.sustain, shift ? 63 : 127);
+            animateTo(MODEL.control_id.sustain, shift ? 63 : 127);
             break;
         case 84:                // T            tap
             tapDown("cc-28-127");
             break;
         case 90:                // Z
-            animateTo(DEVICE.control_id.ring_modulation, shift ? 63 : 0);
+            animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 0);
             break;
         case 85:                // U
-            animateTo(DEVICE.control_id.ring_modulation, shift ? 63 : 127);
+            animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 127);
             break;
         case 32:                // SPACE
             toggleBypass();
             break;
         case 109:               // num keypad "-"
-            animateTo(DEVICE.control_id.modulation, shift ? 63 : 0);
+            animateTo(MODEL.control_id.modulation, shift ? 63 : 0);
             break;
         case 107:               // num keypad "+"
-            animateTo(DEVICE.control_id.modulation, shift ? 63 : 127);
+            animateTo(MODEL.control_id.modulation, shift ? 63 : 127);
             break;
         case 79:                   // O
-            const v = DEVICE.getControlValue(DEVICE.getControl(DEVICE.control_id.portamento));
-            animateFromTo(DEVICE.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
+            const v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
+            animateFromTo(MODEL.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
             break;
         case 82:                // R Randomize
             randomize();

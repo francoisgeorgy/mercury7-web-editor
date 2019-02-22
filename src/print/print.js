@@ -1,4 +1,4 @@
-import DEVICE from "../model/index.js";
+import MODEL from "../model/index.js";
 import * as Utils from "../utils.js";
 import * as Mustache from "mustache";
 import {hexy} from "hexy";
@@ -7,11 +7,11 @@ import {URL_PARAM_SYSEX} from "./../constants";
 import {log} from "../debug";
 
 function renderControlName(control_number) {
-    return DEVICE.control[control_number].name;
+    return MODEL.control[control_number].name;
 }
 
 function renderControlValue(control_number) {
-    const c = DEVICE.control[control_number];
+    const c = MODEL.control[control_number];
     return c.human(c.raw_value);
 }
 
@@ -19,7 +19,7 @@ function renderPreset(template, filename) {
     const t = $(template).filter("#template-main").html();
     const p = {
         "f": () => () => filename ? `(${filename})` : "",
-        "id": () => () => DEVICE.meta.preset_id.value ? `#${DEVICE.meta.preset_id.value}` : '(unsaved)',
+        "id": () => () => MODEL.meta.preset_id.value ? `#${MODEL.meta.preset_id.value}` : '(unsaved)',
         "n": () => text => renderControlName(text.trim().toLowerCase()),
         "v": () => text => renderControlValue(text.trim().toLowerCase())
     };
@@ -34,7 +34,7 @@ function loadTemplate(data, filename) {
             for (let i=0; i<data.length; i++) {
                 if (data[i] === 240) {
                     if (d) {
-                        if (DEVICE.setValuesFromSysEx(d)) {
+                        if (MODEL.setValuesFromSysEx(d)) {
                             renderPreset(template);
                         } else {
                             console.warn("unable to update device from sysex");
@@ -48,7 +48,7 @@ function loadTemplate(data, filename) {
 */
         let ok = false;
         if (data) {
-            ok = DEVICE.setValuesFromSysEx(data)
+            ok = MODEL.setValuesFromSysEx(data)
         } else {
             ok = true;
         }
@@ -146,7 +146,7 @@ $(function () {
     dropZone.addEventListener('dragleave', hideDropZone);
     dropZone.addEventListener('drop', handleDrop);
 
-    DEVICE.init();
+    MODEL.init();
 
     let valid = false;
     let data = null;
@@ -155,7 +155,7 @@ $(function () {
         try {
             // data = Utils.fromHexString(LZString.decompressFromBase64(decodeURI(s)));
             data = Utils.fromHexString(decodeURI(s));
-            valid = DEVICE.setValuesFromSysEx(data);
+            valid = MODEL.setValuesFromSysEx(data);
         } catch (error) {
             console.warn(error);
         }

@@ -1,5 +1,5 @@
 import {log} from "./debug";
-import DEVICE from "./model";
+import MODEL from "./model";
 import {sendSysEx} from "./midi_out";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
@@ -57,7 +57,7 @@ export function setupGlobalConfig() {
             return false;
         }
         log(`setupGlobalConfig: ${setting_number}=${value}`);
-        sendSysEx(DEVICE.getSysexDataForGlobalConfig(setting_number, value));
+        sendSysEx(MODEL.getSysexDataForGlobalConfig(setting_number, value));
     });
     return true;
 }

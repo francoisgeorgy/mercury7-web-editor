@@ -1,4 +1,4 @@
-import DEVICE from "./model";
+import MODEL from "./model";
 import {log, TRACE} from "./debug";
 import {settings} from "./settings";
 import {showMidiOutActivity} from "./ui_midi_activity";
@@ -31,7 +31,7 @@ export function getLastSendTime() {
  */
 export function sendCC(control) {
 
-    let a = DEVICE.getMidiMessagesForCC(control);
+    let a = MODEL.getMidiMessagesForCC(control);
 
     for (let i=0; i<a.length; i++) {
         if (midi_output) {
@@ -64,7 +64,7 @@ export function updateDevice(control_type, control_number, value_float) {
 
     log("updateDevice", control_type, control_number, value_float, value);
 
-    sendCC(DEVICE.setControlValue(control_type, control_number, value));
+    sendCC(MODEL.setControlValue(control_type, control_number, value));
 }
 
 /**
@@ -72,7 +72,7 @@ export function updateDevice(control_type, control_number, value_float) {
  */
 export function fullUpdateDevice(onlyChanged = false) {
     if (TRACE) console.groupCollapsed(`fullUpdateDevice(${onlyChanged})`);
-    const c = DEVICE.control;
+    const c = MODEL.control;
     for (let i=0; i < c.length; i++) {
         if (typeof c[i] === "undefined") continue;
         if (!onlyChanged || c[i].randomized) {
@@ -101,7 +101,7 @@ export function sendSysEx(data) {
     if (midi_output) {
         showMidiOutActivity();
         setSuppressSysexEcho();
-        midi_output.sendSysex(DEVICE.meta.signature.sysex.value, Array.from(data));
+        midi_output.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
     }
     logOutgoingMidiMessage("SysEx", 0);
 }

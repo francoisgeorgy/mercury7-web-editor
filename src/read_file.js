@@ -1,5 +1,5 @@
 import {log} from "./debug";
-import DEVICE from "./model";
+import MODEL from "./model";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import * as lity from "lity";
@@ -39,7 +39,7 @@ export function readFile() {
                 data.push(view[i]);
                 if (view[i] === SYSEX_END) break;
             }
-            if (DEVICE.setValuesFromSysEx(data)) {
+            if (MODEL.setValuesFromSysEx(data)) {
                 log("file read OK");
                 if (lightbox) lightbox.close();
 

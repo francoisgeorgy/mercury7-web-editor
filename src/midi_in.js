@@ -4,7 +4,7 @@ import {logIncomingMidiMessage} from "./ui_midi_window";
 import {getLastSendTime} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
-import DEVICE from "./model";
+import MODEL from "./model";
 import {clearError, clearStatus, setStatus, setStatusError} from "./ui_messages";
 
 let midi_input = null;
@@ -65,7 +65,7 @@ export function handleCC(msg) {
 
     logIncomingMidiMessage("CC", cc, v);
 
-    // if (DEVICE.control[cc]) {
+    // if (MODEL.control[cc]) {
     updateModelAndUI("cc", cc, v);
     // } else {
     //     warn(`unsupported CC: ${cc}`)
@@ -79,10 +79,10 @@ export function handleSysex(data) {
         suppress_sysex_echo = false;
         return;
     }
-    if (DEVICE.setValuesFromSysEx(data)) {
+    if (MODEL.setValuesFromSysEx(data)) {
         updateUI();
         clearError();
-        setStatus(`SysEx received with preset #${DEVICE.meta.preset_id.value}.`);
+        setStatus(`SysEx received with preset #${MODEL.meta.preset_id.value}.`);
         log("Device updated with SysEx");
     } else {
         clearStatus();

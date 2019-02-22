@@ -1,5 +1,5 @@
 import {log} from "./debug";
-import DEVICE from "./model";
+import MODEL from "./model";
 import Knob from "svg-knob";
 import {KNOB_THEME_BLUE} from "./ui_knobs_theme";
 
@@ -12,16 +12,16 @@ export function setupKnobs(userActionCallback) {
 
     log("setupKnobs()");
 
-    for (let i=0; i < DEVICE.control.length; i++) {
+    for (let i=0; i < MODEL.control.length; i++) {
 
-        const c = DEVICE.control[i];
+        const c = MODEL.control[i];
         if (typeof c === "undefined") {
             log("device undefined", i);
             continue;
         }
 
         const id = `${c.cc_type}-${c.cc_number}`;
-        const v = DEVICE.getControlValue(DEVICE.control[i]);
+        const v = MODEL.getControlValue(MODEL.control[i]);
 
         let elem = document.getElementById(id);
         if (elem === null) {

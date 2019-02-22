@@ -1,5 +1,5 @@
 import {log} from "./debug";
-import DEVICE from "./model";
+import MODEL from "./model";
 import {displayPreset, setPresetNumber} from "./ui_presets";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
@@ -9,7 +9,7 @@ import {settings, SETTINGS_UPDATE_URL} from "./settings";
 
 export function init() {
     log("init()");
-    DEVICE.init();
+    MODEL.init();
     setPresetNumber(0);
     displayPreset();
     updateUI(true);
@@ -23,7 +23,7 @@ export function init() {
 
 export function randomize() {
     log("randomize");
-    DEVICE.randomize();
+    MODEL.randomize();
     setPresetNumber(0);
     displayPreset();
     updateUI();
