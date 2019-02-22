@@ -4,10 +4,12 @@ import * as Utils from "./utils";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {toHexString} from "./utils";
+import {saveSettings, settings, SETTINGS_UPDATE_URL} from "./settings";
 
 let ignoreNextHashChange = false;
 
 export function updateBookmark() {
+    log("updateBookmark()");
     // window.location.href.split("?")[0] is the current URL without the query-string if any
     // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx());
     // window.location.hash = "" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx())
@@ -30,6 +32,39 @@ export function initFromBookmark(updateConnectedDevice = true) {
         } else {
             log("unable to set value from hash");
         }
+    }
+}
+
+let automationHandler = null;
+
+export function startBookmarkAutomation() {
+    if (settings.update_URL === SETTINGS_UPDATE_URL.every_second) {
+        log("startBookmarkAutomation");
+        automationHandler = setInterval(updateBookmark, 500);
+    }
+}
+
+export function stopBookmarkAutomation() {
+    if (automationHandler) {
+        log("stopBookmarkAutomation");
+        clearInterval(automationHandler);
+        automationHandler = null;
+    }
+}
+
+let automation_was = SETTINGS_UPDATE_URL.manually;
+
+export function toggleBookmarkAutomation() {
+    log("toggleBookmarkAutomation");
+    if (automationHandler) {
+        saveSettings({update_URL: automation_was});
+        $("#url-auto-toggle").removeClass("running");
+        stopBookmarkAutomation();
+    } else {
+        automation_was = settings.update_URL;
+        saveSettings({update_URL: SETTINGS_UPDATE_URL.every_second});
+        $("#url-auto-toggle").addClass("running");
+        startBookmarkAutomation();
     }
 }
 

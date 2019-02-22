@@ -84,7 +84,11 @@ export function fullUpdateDevice(onlyChanged = false) {
 }
 
 export function sendPC(pc) {
+
     setPresetNumber(pc);
+
+    MODEL.meta.preset_id.value = pc;
+
     if (midi_output) {
         log(`send program change ${pc}`);
         showMidiOutActivity();

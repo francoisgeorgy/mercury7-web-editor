@@ -69,6 +69,17 @@ html {
     color: var(--value)!important;
 }
 
+#url-auto-toggle {
+    cursor: pointer;
+}
+
+.paused {
+    color: var(--paused);
+}
+.running {
+    color: var(--running);
+}
+
 /*
 .no-left-border {
     border-left: none !important;
@@ -268,14 +279,31 @@ div.controls {
 }
 
 #options {
+    /*
     display: grid;
     grid-template-columns: auto auto;
     justify-items: start;
     justify-content: start;
     grid-column-gap: 5px;
     grid-row-gap: 2px;
-    /*margin-bottom: 15px;*/
     color: var(--header-text);
+    */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#options-col-1 {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: start;
+    justify-content: start;
+    grid-column-gap: 5px;
+    grid-row-gap: 2px;
+    color: var(--header-text);
+}
+
+#options-col-2 {
 }
 
 #presets .header {

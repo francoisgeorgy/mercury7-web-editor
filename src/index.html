@@ -47,51 +47,56 @@
             </div>
 
             <div id="options">
-                <div>
-                    <div>MIDI</div>
+                <div id="options-col-1">
+                    <div>
+                        <div>MIDI</div>
+                    </div>
+                    <div style="width:100%;text-align:right">
+                        <i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i>
+                    </div>
+                    <div>
+                        input:
+                    </div>
+                    <div>
+                        <select id="midi-input-device">
+                            <option>- select -</option>
+                        </select>
+                    </div>
+                    <div>
+                        output:
+                    </div>
+                    <div>
+                        <select id="midi-output-device">
+                            <option>- select -</option>
+                        </select>
+                    </div>
+                    <div>
+                        channel:
+                    </div>
+                    <div>
+                        <select id="midi-channel">
+                            <option value="all">all</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                        </select>
+                    </div>
                 </div>
-                <div style="width:100%;text-align:right">
-                    <i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i>
-                </div>
-                <div>
-                    input:
-                </div>
-                <div>
-                    <select id="midi-input-device">
-                        <option>- select -</option>
-                    </select>
-                </div>
-                <div>
-                    output:
-                </div>
-                <div>
-                    <select id="midi-output-device">
-                        <option>- select -</option>
-                    </select>
-                </div>
-                <div>
-                    channel:
-                </div>
-                <div>
-                    <select id="midi-channel">
-                        <option value="all">all</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                    </select>
+                <div id="options-col-2">
+                    <div id="url-auto-toggle" class="paused" title="When ON, update the URL every 500ms."><i class="fas fa-circle"></i></div>
                 </div>
             </div>
 
@@ -637,6 +642,7 @@
                             <option value="1">automatically after each randomization</option>
                             <option value="2">automatically after each init</option>
                             <option value="4">automatically after each randomization or init</option>
+                            <option value="8">automatically every second</option>
                         </select>
                     </div>
                     <div>

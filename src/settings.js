@@ -6,7 +6,8 @@ export const SETTINGS_UPDATE_URL = {
     manually: 0,
     on_randomize: 1,
     on_init: 2,
-    on_randomize_and_init: 4
+    on_randomize_and_init: 4,
+    every_second: 8
 };
 
 export let settings = {
@@ -21,7 +22,6 @@ export let settings = {
 export function loadSettings() {
     const s = store.get(LOCAL_STORAGE_KEY);
     if (s) settings = Object.assign(settings, settings, JSON.parse(s));
-
 }
 
 export function saveSettings(options = {}) {

@@ -8,7 +8,7 @@ import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
 import {getMidiOutputPort, setMidiOutputPort} from "./midi_out";
-import {initFromBookmark, setupBookmarkSupport} from "./hash";
+import {initFromBookmark, setupBookmarkSupport, startBookmarkAutomation} from "./hash";
 import "./css/themes.css";
 import "./css/main.css";
 import "./css/zoom.css";
@@ -245,6 +245,8 @@ $(function () {
 
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice);
     setupBookmarkSupport();
+    startBookmarkAutomation();
+
     setStatus("Waiting for MIDI interface access...");
 
     // noinspection JSUnresolvedFunction

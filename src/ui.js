@@ -18,7 +18,7 @@ import {openCreditsDialog, openHelpDialog, printPreset} from "./ui_dialogs";
 import {openMidiWindow} from "./ui_midi_window";
 import {initZoom, zoomIn, zoomOut} from "./ui_zoom";
 import {settings} from "./settings";
-import {updateBookmark} from "./hash";
+import {toggleBookmarkAutomation, updateBookmark} from "./hash";
 import {setupGlobalConfig, openSettingsPanel} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
 import {setupAppPreferences, openAppPreferencesPanel} from "./ui_app_prefs";
@@ -31,7 +31,7 @@ import {downloadLastSysEx} from "./download";
 export function handleUserAction(control_type, control_number, value) {
     log(`handleUserAction(${control_type}, ${control_number}, ${value})`);
     if (control_type === 'pc') {
-        sendPC(control_number);
+        sendPC(parseInt(control_number, 10));
     } else {
         updateDevice(control_type, control_number, value);
     }
@@ -196,6 +196,7 @@ function setupMenu() {
     $("#menu-zoom-out").click(zoomOut);
     $("#menu-global").click(openSettingsPanel);
     $("#menu-prefs").click(openAppPreferencesPanel);
+    $("#url-auto-toggle").click(toggleBookmarkAutomation);
     // in settings dialog:
     // $("#midi-channel").change(setMidiChannel);
 }

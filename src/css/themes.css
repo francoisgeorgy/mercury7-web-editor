@@ -48,6 +48,9 @@ html {
 
     --select-border: #777;
 
+    --paused: #777;
+    --running: #fff;
+
     /*--mercury7-blue: #006ab7;*/
     /*--mercury7-blue: blue;*/
     --mercury7-blue: #a28700;
@@ -104,6 +107,9 @@ html[data-theme="blue"] {
     --inset-shadow-color: #0707ff;
 
     --select-border: #71acff;
+
+    --paused: #706c58;
+    --running: red;
 
     /*--mercury7-blue: blue;*/
     --mercury7-blue: #a28700;

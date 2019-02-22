@@ -1,9 +1,10 @@
 import {log} from "./debug";
 import {closeSettingsPanel} from "./ui_global_settings";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
-import {saveSettings, settings} from "./settings";
+import {saveSettings, settings, SETTINGS_UPDATE_URL} from "./settings";
 import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
+import {startBookmarkAutomation, stopBookmarkAutomation} from "./hash";
 
 const CONTAINER = "#app-preferences";
 
@@ -58,13 +59,20 @@ export function setupAppPreferences() {
     });
 
     $("#update_URL").on("change", function(e) {
-        console.log(event.target.value);
-        saveSettings({update_URL: parseInt(event.target.value, 10)});
+        // console.log(event.target.value);
+        const v = parseInt(event.target.value, 10);
+        saveSettings({update_URL: v});
+        if (v === SETTINGS_UPDATE_URL.every_second) {
+            startBookmarkAutomation();
+        } else {
+            stopBookmarkAutomation();
+        }
     });
 
     $("#settings_zoom_level").on("change", function(e) {
-        console.log(event.target.value);
-        saveSettings({zoom_level: parseInt(event.target.value, 10)});
+        // console.log(event.target.value);
+        const v = parseInt(event.target.value, 10);
+        saveSettings({zoom_level: v});
     });
 
     return true;
