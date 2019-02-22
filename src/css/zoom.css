@@ -1,0 +1,73 @@
+
+#wrapper.zoom-0 {width: 650px; margin: 10px auto 0 auto; } /* calc(50vw - 1vh); height: calc(50vh - 0.5vh);*/
+#wrapper.zoom-1 {width: 1000px; margin: 10px auto 0 auto; padding-bottom: 10px; border-radius: 3px; }
+/*#wrapper.zoom-1 {width: calc(70vw - 1vh);}*/
+#wrapper.zoom-2 {width: calc(100vw - 20px); height: calc(100vh - (0 * 5px)); margin: 0; }
+
+/*
+#wrapper.zoom-1 {width: 1000px; border-radius: 5px; grid-column-gap: 4px; grid-row-gap: 4px; }
+#wrapper.zoom-2 {width: calc(100vw - 20px); height: calc(100vh - (0 * 5px));}
+*/
+
+.zoom-2 #title .neon {
+    font-size: 1.25rem;
+}
+
+#main.main-default.zoom-0 { border-radius: 3px; grid-column-gap: 2px; grid-row-gap: 2px; }
+#main.main-default.zoom-1 { border-radius: 5px; grid-column-gap: 4px; grid-row-gap: 4px; }
+#main.main-default.zoom-2 { border-radius: 6px; grid-column-gap: 5px; grid-row-gap: 5px; }
+
+#main.zoom-0 > div { border-radius: 3px; padding-bottom: 0; }
+#main.zoom-1 > div { border-radius: 5px; padding-bottom: 5px; }
+#main.zoom-2 > div { border-radius: 6px; padding-bottom: 5px; }
+
+#main.zoom-0 {font-size: 0.85rem; margin-top: 1vh; padding: 2px;}
+#main.zoom-1 {font-size: 1rem; margin-top: 20px;  padding: 3px;}
+#main.zoom-2 {font-size: 1rem; border-radius: 0; padding: 5px;}
+
+.zoom-0 .menu {font-size: 0.85rem;}
+.zoom-1 .menu {font-size: 1rem;}
+.zoom-2 .menu {font-size: 1.25rem;}
+
+.zoom-0 .menu span.menu-entry {margin-left: 10px;}
+.zoom-1 .menu span.menu-entry {margin-left: 10px;}
+.zoom-2 .menu span.menu-entry {margin-left: 10px;}
+
+.zoom-0 .menu span.menu-text {display: none;}
+
+/*.zoom-0 #main select {font-size: 0.85rem;}*/
+/*.zoom-1 #main select {font-size: 1rem;}*/
+.zoom-2 #main select {font-size: 1rem;}
+
+.zoom-0 .preset {padding: 5px 0; font-size: 1rem;}
+.zoom-1 .preset {padding: 8px 0; font-size: 1.75rem;}
+.zoom-2 .preset {padding: 8px 0; font-size: 2.5rem;}
+
+.zoom-0 #error-message, .zoom-0 #info-message {font-size: 0.85rem;}
+.zoom-1 #error-message, .zoom-1 #info-message {font-size: 1rem;}
+.zoom-2 #error-message, .zoom-2 #info-message {font-size: 1.15rem;}
+
+.zoom-0 #options {font-size: 0.85rem;}
+.zoom-1 #options {font-size: 1rem;}
+.zoom-2 #options {font-size: 1.5rem;}
+
+.zoom-0 .header {font-size: 0.85rem;}
+.zoom-1 .header {font-size: 1.25rem;}
+.zoom-2 .header {font-size: 1.5rem;}
+
+.zoom-0 .bt {margin: 2px 2px 0 2px; padding: 1px 0; font-size: 0.85rem;}
+.zoom-1 .bt {margin: 5px 5px 0 5px; padding: 3px 0 2px 0; font-size: 1.25rem; }
+.zoom-2 .bt {margin: 5px 5px 0 5px; padding: 0 0; font-size: 1.5rem;}
+
+.zoom-0 .stompswitch {font-size: 3rem; margin-top: 20px;}
+.zoom-1 .stompswitch {font-size: 4rem; margin-top: 30px;}
+.zoom-2 .stompswitch {font-size: 5rem; margin-top: 40px;}
+
+.zoom-0 .knob {height: 80px; margin: 0;}
+.zoom-1 .knob {width: 125px; margin: 0;}
+/*.zoom-1 .knob {height: 12vh; margin: 0;}*/
+.zoom-2 .knob {height: 15vh; margin: 0;}
+
+.zoom-0 .knob-value {font-size: 125%;}
+.zoom-1 .knob-value {font-size: 125%;}
+.zoom-2 .knob-value {font-size: 125%;}

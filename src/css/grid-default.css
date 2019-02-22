@@ -1,0 +1,132 @@
+#main.main-default {
+    display: grid;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+#title {
+    grid-column: 1 / span 6;
+    grid-row: 1;
+}
+
+/*
+#panel {
+    grid-column: 7;
+    grid-row: 1 / span 6;
+    display: none;
+}
+*/
+
+#messages {
+    grid-row: 2;
+    grid-column: 1 / span 4;
+}
+
+#options {
+    grid-row: 2;
+    grid-column: 5 / span 2;
+}
+
+#presets {
+    grid-row: 3;
+    grid-column: 1 / span 6;
+}
+
+#pitch {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 0);
+}
+
+#portamento {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 1);
+}
+
+#filter {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 2);
+}
+
+#filter-type {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 3);
+}
+
+#mix {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 4);
+}
+
+#delay-level {
+    grid-row: calc(var(--controls-row-start) + 0);
+    grid-column: calc(var(--controls-col-start) + 5);
+}
+
+#sustain {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 0);
+}
+
+#ring-mod {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 1);
+}
+
+#filter-env {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 2);
+}
+
+#filter-bandwidth {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 3);
+}
+
+#modulation {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 4);
+}
+
+#delay-feedback {
+    grid-row: calc(var(--controls-row-start) + 1);
+    grid-column: calc(var(--controls-col-start) + 5);
+}
+
+#tap {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 0);
+}
+
+#tempo {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 1);
+}
+
+#env-type {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 2);
+}
+
+#synth-mode {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 3);
+}
+
+#waveshape {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 4);
+}
+
+#bypass {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 5);
+}
+
+
+/*
+#status-bar {
+    grid-row: calc(var(--controls-row-start) + 4);
+    grid-column: calc(var(--controls-col-start) + 0) / span 6;
+}
+*/

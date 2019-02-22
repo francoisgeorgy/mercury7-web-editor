@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mercury7 Web Editor</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Control your Meris Mercury7 efefct pedal directly from your web browser." />
+    <meta name="author" content="François Georgy" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700|Roboto+Condensed:300,400,700" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+<body>
+    <div id="wrapper" class="zoom-1">
+        <div id="main" class="main-default">
+
+            <div id="title">
+                <div class="neon">Mercury7 web editor</div>
+                <div class="menu">
+                    <span class="menu-entry"><a id="menu-init" href="#"><i class="fa fa-bolt" aria-hidden="true"></i> <span class="menu-text">Init</span></a></span>
+                    <span class="menu-entry"><a id="menu-randomize" href="#"><i class="fa fa-random" aria-hidden="true"></i> <span class="menu-text">Randomize</span></a></span>
+                    <span class="menu-entry"><a id="menu-get-url" href="#" title="Get a bookmarkable URL for the current preset"><i class="far fa-bookmark" aria-hidden="true"></i> <span class="menu-text">URL</span></a></span>
+                    <span class="menu-entry"><a id="menu-load-preset" href="#" title="Load a preset from a .syx file"><i class="far fa-folder-open" aria-hidden="true"></i> <span class="menu-text">Load</span></a></span>
+                    <span class="menu-entry"><a id="menu-send" href="#" title="Update the Mercury7 with the current preset"><i class="fas fa-upload"></i> <span class="menu-text">Send</span></a></span> <!--&#8651;-->
+                    <span class="menu-entry"><a id="menu-print-preset" href="#" title="display the current preset for printing"><i class="fas fa-print" aria-hidden="true"></i> <span class="menu-text">Print</span></a></span>
+                    <span class="menu-entry"><a id="menu-midi" href="#"><i class="fas fa-exchange-alt" aria-hidden="true"></i> <span class="menu-text">Midi</span></a></span>
+                    <span class="menu-entry"><a id="menu-global" href="#"><i class="fas fa-cog" aria-hidden="true"></i> <span class="menu-text">Global</span></a></span>    <!--&#x2699;-->
+                    <span class="menu-entry"><a id="menu-prefs" href="#"><i class="fas fa-sliders-h" aria-hidden="true"></i> <span class="menu-text">Prefs</span></a></span>    <!--&#x2699;-->
+                    <span class="menu-entry"><a id="menu-help" href="#"><i class="fas fa-question"></i> <span class="menu-text">Help</span></a></span>
+                    <span class="menu-entry"><a id="menu-about" href="#"><i class="fas fa-info"></i> <span class="menu-text">About</span></a></span>      <!--&#x3f;-->
+                    <span class="menu-entry"><a id="menu-zoom-out" href="#"><i class="fas fa-search-minus"></i></a></span>
+                    <span class="menu-entry"><a id="menu-zoom-in" href="#"><i class="fas fa-search-plus"></i></a></span>
+                </div>
+            </div>
+
+            <div id="messages">
+                <div class="cell">
+                    <div id="error-message">
+                    </div>
+                    <div id="info-message">
+                    </div>
+                </div>
+            </div>
+
+            <div id="options">
+                <div>
+                    <div>MIDI</div>
+                </div>
+                <div style="width:100%;text-align:right">
+                    <i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i>
+                </div>
+                <div>
+                    input:
+                </div>
+                <div>
+                    <select id="midi-input-device">
+                        <option>- select -</option>
+                    </select>
+                </div>
+                <div>
+                    output:
+                </div>
+                <div>
+                    <select id="midi-output-device">
+                        <option>- select -</option>
+                    </select>
+                </div>
+                <div>
+                    channel:
+                </div>
+                <div>
+                    <select id="midi-channel">
+                        <option value="all">all</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                    </select>
+                </div>
+            </div>
+
+            <!--
+                PRESET CHANGE AND QUICK ACCESS
+            -->
+            <div id="presets" class="grid-default">
+                <div class="header">
+                    <div>presets</div>
+                </div>
+                <div class="preset-selection">
+                    <div id="pc-down" class="preset preset-sel">&lt;</div>
+                    <div id="pc-up" class="preset preset-sel">&gt;</div>
+                    <div id="pc-1" class="preset preset-id">1</div>
+                    <div id="pc-2" class="preset preset-id">2</div>
+                    <div id="pc-3" class="preset preset-id">3</div>
+                    <div id="pc-4" class="preset preset-id">4</div>
+                    <div id="pc-5" class="preset preset-id">5</div>
+                    <div id="pc-6" class="preset preset-id">6</div>
+                    <div id="pc-7" class="preset preset-id">7</div>
+                    <div id="pc-8" class="preset preset-id">8</div>
+                    <div id="pc-9" class="preset preset-id">9</div>
+                    <div id="pc-10" class="preset preset-id">10</div>
+                    <div id="pc-11" class="preset preset-id">11</div>
+                    <div id="pc-12" class="preset preset-id">12</div>
+                    <div id="pc-13" class="preset preset-id">13</div>
+                    <div id="pc-14" class="preset preset-id">14</div>
+                    <div id="pc-15" class="preset preset-id">15</div>
+                    <div id="pc-16" class="preset preset-id">16</div>
+                </div>
+            </div>
+
+            <!--
+                TODO: EXPRESSION PEDAL
+            -->
+
+            <!--
+                PITCH
+            -->
+            <div id="pitch" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[C,V]</div>
+                    <div>pitch</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-16"></svg>
+                </div>
+            </div>
+
+            <!--
+                PORTAMENTO
+            -->
+            <div id="portamento" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[O]</div>
+                    <div>portamento</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-22"></svg>
+                </div>
+            </div>
+
+            <!--
+                FILTER
+            -->
+            <div id="filter" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[F,G]</div>
+                    <div>filter</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-17"></svg>
+                </div>
+            </div>
+
+            <!--
+                FILTER TYPE
+            -->
+            <div id="filter-type" class="grid-default">
+                <div class="header">
+                    <div>filter type</div>
+                </div>
+                <div id="cc-23-options" class="grid-3x2">
+                    <div id="cc-23-0" class="bt">LP</div>
+                    <div id="cc-23-87" class="bt">v. LP</div>
+                    <div id="cc-23-32" class="bt">BP</div>
+                    <div id="cc-23-115" class="bt">v. BP</div>
+                    <div id="cc-23-59" class="bt">HP</div>
+                    <div id="cc-23-127" class="bt">v. HP</div>
+                </div>
+            </div>
+
+            <!--
+                MIX
+            -->
+            <div id="mix" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[Y,X]</div>
+                    <div>mix</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-18"></svg>
+                </div>
+            </div>
+
+            <!--
+                DELAY LEVEL
+            -->
+            <div id="delay-level" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[K,L]</div>
+                    <div>delay level</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-24"></svg>
+                </div>
+            </div>
+
+            <!--
+                SUSTAIN
+            -->
+            <div id="sustain" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[DEL,B,N]</div>
+                    <div>sustain</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-19"></svg>
+                </div>
+            </div>
+
+            <!--
+                RING MODULATION
+            -->
+            <div id="ring-mod" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[Z,U]</div>
+                    <div>ring mod</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-25"></svg>
+                </div>
+            </div>
+
+            <!--
+                FILTER ENVELOPE
+            -->
+            <div id="filter-env" class="grid-default">
+                <div class="header">
+                    <div>filter env</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-20"></svg>
+                </div>
+            </div>
+
+            <!--
+                FILTER BANDWITDH
+            -->
+            <div id="filter-bandwidth" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[H,J]</div>
+                    <div>filter Q</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-26"></svg>
+                </div>
+            </div>
+
+            <!--
+                MODULATION
+            -->
+            <div id="modulation" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[-,+]</div>
+                    <div>modulation</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-21"></svg>
+                </div>
+            </div>
+
+            <!--
+                DELAY FEEDBACK
+            -->
+            <div id="delay-feedback" class="grid-default">
+                <div class="header">
+                    <div>delay-feedback</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-27"></svg>
+                </div>
+            </div>
+
+            <!--
+                TAP
+            -->
+            <div id="tap" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[T]</div>
+                    <div>tap</div>
+                </div>
+                <div class="controls">
+                    <div class="stompswitch">
+                        <div id="cc-28-127" class="swm">
+                            <i id="cc-28-127-off" class="fas fa-circle" aria-hidden="true" title="click to switch on"></i>
+                            <i id="cc-28-127-on" class="sw-off sw-on fas fa-circle" aria-hidden="true" title="click to switch off"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+                MAX DELAY FEEDBACK
+            -->
+    <!--
+            <div id="max-delay-feedback" class="grid-default">
+                <div class="header">
+                    <div>max delay feedback</div>
+                </div>
+                <div class="controls">
+                </div>
+            </div>
+    -->
+
+            <!--
+                TEMPO
+            -->
+            <div id="tempo" class="grid-default">
+                <div class="header">
+                    <div>tempo</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-15"></svg>
+                </div>
+            </div>
+
+            <!--
+                ENVELOPE TYPE
+            -->
+            <div id="env-type" class="grid-default">
+                <div class="header">
+                    <div>envelope type</div>
+                </div>
+                <div id="cc-9-options" class="options">
+                    <div id="cc-9-0" class="bt">TRIGGERED</div>
+                    <div id="cc-9-127" class="bt">FOLLOWER</div>
+                </div>
+            </div>
+
+            <!--
+                SYNTH MODE
+            -->
+            <div id="synth-mode" class="grid-default">
+                <div class="header">
+                    <div>synth mode</div>
+                </div>
+                <div id="cc-29-options" class="options">
+                    <div id="cc-29-0" class="bt">DRY</div>
+                    <div id="cc-29-63" class="bt">MONO</div>
+                    <div id="cc-29-95" class="bt">ARP</div>
+                    <div id="cc-29-127" class="bt">POLY</div>
+                </div>
+            </div>
+
+            <!--
+                SYNTH WAVESHAPE
+            -->
+            <div id="waveshape" class="grid-default">
+                <div class="header">
+                    <div>waveshape</div>
+                </div>
+                <div id="cc-30-options" class="options">
+                    <div id="cc-30-0" class="bt">SAWTOOTH</div>
+                    <div id="cc-30-127" class="bt">SQUARE</div>
+                </div>
+            </div>
+
+            <!--
+                BYPASS
+            -->
+            <div id="bypass" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[SPACE]</div>
+                    <div>bypass</div>
+                </div>
+                <div class="controls">
+                    <div class="stompswitch">
+                        <div id="cc-14-127" class="sw"><i class="fas fa-circle" aria-hidden="true" title="click to switch on"></i></div>
+                        <div id="cc-14-0" class="sw sw-off sw-on"><i class="fas fa-circle" aria-hidden="true" title="click to switch off"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="global-settings" class="grid-global-settings closed">
+                <div class="header">
+                    <span style="float:right" class="close-settings-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
+                    GLOBAL SETTINGS
+                </div>
+
+                <div style="margin:20px 0">
+                    Unfortunately, at the moment, the application is not able to read the current global configuration of the pedal. That's why nothing is selected below.<br />
+                    To set a global parameter, just click the radio button and the parameter will be set in the pedal.
+                </div>
+
+                <div class="settings-columns">
+
+                    <div class="settings-rows">
+
+                        <div class="g0">
+                            INPUT MODE
+                        </div>
+                        <div></div>
+                        <div>
+                            <label>
+                                <input type="radio" class="global-config" name="global-0" value="0">
+                                mono in
+                            </label>
+                            <label>
+                                <input type="radio" class="global-config" name="global-0" value="127">
+                                stereo in (TRS)
+                            </label>
+                        </div>
+                        <div>
+                        </div>
+
+                        <div class="g0">
+                            BYPASS MODE
+                        </div>
+                        <div></div>
+                        <div>
+                            <label>
+                                <input type="radio" class="global-config" name="global-2" value="0">
+                                buffered bypass
+                            </label>
+                            <label>
+                                <input type="radio" class="global-config" name="global-2" value="127">
+                                relay bypass
+                            </label>
+                        </div>
+                        <div>
+                        </div>
+
+                        <div class="g0">
+                            TEMPO
+                        </div>
+                        <div></div>
+                        <div>
+                            <label>
+                                <input type="radio" class="global-config" name="global-5" value="0">
+                                global tempo
+                            </label>
+                            <label>
+                                <input type="radio" class="global-config" name="global-5" value="127">
+                                preset tempo
+                            </label>
+                        </div>
+                        <div>
+                        </div>
+
+                    </div>
+
+                    <div class="settings-rows">
+
+                        <div class="g0">
+                            INPUT LEVEL
+                        </div>
+                        <div></div>
+                        <div>
+                            <label>
+                                <input type="radio" class="global-config" name="global-1" value="0">
+                                instrument level
+                            </label>
+                            <label>
+                                <input type="radio" class="global-config" name="global-1" value="127">
+                                line level
+                            </label>
+                        </div>
+                        <div>
+                        </div>
+
+                        <div class="g0">
+                            KILL DRY
+                        </div>
+                        <div></div>
+                        <div>
+                            <label>
+                                <input type="radio" class="global-config" name="global-3" value="0">
+                                dry active
+                            </label>
+                            <label>
+                                <input type="radio" class="global-config" name="global-3" value="127">
+                                dry muted
+                            </label>
+                        </div>
+                        <div>
+                            <!--With DRY MUTED, the pedal delivers wet only in active mode; in bypass, the entire pedal is muted.-->
+                        </div>
+
+                        <div class="g0">
+                            TRAILS
+                        </div>
+                        <div></div>
+                        <div>
+                            <label>
+                                <input type="radio" class="global-config" name="global-4" value="0">
+                                trails off
+                            </label>
+                            <label>
+                                <input type="radio" class="global-config" name="global-4" value="127">
+                                trails on
+                            </label>
+
+    <!--
+                            <label>
+                                <input type="checkbox" class="global-config" name="global-4-0" value="0">
+                                trails
+                            </label>
+                            <label>
+                                <input type="checkbox" class="global-config" name="global-4-1" value="1">
+                                split
+                            </label>
+    -->
+                        </div>
+                        <div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <!--
+                            <div class="settings-rows">
+                                    <div class="g0">
+                                        EXPRESSION MODE
+                                        <div>
+                                            <div>
+                                                <label>
+                                                    <input type="radio" class="global-config" name="global-x" value="0">
+                                                    expression
+                                                </label>
+                                                The expression pedal works by morphing between two complete settings of all of the knob values (even the second layer
+                                                knob values).
+                                            </div>
+                                            <div>
+                                            <label>
+                                                <input type="radio" class="global-config" name="global-x" value="63">
+                                                tap
+                                                </label>
+                                                    The external switch controls Tap Tempo and has all of the same functionality as the tap button on the main
+                                                    pedal, this includes max feedback.
+                                                </div>
+                                            <div>
+                                                <label>
+                                                    <input type="radio" class="global-config" name="global-x" value="95">
+                                                    preset
+                                                </label>
+                                                This mode gives you access to and instant enabling of presets 1 through 4, when connected with a proprietary Meris 4
+                                                button switch.
+                                            </div>
+                                            <div>
+                                                <label>
+                                                    <input type="radio" class="global-config" name="global-x" value="127">
+                                                    MIDI
+                                                </label>
+                                                To connect to a Meris MIDI adapter.
+                                            </div>
+                                        </div>
+                                    </div>
+                -->
+        <!--
+                        <div>
+                            MIDI CHANNEL
+                            <div>
+                                <select>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            MIDI THRU
+                        </div>
+                </div>
+        -->
+            </div>
+
+            <div id="app-preferences" class="grid-global-settings closed">
+                <div class="header">
+                    <span style="float:right" class="close-app-prefs-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
+                    EDITOR PREFERENCES
+                </div>
+
+<!--
+                <div style="margin:40px 0">
+                    Feature available soon...
+                </div>
+-->
+
+                <div class="settings-rows">
+                    <div class="g0">
+                        MIDI
+                    </div>
+                    <div></div>
+                    <div class="grid-3x3 grid-default-gap">
+                        <div>channel: </div>
+                        <div id="settings_midi_channel"></div>
+                        <div><button id="settings_clear_midi_channel">clear</button></div>
+                        <div>input device: </div>
+                        <div id="settings_input_device"></div>
+                        <div><button id="settings_clear_input_device">clear</button></div>
+                        <div>output device: </div>
+                        <div id="settings_output_device"></div>
+                        <div><button id="settings_clear_output_device">clear</button></div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+
+                <div class="settings-rows">
+                    <div class="g0">
+                        UPDATE URL
+                    </div>
+                    <div></div>
+                    <div>
+                        <select id="update_URL">
+                            <option value="0">manually (with the URL menu entry)</option>
+                            <option value="1">automatically after each randomization</option>
+                            <option value="2">automatically after each init</option>
+                            <option value="4">automatically after each randomization or init</option>
+                        </select>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+
+                <div class="settings-rows">
+                    <div class="g0">
+                        APPLICATION DISPLAY
+                    </div>
+                    <div></div>
+                    <div>
+                        <select id="settings_zoom_level">
+                            <option value="0">small</option>
+                            <option value="1">default</option>
+                            <option value="2">large</option>
+                        </select>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="load-preset-dialog" class="dialog lity-hide">
+        <h2>Load preset from file</h2>
+        <div id="import-dialog-instructions">
+            Select a file containing an Mercury7 preset (.syx file):
+        </div>
+        <div style="margin:10px 0;">
+            <input type="file" id="preset-file" placeholder="preset file" />
+        </div>
+        <div id="load-preset-error" style="margin:10px 0;color:red">
+        </div>
+    </div>
+
+    <div id="credits-dialog" class="dialog lity-hide">
+        <a href="https://github.com/francoisgeorgy/mercury7-web-editor">
+            <img style="position: absolute; top: 0; right: 0; border: 0;"
+                 src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"
+                 alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+        <div class="mercury7-gold" style="font-size:2rem;font-weight:bold">
+            Mercury7 Web Interface <span class="version">2.0.0</span>
+        </div>
+        <p>
+            <i class="fas fa-exclamation-triangle"></i>
+            Still under active development. Feel free to log bugs/issues.
+        </p>
+        <p>Mercury7 Web Editor is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/mercury7-web-editor/blob/master/LICENSE" target="_blank" >View license</a>.</p>
+        <h1 style="margin-top:20px">Credits</h1>
+        <p>This application uses the following Open Source components:</p>
+        <ul>
+            <li><a href="https://github.com/cotejp/webmidi" target="_blank" rel="noopener">WebMidi.js</a> helps you tame the <a href="https://www.w3.org/TR/webmidi/" target="_blank">Web MIDI API</a>.</li>
+            <li><a href="https://github.com/francoisgeorgy/svg-knob" target="_blank" rel="noopener">svg-knob</a>: a flexible and customizable knob for your web applications.</li>
+            <li><a href="http://sorgalla.com/lity/" target="_blank" rel="noopener">Lity</a>: a lightweight, accessible and responsive lightbox.</li>
+            <li><a href="https://jquery.com/" target="_blank" rel="noopener">jQuery</a>: a fast, small, and feature-rich JavaScript library.</li>
+            <li><a href="https://yarnpkg.com/en/package/rxjs" target="_blank" rel="noopener">RxJS</a>: reactive Extensions for modern JavaScript .</li>
+            <li><a href="https://yarnpkg.com/en/package/storejs" target="_blank" rel="noopener">storejs</a>: local storage localstorage package provides a simple API.</li>
+            <li><a href="https://github.com/DamonOehlman/detect-browser" target="_blank" rel="noopener">detect-browser</a>: unpack a browser type and version from the useragent string.</li>
+            <li><a href="http://fontawesome.io/" target="_blank" rel="noopener">Font Awesome</a>: the iconic font and CSS toolkit.</li>
+            <li><a href="https://fonts.google.com/specimen/Roboto" target="_blank" rel="noopener">Roboto font</a> by Google.</li>
+        </ul>
+        <p class="trademarks">
+            This application is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.<br />
+        </p>
+    </div>
+
+    <div id="help-dialog" class="dialog lity-hide">
+        <h2>Instructions</h2>
+        <ol>
+            <li>Allow the browser to access your MIDI devices.</li>
+            <li>If it's not already done, connect your Mercury7 to its MIDI adapter.</li>
+            <li>When the Mercury7 is connected the logo will glow.</li>
+            <li>Move a knob on your Mercury7, the corresponding on-screen control must move accordingly.</li>
+        </ol>
+        <h4>Knobs:</h4>
+        <ul>
+            <li>To move the knobs, use the mouse.</li>
+            <li>Click and drag over the knob. You can also use the mousewheel.</li>
+        </ul>
+        <h4>Keyboard shortcuts:</h4>
+        <div style="display:flex;flex-direction: row">
+            <ul style="margin-top: 0;">
+                <li>ESC: close dialogs and settings</li>
+                <li>SPACE BAR: Bypass on/off</li>
+                <li>0..9: presets 1..10</li>
+                <li>Up, Right, +: next preset</li>
+                <li>Down, Left, -: previous preset</li>
+                <li>T: TAP</li>
+                <li>I: Init</li>
+                <li>R: Randomize</li>
+                <li>D,A,M,P: Dry, Arp, Mono, Poly</li>
+                <li>W: Sawtooth wave</li>
+                <li>Q: Square wave</li>
+            </ul>
+            <ul style="margin-top: 0;margin-left:40px">
+                <li>C, V: animate pitch</li>
+                <li>B, N: animate sustain</li>
+                <li>F, G: animate filter</li>
+                <li>H, J: animate filter Q</li>
+                <li>Y, X: animate mix</li>
+                <li>K, L: animate delay level</li>
+                <li>Z, U: animate ring mod</li>
+                <li>-, +: animate modulation</li>
+                <li>O: animate portamento</li>
+                <li>DEL: animate sustain to 0</li>
+            </ul>
+        </div>
+        Use shift to play animation until 50%.
+        <div class="dialog-info">
+            <span style="float:right">ESC to close</span>
+        </div>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="1" height="0" style="display:block">
+        <defs>
+            <linearGradient id="grad" gradientTransform="rotate(65)">
+                <stop offset="0%" stop-color="#555" />
+                <stop offset="95%" stop-color="#222" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="1" height="0" style="display:block">
+        <defs>
+            <linearGradient id="grad2" gradientTransform="rotate(65)">
+                <stop offset="20%" stop-color="#555" />
+                <stop offset="95%" stop-color="#000" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+</body>
+</html>

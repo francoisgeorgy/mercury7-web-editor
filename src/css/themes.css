@@ -1,0 +1,159 @@
+
+/* default theme */
+html {
+
+    --messages-bg: #4b3f00;
+
+    --controls-row-start: 4;
+    --controls-col-start: 1;
+
+    --value: #f9d000;
+    --knob-back-border: #999;
+    /*--knob-value: #d3d347;*/
+    --knob-value: #e7c100;
+    /*--knob-track-init: #bc9d00;*/
+    /*--knob-back-track-color: #303030;   !*373738*!*/
+
+    --bt-text: #ddd;
+    /*--label: #bbb;*/
+
+    --body-bg-from: #202023;
+    --body-bg-to: #3E3E46;
+
+    --title-text: #fff;
+    --header-text: #ccc;
+    --header-shortcut-text: #999;
+
+    --menu-icon: #ccc;
+    --menu-text: #ddd;
+    --menu-text-hover: yellow;
+
+    --preset-border: #4b3f00;
+    --preset-color: #fff;
+    --preset-hover-color: #f9d000;
+    --preset-hover-bg-color: #transparent;
+    --preset-on-color: #f9d000;
+
+    --sw-on-color: #f9d000;
+    --sw-on-shadow-color: yellow;
+
+    --default-bg-from: #454547;
+    --default-bg-to: #373738;
+
+    --inset-shadow-color: #0707ff;
+
+    --select-border: #777;
+
+    /*--mercury7-blue: #006ab7;*/
+    /*--mercury7-blue: blue;*/
+    --mercury7-blue: #a28700;
+}
+
+html[data-theme="blue"] {
+
+    /* http://www.0to255.com/0059d7 */
+
+    --messages-bg: #0000003b;
+
+    --controls-row-start: 4;
+    --controls-col-start: 1;
+
+    --value: #f9d000;
+    --knob-back-border: #999;
+    /*--knob-value: #d3d347;*/
+    --knob-value: #ddd;
+    /*--knob-track-init: #bc9d00;*/
+    /*--knob-back-track-color: #303030;   !*373738*!*/
+
+
+    --body-bg-from: #202023;
+    --body-bg-to: #3E3E46;
+
+    --title-text: #fff;
+    --header-text: #fff;
+    --header-shortcut-text: #ccc;
+
+    --menu-icon: #a4caff;
+    --menu-text: #a4caff;
+    --menu-text-hover: #fff;
+
+    --preset-border: #71acff;
+    --preset-color: #a4caff;
+    --preset-hover-color: #fff;
+    --preset-hover-bg-color: #4f98ff;
+    --preset-on-color: #fff;
+    /*--preset-on-bg-color: #eaea02;*/
+    /*--preset-on-bg-color: #f8f812;*/
+    --preset-on-bg-color: #60a2ff;
+
+    --bt-text: #a4caff;
+    /*--bt-on-bg-color: #f0f008;*/
+    --bt-on-bg-color: #60a2ff;
+
+    --sw-on-color: #fff;
+    --sw-on-shadow-color: #fff;
+
+    --default-bg-from: #454547;
+    --default-bg-to: #373738;
+
+    --inset-shadow-color: #0707ff;
+
+    --select-border: #71acff;
+
+    /*--mercury7-blue: blue;*/
+    --mercury7-blue: #a28700;
+
+}
+
+/*
+html #main {
+    background-color: var(--mercury7-blue);
+}
+*/
+
+html[data-theme="blue"] #wrapper {
+    /*background: linear-gradient(to right, #feda9e, #fdb53e 2%, #fdb53e 98%, #feda9e);*/
+    background: linear-gradient(to right, #60a2ff, #0059d7 1%, #0059d7 99%, #60a2ff);
+}
+
+html[data-theme="blue"] #main > div {
+    background: transparent;
+}
+
+html[data-theme="blue"] .cell {
+    box-shadow: inset 0 0 6px #000000;
+}
+
+html[data-theme="blue"] .header {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+html[data-theme="blue"] .knob-bg {
+    fill: url("#grad2");
+    /*fill: #000;*/
+    stroke: #000;
+}
+
+html[data-theme="blue"] .preset.on {
+    background-color: var(--preset-on-bg-color);
+    color: var(--preset-on-color)!important;
+    text-shadow: none;
+    box-shadow: inset 0 0 6px var(--inset-shadow-color);
+    /*border: 1px solid #1d1c17;*/
+}
+
+html[data-theme="blue"] div.bt.on,
+html[data-theme="blue"] div.btc.on {
+    background-color: var(--bt-on-bg-color);
+    color: var(--preset-on-color)!important;
+    /*text-shadow: 0 0 8px lightyellow;*/
+    /*border: 1px solid var(--value);*/
+    text-shadow: none;
+    box-shadow: inset 0 0 6px var(--inset-shadow-color);
+}
+
+
+html[data-theme="blue"] .on {
+    color: #000!important;
+}
