@@ -34,8 +34,12 @@ html {
     --preset-hover-bg-color: #transparent;
     --preset-on-color: #f9d000;
 
+    --sw-color: #999;
     --sw-on-color: #f9d000;
     --sw-on-shadow-color: yellow;
+
+    --stompswitch-color: #b3a1f1;
+    --stompswitch-on-color: #fff;
 
     --default-bg-from: #454547;
     --default-bg-to: #373738;
@@ -90,6 +94,7 @@ html[data-theme="blue"] {
     /*--bt-on-bg-color: #f0f008;*/
     --bt-on-bg-color: #60a2ff;
 
+    --sw-color: #b3a1f1;
     --sw-on-color: #fff;
     --sw-on-shadow-color: #fff;
 

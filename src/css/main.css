@@ -234,7 +234,7 @@ div.controls {
 .stompswitch {
     font-size: 5rem;
     /*color: var(--knob-track-init);*/
-    color: #706c58;
+    color: var(--sw-color);
 }
 
 .menu i {

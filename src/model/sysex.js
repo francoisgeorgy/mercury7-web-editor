@@ -3,6 +3,17 @@ import meta from "./meta.js";
 import {control_id} from "./cc";
 import {warn} from "../debug";
 
+// will store the last sysex received (all bytes, without any transformation).
+let last_sysex = Array.from(new Uint8Array(39));
+
+const saveLastSysEx = function(data) {
+    last_sysex = data;
+};
+
+// export const getSysEx = function() {
+//     return last_sysex;
+// };
+
 /**
  *
  * @param data
@@ -89,6 +100,7 @@ function decodeControls(data, controls) {
  */
 const setDump = function (data) {
     if (!validate(data)) return false;
+    saveLastSysEx(data);
     decodeMeta(data);
     decodeControls(data, control);
     return true;
@@ -101,14 +113,8 @@ const setDump = function (data) {
  */
 const getDump = function () {
 
-    // MSB: most significant byte
-    // LSB: least significant byte
-    // msb: most significant bit
-    // lsb: least significant bit
-
-    // console.group("getSysExDump", control);
-
-    let data = new Uint8Array(39); // TODO: create CONST for sysex length  // By default, the bytes are initialized to 0
+    // const data = new Uint8Array(39); // TODO: create CONST for sysex length  // By default, the bytes are initialized to 0
+    const data = Uint8Array.from(last_sysex);
 
     data[0] = 0xF0;
     data[1] = 0x00;
@@ -134,8 +140,6 @@ const getDump = function () {
     data[24] = control[control_id.synth_waveshape].raw_value;
 
     data[38] = 0xF7;   // end-of-sysex marker
-
-    // console.groupEnd();
 
     return data;
 };
