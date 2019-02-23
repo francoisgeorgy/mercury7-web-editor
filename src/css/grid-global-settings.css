@@ -1,7 +1,7 @@
 #main.settings-view {
     display: grid;
-    grid-column-gap: 0.5vh;
-    grid-row-gap: 0.5vh;
+    /*grid-column-gap: 5px;*/
+    /*grid-row-gap: 5px;*/
     grid-template-columns: repeat(6, 1fr);
 }
 

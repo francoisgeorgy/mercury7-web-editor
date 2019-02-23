@@ -4,7 +4,7 @@ import {settings} from "./settings";
 import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
 import {setPresetNumber} from "./ui_presets";
-import {MSG_SEND_SYSEX, setStatus} from "./ui_messages";
+import {appendMessage, monitorMessage, MSG_SEND_SYSEX, setStatus} from "./ui_messages";
 import {toHexString} from "./utils";
 import {setSuppressSysexEcho} from "./midi_in";
 
@@ -16,6 +16,29 @@ export function getMidiOutputPort() {
 
 export function setMidiOutputPort(port) {
     midi_output = port;
+}
+
+
+// const previous_values = new Array(127);
+const monitors = new Array(127);
+
+/*
+function updatePreviousValues() {
+    const c = MODEL.control;
+    for (let i=0; i < c.length; i++) {
+        if (typeof c[i] === "undefined") continue;
+        previous_values[i] = c.raw_value;
+    }
+}
+*/
+
+function monitorCC(control_number) {
+    clearTimeout(monitors[control_number]);
+    monitors[control_number] = setTimeout(() => {
+        const v = MODEL.control[control_number].raw_value;
+        log(`monitor send CC ${control_number} = ${v}`);
+        monitorMessage(control_number, v);
+    }, 200)
 }
 
 
@@ -31,21 +54,42 @@ export function getLastSendTime() {
  */
 export function sendCC(control) {
 
-    let a = MODEL.getMidiMessagesForCC(control);
+    monitorCC(control.cc_number);   // TODO: check that control exists
 
-    for (let i=0; i<a.length; i++) {
-        if (midi_output) {
-            log(`send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel}`);
-            showMidiOutActivity();
-            last_send_time = performance.now(); // for echo suppression
+    const v = MODEL.getControlValue(control);
 
-            midi_output.sendControlChange(a[i][0], a[i][1], settings.midi_channel);
+    if (midi_output) {
+        log(`send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${settings.midi_channel}`);
 
-        } else {
-            log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel})`);
-        }
-        logOutgoingMidiMessage("CC", a[i][0], a[i][1]);
+        showMidiOutActivity();
+
+        last_send_time = performance.now(); // for echo suppression
+
+        midi_output.sendControlChange(control.cc_number, v, settings.midi_channel);
+
+    } else {
+        log(`(send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${settings.midi_channel})`);
     }
+
+    logOutgoingMidiMessage("CC", control.cc_number, v);
+
+    /*
+        let a = MODEL.getMidiMessagesForCC(control);
+
+        for (let i=0; i<a.length; i++) {
+            if (midi_output) {
+                log(`send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel}`);
+                showMidiOutActivity();
+                last_send_time = performance.now(); // for echo suppression
+
+                midi_output.sendControlChange(a[i][0], a[i][1], settings.midi_channel);
+
+            } else {
+                log(`(send CC ${a[i][0]} ${a[i][1]} (${control.name}) on MIDI channel ${settings.midi_channel})`);
+            }
+            logOutgoingMidiMessage("CC", a[i][0], a[i][1]);
+        }
+    */
 }
 
 /**
@@ -87,6 +131,8 @@ export function sendPC(pc) {
 
     setPresetNumber(pc);
 
+    appendMessage(`Select preset ${pc}`);
+
     MODEL.meta.preset_id.value = pc;
 
     if (midi_output) {
@@ -95,7 +141,7 @@ export function sendPC(pc) {
 
         midi_output.sendProgramChange(pc, settings.midi_channel);
 
-        setStatus(`Preset ${pc} selected.`, MSG_SEND_SYSEX);
+        appendMessage(MSG_SEND_SYSEX);
     }
     logOutgoingMidiMessage("PC", pc);
 }

@@ -1,6 +1,8 @@
 
 #wrapper.zoom-0 {width: 650px; margin: 10px auto 0 auto; } /* calc(50vw - 1vh); height: calc(50vh - 0.5vh);*/
 #wrapper.zoom-1 {width: 1000px; margin: 10px auto 0 auto; padding-bottom: 10px; border-radius: 3px; }
+/*#wrapper.zoom-1 {width: 1000px; margin: 10px auto 0 auto; padding-bottom: 10px; border-radius: 3px; }*/
+/*#wrapper.zoom-1 {width: 1000px; height: 680px; margin: 10px auto 0 auto; padding-bottom: 10px; border-radius: 3px; }*/
 /*#wrapper.zoom-1 {width: calc(70vw - 1vh);}*/
 #wrapper.zoom-2 {width: calc(100vw - 20px); height: calc(100vh - (0 * 5px)); margin: 0; }
 
@@ -13,24 +15,28 @@
     font-size: 1.25rem;
 }
 
-#main.main-default.zoom-0 { border-radius: 3px; grid-column-gap: 2px; grid-row-gap: 2px; }
-#main.main-default.zoom-1 { border-radius: 5px; grid-column-gap: 4px; grid-row-gap: 4px; }
-#main.main-default.zoom-2 { border-radius: 6px; grid-column-gap: 5px; grid-row-gap: 5px; }
+#wrapper.zoom-0 #main.main-default { grid-column-gap: 2px; grid-row-gap: 2px; padding-bottom: 10px; }
+#wrapper.zoom-1 #main.main-default { grid-column-gap: 4px; grid-row-gap: 4px; }
+#wrapper.zoom-2 #main.main-default { grid-column-gap: 5px; grid-row-gap: 5px; grid-template-rows: 30px 15vh repeat(4, calc((100vh - 30px - 15vh) / 3 )); }
 
-#main.zoom-0 > div { border-radius: 3px; padding-bottom: 0; }
-#main.zoom-1 > div { border-radius: 5px; padding-bottom: 5px; }
-#main.zoom-2 > div { border-radius: 6px; padding-bottom: 5px; }
+#wrapper.zoom-0 #main.settings-view { grid-column-gap: 2px; grid-row-gap: 2px; }
+#wrapper.zoom-1 #main.settings-view { grid-column-gap: 4px; grid-row-gap: 4px; }
+#wrapper.zoom-2 #main.settings-view { grid-column-gap: 5px; grid-row-gap: 5px; }
 
-#main.zoom-0 {font-size: 0.85rem; margin-top: 1vh; padding: 2px;}
-#main.zoom-1 {font-size: 1rem; margin-top: 20px;  padding: 3px;}
-#main.zoom-2 {font-size: 1rem; border-radius: 0; padding: 5px;}
+#wrapper.zoom-0 #main > div { border-radius: 3px; padding-bottom: 0; }
+#wrapper.zoom-1 #main > div { border-radius: 5px; padding-bottom: 5px; }
+#wrapper.zoom-2 #main > div { border-radius: 6px; padding-bottom: 5px; }
+
+#wrapper.zoom-0 #main {font-size: 0.85rem; margin-top: 1vh; padding: 2px;}
+#wrapper.zoom-1 #main {font-size: 1rem; margin-top: 20px;  padding: 3px;}
+#wrapper.zoom-2 #main {font-size: 1rem; border-radius: 0; padding: 5px;}
 
 .zoom-0 .menu {font-size: 0.85rem;}
 .zoom-1 .menu {font-size: 1rem;}
 .zoom-2 .menu {font-size: 1.25rem;}
 
 .zoom-0 .menu span.menu-entry {margin-left: 10px;}
-.zoom-1 .menu span.menu-entry {margin-left: 10px;}
+.zoom-1 .menu span.menu-entry {margin-left: 5px;}
 .zoom-2 .menu span.menu-entry {margin-left: 10px;}
 
 .zoom-0 .menu span.menu-text {display: none;}
@@ -40,12 +46,18 @@
 .zoom-2 #main select {font-size: 1rem;}
 
 .zoom-0 .preset {padding: 5px 0; font-size: 1rem;}
-.zoom-1 .preset {padding: 8px 0; font-size: 1.75rem;}
-.zoom-2 .preset {padding: 8px 0; font-size: 2.5rem;}
+.zoom-1 .preset {padding: 8px 0; font-size: 1.5rem;}
+.zoom-2 .preset {padding: 8px 0; font-size: 2rem;}
 
+/*
 .zoom-0 #error-message, .zoom-0 #info-message {font-size: 0.85rem;}
 .zoom-1 #error-message, .zoom-1 #info-message {font-size: 1rem;}
 .zoom-2 #error-message, .zoom-2 #info-message {font-size: 1.15rem;}
+*/
+
+#wrapper.zoom-0 #messages-list { padding: 4px; height: 80px; border-radius: 3px; font-size: 0.80rem; }
+#wrapper.zoom-1 #messages-list { padding: 4px 6px; height: 100px; border-radius: 4px; font-size: 1rem; }
+#wrapper.zoom-2 #messages-list { padding: 6px; height: calc(15vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }
 
 .zoom-0 #options {font-size: 0.85rem;}
 .zoom-1 #options {font-size: 1rem;}

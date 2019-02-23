@@ -65,9 +65,9 @@ function disconnectInputPort() {
         p.removeListener();    // remove all listeners for all channels
         setMidiInputPort(null);
         log("midi_input not listening");
+        setStatus(`Device is disconnected.`);
     }
     setMidiInStatus(false);
-    setStatus(`Device is disconnected.`);
 }
 
 function connectInputPort(input) {
@@ -115,12 +115,13 @@ function connectInputDevice(id) {
     const p = getMidiInputPort();
 
     if (!id && p) {
+        log(`connectInputDevice(): disconnect currently connected port`);
         // save in settings for autoloading at next restart:
         saveSettings({input_device_id: id});
         // the user select no device, disconnect.
         disconnectInputPort();
         clearStatus();
-        setStatusError(`Please connect your device or check the MIDI channel.`);
+        setStatusError(`Connect the Mercury7 or check the MIDI channel.`);
         setMidiInStatus(false);
         return;
     }
@@ -130,6 +131,8 @@ function connectInputDevice(id) {
         log(`connectInputDevice(${id}): port is already connected`);
         return;
     }
+
+    log(`connectInputDevice(${id}): will connect port ${id}`);
 
     // save in settings for autoloading at next restart:
     saveSettings({input_device_id: id});
@@ -143,7 +146,7 @@ function connectInputDevice(id) {
         connectInputPort(port);
     } else {
         clearStatus();
-        setStatusError(`Please connect your device or check the MIDI channel.`);
+        setStatusError(`Connect the Mercury7  or check the MIDI channel.`);
         setMidiInStatus(false);
     }
 }
@@ -155,13 +158,14 @@ function connectOutputDevice(id) {
     const p = getMidiOutputPort();
 
     if (!id && p) {
+        log(`connectOutputDevice(): disconnect currently connected port`);
         // save in settings for autoloading at next restart:
         settings.output_device_id = id;
         saveSettings();
         // the user select no device, disconnect.
         disconnectOutputPort();
         clearStatus();
-        setStatusError(`Please connect your device or check the MIDI channel.`);
+        // setStatusError(`Please connect your device or check the MIDI channel.`);
         return;
     }
 
@@ -185,7 +189,7 @@ function connectOutputDevice(id) {
         connectOutputPort(port);
     } else {
         clearStatus();
-        setStatusError(`Please connect your device or check the MIDI channel.`);
+        // setStatusError(`Please connect your device or check the MIDI channel.`);
     }
 }
 
@@ -197,8 +201,15 @@ function deviceConnected(info) {
     log("%cdeviceConnected", "color: yellow; font-weight: bold", info.type, info.port.type, info.port.id, info.port.name);
 
     // Auto-connect if not already connected.
-    if (getMidiInputPort() === null) connectInputDevice(settings.input_device_id);
-    if (getMidiOutputPort() === null) connectOutputDevice(settings.output_device_id);
+
+    //FIXME: use autoConnect() method
+
+    if (info.port.type === 'input') {
+        if (getMidiInputPort() === null) connectInputDevice(settings.input_device_id);
+    }
+    if (info.port.type === 'output') {
+        if (getMidiOutputPort() === null) connectOutputDevice(settings.output_device_id);
+    }
 
     updateSelectDeviceList();
 }
@@ -223,6 +234,7 @@ function deviceDisconnected(info) {
 
 function autoConnect() {
     if (settings) {
+        log(`autoConnect()`);
         //AUTO CONNECT
         connectInputDevice(settings.input_device_id);
         connectOutputDevice(settings.output_device_id);
@@ -279,7 +291,7 @@ $(function () {
             // noinspection JSUnresolvedFunction
             WebMidi.addListener("disconnected", e => deviceDisconnected(e));
 
-            autoConnect();
+            // autoConnect();
             initFromBookmark();
 
         }

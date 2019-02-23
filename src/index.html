@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mercury7 Web Editor</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta name="description" content="Control your Meris Mercury7 efefct pedal directly from your web browser." />
     <meta name="author" content="François Georgy" />
-    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <title>Mercury7 Web Editor</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700|Roboto+Condensed:300,400,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
@@ -38,11 +38,13 @@
             </div>
 
             <div id="messages">
-                <div class="cell">
+                <div id="messages-list">
+<!--
                     <div id="error-message">
                     </div>
                     <div id="info-message">
                     </div>
+-->
                 </div>
             </div>
 
@@ -103,13 +105,17 @@
             <!--
                 PRESET CHANGE AND QUICK ACCESS
             -->
-            <div id="presets" class="grid-default">
+            <div id="presets">
+<!--
                 <div class="header">
-                    <div>presets</div>
+                    <div>preset</div>
                 </div>
-                <div class="preset-selection">
+-->
+                <!--<div class="preset-selection">-->
+<!--
                     <div id="pc-down" class="preset preset-sel">&lt;</div>
                     <div id="pc-up" class="preset preset-sel">&gt;</div>
+-->
                     <div id="pc-1" class="preset preset-id">1</div>
                     <div id="pc-2" class="preset preset-id">2</div>
                     <div id="pc-3" class="preset preset-id">3</div>
@@ -126,7 +132,7 @@
                     <div id="pc-14" class="preset preset-id">14</div>
                     <div id="pc-15" class="preset preset-id">15</div>
                     <div id="pc-16" class="preset preset-id">16</div>
-                </div>
+                <!--</div>-->
             </div>
 
             <!--
@@ -134,12 +140,12 @@
             -->
 
             <!--
-                PITCH
+                SPACE DECAY
             -->
-            <div id="pitch" class="grid-default">
+            <div id="A1" class="grid-default">
                 <div class="header">
                     <div class="header-shortcut hidden">[C,V]</div>
-                    <div>pitch</div>
+                    <div>space decay</div>
                 </div>
                 <div class="controls">
                     <svg class="knob" id="cc-16"></svg>
@@ -147,12 +153,12 @@
             </div>
 
             <!--
-                PORTAMENTO
+                PREDELAY
             -->
-            <div id="portamento" class="grid-default">
+            <div id="A2" class="grid-default">
                 <div class="header">
                     <div class="header-shortcut hidden">[O]</div>
-                    <div>portamento</div>
+                    <div>predelay</div>
                 </div>
                 <div class="controls">
                     <svg class="knob" id="cc-22"></svg>
@@ -160,12 +166,12 @@
             </div>
 
             <!--
-                FILTER
+                MODULATE
             -->
-            <div id="filter" class="grid-default">
+            <div id="A3" class="grid-default">
                 <div class="header">
                     <div class="header-shortcut hidden">[F,G]</div>
-                    <div>filter</div>
+                    <div>modulate</div>
                 </div>
                 <div class="controls">
                     <svg class="knob" id="cc-17"></svg>
@@ -173,26 +179,21 @@
             </div>
 
             <!--
-                FILTER TYPE
+                MOD SPEED
             -->
-            <div id="filter-type" class="grid-default">
+            <div id="B3" class="grid-default">
                 <div class="header">
-                    <div>filter type</div>
+                    <div>MOD SPEED</div>
                 </div>
-                <div id="cc-23-options" class="grid-3x2">
-                    <div id="cc-23-0" class="bt">LP</div>
-                    <div id="cc-23-87" class="bt">v. LP</div>
-                    <div id="cc-23-32" class="bt">BP</div>
-                    <div id="cc-23-115" class="bt">v. BP</div>
-                    <div id="cc-23-59" class="bt">HP</div>
-                    <div id="cc-23-127" class="bt">v. HP</div>
+                <div class="controls">
+                    <svg class="knob" id="cc-23"></svg>
                 </div>
             </div>
 
             <!--
                 MIX
             -->
-            <div id="mix" class="grid-default">
+            <div id="A6" class="grid-default">
                 <div class="header">
                     <div class="header-shortcut hidden">[Y,X]</div>
                     <div>mix</div>
@@ -203,12 +204,12 @@
             </div>
 
             <!--
-                DELAY LEVEL
+                PITCH VECTOR MIX
             -->
-            <div id="delay-level" class="grid-default">
+            <div id="A5" class="grid-default">
                 <div class="header">
                     <div class="header-shortcut hidden">[K,L]</div>
-                    <div>delay level</div>
+                    <div>PITCH V. MIX</div>
                 </div>
                 <div class="controls">
                     <svg class="knob" id="cc-24"></svg>
@@ -216,12 +217,12 @@
             </div>
 
             <!--
-                SUSTAIN
+                LO FREQ
             -->
-            <div id="sustain" class="grid-default">
+            <div id="B5" class="grid-default">
                 <div class="header">
                     <div class="header-shortcut hidden">[DEL,B,N]</div>
-                    <div>sustain</div>
+                    <div>LO FREQ</div>
                 </div>
                 <div class="controls">
                     <svg class="knob" id="cc-19"></svg>
@@ -229,50 +230,12 @@
             </div>
 
             <!--
-                RING MODULATION
+                HI FREQ
             -->
-            <div id="ring-mod" class="grid-default">
-                <div class="header">
-                    <div class="header-shortcut hidden">[Z,U]</div>
-                    <div>ring mod</div>
-                </div>
-                <div class="controls">
-                    <svg class="knob" id="cc-25"></svg>
-                </div>
-            </div>
-
-            <!--
-                FILTER ENVELOPE
-            -->
-            <div id="filter-env" class="grid-default">
-                <div class="header">
-                    <div>filter env</div>
-                </div>
-                <div class="controls">
-                    <svg class="knob" id="cc-20"></svg>
-                </div>
-            </div>
-
-            <!--
-                FILTER BANDWITDH
-            -->
-            <div id="filter-bandwidth" class="grid-default">
-                <div class="header">
-                    <div class="header-shortcut hidden">[H,J]</div>
-                    <div>filter Q</div>
-                </div>
-                <div class="controls">
-                    <svg class="knob" id="cc-26"></svg>
-                </div>
-            </div>
-
-            <!--
-                MODULATION
-            -->
-            <div id="modulation" class="grid-default">
+            <div id="B6" class="grid-default">
                 <div class="header">
                     <div class="header-shortcut hidden">[-,+]</div>
-                    <div>modulation</div>
+                    <div>HI FREQ</div>
                 </div>
                 <div class="controls">
                     <svg class="knob" id="cc-21"></svg>
@@ -280,11 +243,49 @@
             </div>
 
             <!--
-                DELAY FEEDBACK
+                DENSITY
             -->
-            <div id="delay-feedback" class="grid-default">
+            <div id="B2" class="grid-default">
                 <div class="header">
-                    <div>delay-feedback</div>
+                    <div class="header-shortcut hidden">[Z,U]</div>
+                    <div>DENSITY</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-25"></svg>
+                </div>
+            </div>
+
+            <!--
+                PITCH VECTOR
+            -->
+            <div id="B4" class="grid-default">
+                <div class="header">
+                    <div>PITCH VECTOR</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-20"></svg>
+                </div>
+            </div>
+
+            <!--
+                ATTACK TIME
+            -->
+            <div id="B1" class="grid-default">
+                <div class="header">
+                    <div class="header-shortcut hidden">[H,J]</div>
+                    <div>ATTACK TIME</div>
+                </div>
+                <div class="controls">
+                    <svg class="knob" id="cc-26"></svg>
+                </div>
+            </div>
+
+            <!--
+                VIBRATO DEPTH
+            -->
+            <div id="A4" class="grid-default">
+                <div class="header">
+                    <div>VIBRATO DEPTH</div>
                 </div>
                 <div class="controls">
                     <svg class="knob" id="cc-27"></svg>
@@ -292,12 +293,12 @@
             </div>
 
             <!--
-                TAP
+                SWELL
             -->
-            <div id="tap" class="grid-default">
+            <div id="C1" class="grid-default">
                 <div class="header">
                     <div class="header-shortcut hidden">[T]</div>
-                    <div>tap</div>
+                    <div>SWELL</div>
                 </div>
                 <div class="controls">
                     <div class="stompswitch">
@@ -310,75 +311,52 @@
             </div>
 
             <!--
-                MAX DELAY FEEDBACK
             -->
-    <!--
-            <div id="max-delay-feedback" class="grid-default">
+            <div id="C2" class="grid-default">
                 <div class="header">
-                    <div>max delay feedback</div>
+                    <div></div>
                 </div>
-                <div class="controls">
-                </div>
-            </div>
-    -->
-
-            <!--
-                TEMPO
-            -->
-            <div id="tempo" class="grid-default">
-                <div class="header">
-                    <div>tempo</div>
-                </div>
-                <div class="controls">
-                    <svg class="knob" id="cc-15"></svg>
+                <div>
                 </div>
             </div>
 
             <!--
-                ENVELOPE TYPE
             -->
-            <div id="env-type" class="grid-default">
+            <div id="C3" class="grid-default">
                 <div class="header">
-                    <div>envelope type</div>
+                    <div></div>
                 </div>
-                <div id="cc-9-options" class="options">
-                    <div id="cc-9-0" class="bt">TRIGGERED</div>
-                    <div id="cc-9-127" class="bt">FOLLOWER</div>
+                <div>
                 </div>
             </div>
 
             <!--
-                SYNTH MODE
             -->
-            <div id="synth-mode" class="grid-default">
+            <div id="C4" class="grid-default">
                 <div class="header">
-                    <div>synth mode</div>
+                    <div></div>
                 </div>
-                <div id="cc-29-options" class="options">
-                    <div id="cc-29-0" class="bt">DRY</div>
-                    <div id="cc-29-63" class="bt">MONO</div>
-                    <div id="cc-29-95" class="bt">ARP</div>
-                    <div id="cc-29-127" class="bt">POLY</div>
+                <div>
                 </div>
             </div>
 
             <!--
-                SYNTH WAVESHAPE
+                ALGORITHM
             -->
-            <div id="waveshape" class="grid-default">
+            <div id="C5" class="grid-default">
                 <div class="header">
-                    <div>waveshape</div>
+                    <div>ALGORITHM</div>
                 </div>
                 <div id="cc-30-options" class="options">
-                    <div id="cc-30-0" class="bt">SAWTOOTH</div>
-                    <div id="cc-30-127" class="bt">SQUARE</div>
+                    <div id="cc-29-0" class="bt">ULTRAPLATE</div>
+                    <div id="cc-29-127" class="bt">CATHEDRA</div>
                 </div>
             </div>
 
             <!--
                 BYPASS
             -->
-            <div id="bypass" class="grid-default">
+            <div id="C6" class="grid-default">
                 <div class="header">
                     <div class="header-shortcut hidden">[SPACE]</div>
                     <div>bypass</div>
@@ -642,7 +620,7 @@
                             <option value="1">automatically after each randomization</option>
                             <option value="2">automatically after each init</option>
                             <option value="4">automatically after each randomization or init</option>
-                            <option value="8">automatically every second</option>
+                            <option value="8">automatically every 500ms</option>
                         </select>
                     </div>
                     <div>

@@ -23,6 +23,17 @@ export function setSuppressSysexEcho(v = true) {
     suppress_sysex_echo = v;
 }
 
+const monitors = new Array(127);
+
+function monitorCC(control_number) {
+    clearTimeout(monitors[control_number]);
+    monitors[control_number] = setTimeout(() => {
+        const v = MODEL.control[control_number].raw_value;
+        log(`monitor receive CC ${control_number} = ${v}`);
+        monitorMessage(control_number, v);
+    }, 200)
+}
+
 /**
  * Handle Program Change messages
  * @param msg
@@ -32,6 +43,8 @@ export function handlePC(msg) {
     log("receive PC", msg);
 
     if (msg.type !== "programchange") return;
+
+    // appendMessage(`Preset ${pc} selected`);  //TODO: filter if we are the one sending the PC; otherwise display the message.
 
     showMidiInActivity();
 
@@ -62,6 +75,8 @@ export function handleCC(msg) {
     log("receive CC", cc, v);
 
     showMidiInActivity();
+
+    monitorCC(cc);
 
     logIncomingMidiMessage("CC", cc, v);
 

@@ -20,7 +20,7 @@
 
 #messages {
     grid-row: 2;
-    grid-column: 1 / span 4;
+    grid-column: 3 / span 2;
 }
 
 #options {
@@ -29,96 +29,104 @@
 }
 
 #presets {
-    grid-row: 3;
-    grid-column: 1 / span 6;
+    grid-row: 2;
+    grid-column: 1 / span 2;
+
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: auto auto;
+    grid-column-gap: 4px;
+    grid-row-gap: 8px;
+    justify-items: stretch;
+    align-items: stretch;
 }
 
-#pitch {
+#A1 {
     grid-row: calc(var(--controls-row-start) + 0);
     grid-column: calc(var(--controls-col-start) + 0);
 }
 
-#portamento {
+#A2 {
     grid-row: calc(var(--controls-row-start) + 0);
     grid-column: calc(var(--controls-col-start) + 1);
 }
 
-#filter {
+#A3 {
     grid-row: calc(var(--controls-row-start) + 0);
     grid-column: calc(var(--controls-col-start) + 2);
 }
 
-#filter-type {
+#A4 {
     grid-row: calc(var(--controls-row-start) + 0);
     grid-column: calc(var(--controls-col-start) + 3);
 }
 
-#mix {
+#A5 {
     grid-row: calc(var(--controls-row-start) + 0);
     grid-column: calc(var(--controls-col-start) + 4);
 }
 
-#delay-level {
+#A6 {
     grid-row: calc(var(--controls-row-start) + 0);
     grid-column: calc(var(--controls-col-start) + 5);
 }
 
-#sustain {
+#B1 {
     grid-row: calc(var(--controls-row-start) + 1);
     grid-column: calc(var(--controls-col-start) + 0);
 }
 
-#ring-mod {
+#B2 {
     grid-row: calc(var(--controls-row-start) + 1);
     grid-column: calc(var(--controls-col-start) + 1);
 }
 
-#filter-env {
+#B3 {
     grid-row: calc(var(--controls-row-start) + 1);
     grid-column: calc(var(--controls-col-start) + 2);
 }
 
-#filter-bandwidth {
+#B4 {
     grid-row: calc(var(--controls-row-start) + 1);
     grid-column: calc(var(--controls-col-start) + 3);
 }
 
-#modulation {
+#B5 {
     grid-row: calc(var(--controls-row-start) + 1);
     grid-column: calc(var(--controls-col-start) + 4);
 }
 
-#delay-feedback {
+#B6 {
     grid-row: calc(var(--controls-row-start) + 1);
     grid-column: calc(var(--controls-col-start) + 5);
 }
 
-#tap {
+#C1 {
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 0);
 }
 
-#tempo {
+#C2 {
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 1);
 }
 
-#env-type {
+#C3 {
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 2);
 }
 
-#synth-mode {
+#C4 {
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 3);
 }
 
-#waveshape {
+#C5 {
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 4);
 }
 
-#bypass {
+#C6 {
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 5);
 }

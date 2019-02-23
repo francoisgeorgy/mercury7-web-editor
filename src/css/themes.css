@@ -95,6 +95,7 @@ html[data-theme="blue"] {
 
     --bt-text: #a4caff;
     /*--bt-on-bg-color: #f0f008;*/
+    --bt-border: #71acff;
     --bt-on-bg-color: #60a2ff;
 
     --sw-color: #b3a1f1;

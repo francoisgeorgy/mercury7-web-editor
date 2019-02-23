@@ -1,10 +1,11 @@
 import {log} from "./debug";
 import {closeSettingsPanel} from "./ui_global_settings";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
-import {saveSettings, settings, SETTINGS_UPDATE_URL} from "./settings";
+import {saveSettings, settings} from "./settings";
 import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
 import {startBookmarkAutomation, stopBookmarkAutomation} from "./hash";
+import {SETTINGS_UPDATE_URL} from "../../mercury7-web-editor/src/settings";
 
 const CONTAINER = "#app-preferences";
 

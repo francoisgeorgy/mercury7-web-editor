@@ -1,24 +1,21 @@
 
 export const control_id = {
     exp_pedal: 4,
-    envelope_type: 9,
     bypass: 14,
-    tempo: 15,
-    pitch: 16,
-    filter: 17,
+    space_decay: 16,
+    modulate: 17,
     mix: 18,
-    sustain: 19,
-    filter_envelope: 20,
-    modulation: 21,
-    portamento: 22,
-    filter_type: 23,
-    delay_level: 24,
-    ring_modulation: 25,
-    filter_bandwidth: 26,
-    delay_feedback: 27,
-    tap: 28,
-    synth_mode: 29,
-    synth_waveshape: 30
+    lo_freq: 19,
+    pitch_vector: 20,
+    hi_freq: 21,
+    predelay: 22,
+    mod_speed: 23,
+    pitch_vector_mix: 24,
+    density: 25,
+    attack_time: 26,
+    vibrato_depth: 27,
+    swell: 28,
+    algorithm: 29
 };
 
 export const control = new Array(127);
@@ -26,34 +23,18 @@ export const control = new Array(127);
 const _percent = function (v) {
     return Math.floor(v / 127 * 100 + 0.5) + '%';
 };
-
+/*
 const _off_when_zero = function (v) {
     return v === 0 ? 'OFF' : v;
 };
+*/
 
 const _2_steps = function (v) {
     return v < 64 ? 0 : 127;
 };
 
-const _4_steps = function (v) {
-    if (v < 32) {
-        return 0;
-    } else if (v < 64) {
-        return 63;
-    } else if (v < 96) {
-        return 95;
-    } else {
-        return 127;
-    }
-};
 
-// half steps increments
-//
-// 0, 1,
-// 12, 16, 20, 24, ... 56
-// 72, 76, ... 116,
-// 127
-//
+/*
 const _pitch = function (v) {
     if (v === 0) {
         return "-2 oct";
@@ -122,30 +103,14 @@ const _env_type = function (v) {
         return "FOLLOWER";
     }
 };
+*/
 
-const _synth_mode = function (v) {
-    if (v < 32) {
-        return "DRY";
-    } else if (v < 64) {
-        return "MONO";
-    } else if (v < 96) {
-        return "ARP";
-    } else {
-        return "POLY";
-    }
-};
-
-const _waveshape = function (v) {
+const _algorithm = function (v) {
     if (v < 64) {
-        return "SAWTOOTH";
+        return "ULTRAPLATE";
     } else {
-        return "SQUARE";
+        return "CATHEDRA";
     }
-};
-
-const _tempo = function (v) {
-    // const bpm = v > 0 ? Math.round(60000 / (v * 10)) : "inf ";
-    return (v * 10) + "ms";
 };
 
 function defineControls() {
@@ -156,24 +121,19 @@ function defineControls() {
             mask: [0x7F]
         }
     };
-    control[control_id.tempo] = { // 15,
-        name: "Tempo",
-        human: _tempo,
-        //TODO: tempo from sysex
-    };
-    control[control_id.pitch] = { // 16,
-        name: "Pitch",
-        init_value: 63,
-        cc_center: [63, 64],
-        human: _pitch,
+    control[control_id.space_decay] = { // 16,
+        name: "Space Decay",
+        init_value: 80,
+        human: _percent,
         sysex: {
             offset: 9,
             mask: [0x7F]
         }
     };
-    control[control_id.filter] = { // 17,
-        name: "Filter",
-        init_value: 127,
+    control[control_id.modulate] = { // 17,
+        name: "Modulate",
+        init_value: 13,
+        human: _percent,
         sysex: {
             offset: 10,
             mask: [0x7F]
@@ -181,75 +141,84 @@ function defineControls() {
     };
     control[control_id.mix] = { // 18,
         name: "Mix",
-        init_value: 127,
+        init_value: 63,
         human: _percent,
         sysex: {
             offset: 11,
             mask: [0x7F]
         }
     };
-    control[control_id.sustain] = { // 19,
-        name: "Sustain",
+    control[control_id.lo_freq] = { // 19,
+        name: "Lo Freq",
+        human: _percent,
+        init_value: 127,
         sysex: {
             offset: 12,
             mask: [0x7F]
         }
     };
-    control[control_id.filter_envelope] = { // 20,
-        name: "Filter env",
-        human: _filter_env,
+    control[control_id.pitch_vector] = { // 20,
+        name: "Pitch Vector",
+        init_value: 0,
         sysex: {
             offset: 13,
             mask: [0x7F]
         }
     };
-    control[control_id.modulation] = { // 21,
-        name: "Modulation",
-        human: _off_when_zero,
+    control[control_id.hi_freq] = { // 21,
+        name: "Hi Freq",
+        human: _percent,
+        init_value: 127,
         sysex: {
             offset: 14,
             mask: [0x7F]
         }
     };
-    control[control_id.portamento] = { // 22,
-        name: "Portamento",
+    control[control_id.predelay] = { // 22,
+        name: "Predelay",
         sysex: {
             offset: 15,
             mask: [0x7F]
         }
     };
-    control[control_id.filter_type] = { // 23,
-        name: "Filter type",
-        human: _filter_type,
-        map_raw: _filter_type_values,
+    control[control_id.mod_speed] = { // 23,
+        name: "Mod Speed",
+        init_value: 21,
         sysex: {
             offset: 16,
             mask: [0x7F]
         }
     };
-    control[control_id.delay_level] = { // 24,
-        name: "Delay level",
+    control[control_id.pitch_vector_mix] = { // 24,
+        name: "Pitch Vector Mix",
+        init_value: 89,
+        human: _percent,
         sysex: {
             offset: 17,
             mask: [0x7F]
         }
     };
-    control[control_id.ring_modulation] = { //  25,
-        name: "Ring modulation",
+    control[control_id.density] = { //  25,
+        name: "Density",
+        human: _percent,
+        init_value: 127,
         sysex: {
             offset: 18,
             mask: [0x7F]
         }
     };
-    control[control_id.filter_bandwidth] = { // 26,
-        name: "Filter Q",
+    control[control_id.attack_time] = { // 26,
+        name: "Attack Time",
+        init_value: 63,
         sysex: {
             offset: 19,
             mask: [0x7F]
         }
     };
-    control[control_id.delay_feedback] = { // 27,
-        name: "Delay feedback",
+    control[control_id.vibrato_depth] = { // 27,
+        name: "Vibrato Depth",
+        human: _percent,
+        init_value: 0,
         sysex: {
             offset: 20,
             mask: [0x7F]
@@ -265,44 +234,20 @@ function defineControls() {
             mask: [0x7F]
         }
     };
-    control[control_id.envelope_type] = { // 9,
-        name: "Envelope type",
-        human: _env_type,
+    control[control_id.algorithm] = { // 29,
+        name: "Algorithm",
+        human: _algorithm,
         map_raw: _2_steps,
-        sysex: {
-            offset: 22,
-            mask: [0x7F]
-        }
-    };
-    control[control_id.synth_mode] = { // 29,
-        name: "Synth mode",
-        init_value: 63,
-        human: _synth_mode,
-        map_raw: _4_steps,
         sysex: {
             offset: 23,
             mask: [0x7F]
         }
     };
-    control[control_id.synth_waveshape] = { // 30
-        name: "Waveshape",
-        init_value: 0,
-        human: _waveshape,
-        map_raw: _2_steps,
-        sysex: {
-            offset: 24,
-            mask: [0x7F]
-        }
-    };
-    control[control_id.tap] = { // 28,
-        name: "Tap",
+    control[control_id.swell] = { // 28,
+        name: "Swell",
         no_init: true,
         no_randomize: true,
         map_raw: () => 127,
-        // sysex: {
-        //     offset: 22,
-        //     mask: [0x7F]
-        // }
     };
 
     // add the missing default properties

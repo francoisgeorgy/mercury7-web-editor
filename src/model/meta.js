@@ -23,7 +23,7 @@ export default {
     },
     preset_id: {
         name: "Preset Number",
-        value: "",
+        value: 0,
         sysex: {
             offset: 8,
             range: [0, 127],
