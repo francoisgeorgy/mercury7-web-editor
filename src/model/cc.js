@@ -114,13 +114,13 @@ const _algorithm = function (v) {
 };
 
 function defineControls() {
-    control[control_id.exp_pedal] = { // 4,
+    // control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal"   //,
         // sysex: {
         //     offset: 22,
         //     mask: [0x7F]
         // }
-    };
+    // };
     control[control_id.space_decay] = { // 16,
         name: "Space Decay",
         init_value: 80,

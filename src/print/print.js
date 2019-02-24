@@ -7,6 +7,7 @@ import {URL_PARAM_SYSEX} from "./../constants";
 import {log} from "../debug";
 
 function renderControlName(control_number) {
+    log(`renderControlName(${control_number})`);
     return MODEL.control[control_number].name;
 }
 
