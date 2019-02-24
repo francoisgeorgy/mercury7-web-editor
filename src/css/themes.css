@@ -132,6 +132,10 @@ html[data-theme="blue"] #main > div {
     background: transparent;
 }
 
+html[data-theme="blue"] #messages-list {
+    box-shadow: inset 0 0 6px #000000;
+}
+
 html[data-theme="blue"] .cell {
     box-shadow: inset 0 0 6px #000000;
 }
