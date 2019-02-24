@@ -115,11 +115,11 @@ const _algorithm = function (v) {
 
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
-        name: "Exp pedal",
-        sysex: {
-            offset: 22,
-            mask: [0x7F]
-        }
+        name: "Exp pedal"   //,
+        // sysex: {
+        //     offset: 22,
+        //     mask: [0x7F]
+        // }
     };
     control[control_id.space_decay] = { // 16,
         name: "Space Decay",
@@ -248,6 +248,10 @@ function defineControls() {
         no_init: true,
         no_randomize: true,
         map_raw: () => 127,
+        sysex: {
+            offset: 22,
+            mask: [0x7F]
+        }
     };
 
     // add the missing default properties

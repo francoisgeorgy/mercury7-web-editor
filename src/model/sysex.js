@@ -117,22 +117,21 @@ const getDump = function () {
     data[3] = 0x10;
 
     data[8] = meta.preset_id.value;
-    // data[9] = control[control_id.pitch].raw_value;
-    // data[10] = control[control_id.filter].raw_value;
+    data[9] = control[control_id.space_decay].raw_value;
+    data[10] = control[control_id.modulate].raw_value;
     data[11] = control[control_id.mix].raw_value;
-    // data[12] = control[control_id.sustain].raw_value;
-    // data[13] = control[control_id.filter_envelope].raw_value;
-    // data[14] = control[control_id.modulation].raw_value;
-    // data[15] = control[control_id.portamento].raw_value;
-    // data[16] = control[control_id.filter_type].raw_value;
-    // data[17] = control[control_id.delay_level].raw_value;
-    // data[18] = control[control_id.ring_modulation].raw_value;
-    // data[19] = control[control_id.filter_bandwidth].raw_value;
-    // data[20] = control[control_id.delay_feedback].raw_value;
+    data[12] = control[control_id.lo_freq].raw_value;
+    data[13] = control[control_id.pitch_vector_mix].raw_value;
+    data[14] = control[control_id.hi_freq].raw_value;
+    data[15] = control[control_id.predelay].raw_value;
+    data[16] = control[control_id.mod_speed].raw_value;
+    data[17] = control[control_id.pitch_vector_mix].raw_value;
+    data[18] = control[control_id.density].raw_value;
+    data[19] = control[control_id.attack_time].raw_value;
+    data[20] = control[control_id.vibrato_depth].raw_value;
     data[21] = control[control_id.bypass].raw_value;
-    // data[22] = control[control_id.envelope_type].raw_value;
-    // data[23] = control[control_id.synth_mode].raw_value;
-    // data[24] = control[control_id.synth_waveshape].raw_value;
+    data[22] = control[control_id.swell].raw_value;
+    data[23] = control[control_id.algorithm].raw_value;
 
     data[38] = 0xF7;   // end-of-sysex marker
 
