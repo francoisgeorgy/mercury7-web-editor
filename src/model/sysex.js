@@ -1,7 +1,6 @@
-import {control} from "./cc.js";
 import meta from "./meta.js";
-import {control_id} from "./cc";
-import {log, warn} from "../debug";
+import {control, control_id} from "./cc.js";
+import {log, warn} from "../debug.js";
 
 // will store the last sysex received (all bytes, without any transformation).
 let last_sysex = Array.from(new Uint8Array(39));
@@ -118,22 +117,22 @@ const getDump = function () {
     data[3] = 0x10;
 
     data[8] = meta.preset_id.value;
-    data[9] = control[control_id.pitch].raw_value;
-    data[10] = control[control_id.filter].raw_value;
+    // data[9] = control[control_id.pitch].raw_value;
+    // data[10] = control[control_id.filter].raw_value;
     data[11] = control[control_id.mix].raw_value;
-    data[12] = control[control_id.sustain].raw_value;
-    data[13] = control[control_id.filter_envelope].raw_value;
-    data[14] = control[control_id.modulation].raw_value;
-    data[15] = control[control_id.portamento].raw_value;
-    data[16] = control[control_id.filter_type].raw_value;
-    data[17] = control[control_id.delay_level].raw_value;
-    data[18] = control[control_id.ring_modulation].raw_value;
-    data[19] = control[control_id.filter_bandwidth].raw_value;
-    data[20] = control[control_id.delay_feedback].raw_value;
+    // data[12] = control[control_id.sustain].raw_value;
+    // data[13] = control[control_id.filter_envelope].raw_value;
+    // data[14] = control[control_id.modulation].raw_value;
+    // data[15] = control[control_id.portamento].raw_value;
+    // data[16] = control[control_id.filter_type].raw_value;
+    // data[17] = control[control_id.delay_level].raw_value;
+    // data[18] = control[control_id.ring_modulation].raw_value;
+    // data[19] = control[control_id.filter_bandwidth].raw_value;
+    // data[20] = control[control_id.delay_feedback].raw_value;
     data[21] = control[control_id.bypass].raw_value;
-    data[22] = control[control_id.envelope_type].raw_value;
-    data[23] = control[control_id.synth_mode].raw_value;
-    data[24] = control[control_id.synth_waveshape].raw_value;
+    // data[22] = control[control_id.envelope_type].raw_value;
+    // data[23] = control[control_id.synth_mode].raw_value;
+    // data[24] = control[control_id.synth_waveshape].raw_value;
 
     data[38] = 0xF7;   // end-of-sysex marker
 
