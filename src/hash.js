@@ -37,10 +37,15 @@ export function initFromBookmark(updateConnectedDevice = true) {
 
 let automationHandler = null;
 
-export function startBookmarkAutomation() {
-    if (settings.update_URL === SETTINGS_UPDATE_URL.every_second) {
+export function startBookmarkAutomation(force = false) {
+    if (force || (settings.update_URL === SETTINGS_UPDATE_URL.every_second)) {
         log("startBookmarkAutomation");
+        if (automationHandler) {
+            // clear existing before re-starting
+            clearInterval(automationHandler);
+        }
         automationHandler = setInterval(updateBookmark, 500);
+        $("#url-auto-toggle").addClass("running");
     }
 }
 
@@ -50,21 +55,20 @@ export function stopBookmarkAutomation() {
         clearInterval(automationHandler);
         automationHandler = null;
     }
+    $("#url-auto-toggle").removeClass("running");
 }
 
-let automation_was = SETTINGS_UPDATE_URL.manually;
+// let automation_was = SETTINGS_UPDATE_URL.manually;
 
 export function toggleBookmarkAutomation() {
     log("toggleBookmarkAutomation");
     if (automationHandler) {
-        saveSettings({update_URL: automation_was});
-        $("#url-auto-toggle").removeClass("running");
+        // saveSettings({update_URL: automation_was});
         stopBookmarkAutomation();
     } else {
-        automation_was = settings.update_URL;
-        saveSettings({update_URL: SETTINGS_UPDATE_URL.every_second});
-        $("#url-auto-toggle").addClass("running");
-        startBookmarkAutomation();
+        // automation_was = settings.update_URL;
+        // saveSettings({update_URL: SETTINGS_UPDATE_URL.every_second});
+        startBookmarkAutomation(true);
     }
 }
 
