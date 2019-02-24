@@ -33,77 +33,39 @@ const _2_steps = function (v) {
     return v < 64 ? 0 : 127;
 };
 
-
-/*
-const _pitch = function (v) {
-    if (v === 0) {
-        return "-2 oct";
-    } else if (v < 12) {
-        return "-1 oct";
-    } else if (v < 56) {
-        return Math.floor((v - 56) / 4);
-    } else if (v >= 56 && v < 72) {
-        return "0";
-    } else if (v < 116) {
-        return Math.floor((v - 68) / 4);
-    } else if (v < 127) {
-        return "+1 oct";
-    } else {
-        return "+2 oct";
-    }
-};
-
 // human:
-const _filter_type = function (v) {
-    if (v < 4) {
-        return "ladder LP";
-    } else if (v < 33) {
-        return "ladder BP";
-    } else if (v < 60) {
-        return "ladder HP";
-    } else if (v < 88) {
-        return "state variable LP";
-    } else if (v < 116) {
-        return "state variable BP";
+const _pitch_vector = function (v) {
+    if (v < 1) {
+        return "OFF";
+    } else if (v < 31) {
+        return "- Octave";
+    } else if (v < 66) {
+        return "Pitch Down";
+    } else if (v < 82) {
+        return "Pitch Up";
+    } else if (v < 110) {
+        return "+ 5th";
     } else {
-        return "state variable HP";
+        return "Shimmer";
     }
 };
 
 // map_raw:
-const _filter_type_values = function (v) {
-    if (v < 4) {
+const _pitch_vector_values = function (v) {
+    if (v < 1) {
         return 0;
-    } else if (v < 33) {
-        return 32;
-    } else if (v < 60) {
-        return 59;
-    } else if (v < 88) {
-        return 87;
-    } else if (v < 116) {
-        return 115;
+    } else if (v < 31) {
+        return 1;
+    } else if (v < 66) {
+        return 33;
+    } else if (v < 82) {
+        return 81;
+    } else if (v < 110) {
+        return 109;
     } else {
         return 127;
     }
 };
-
-const _filter_env = function (v) {
-    if (v===0) return "OFF";
-    if (v < 64) {
-        return `D ${63-v}`;
-    } else {
-        return `A ${v-64}`;
-    }
-};
-
-const _env_type = function (v) {
-    if (v < 64) {
-        return "TRIGGERED";
-    } else {
-        return "FOLLOWER";
-    }
-};
-*/
 
 const _algorithm = function (v) {
     if (v < 64) {
@@ -159,6 +121,8 @@ function defineControls() {
     };
     control[control_id.pitch_vector] = { // 20,
         name: "Pitch Vector",
+        human: _pitch_vector,
+        map_raw: _pitch_vector_values,
         init_value: 0,
         sysex: {
             offset: 13,

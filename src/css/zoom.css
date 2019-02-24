@@ -17,7 +17,7 @@
 
 #wrapper.zoom-0 #main.main-default { grid-column-gap: 2px; grid-row-gap: 2px; padding-bottom: 10px; }
 #wrapper.zoom-1 #main.main-default { grid-column-gap: 4px; grid-row-gap: 4px; }
-#wrapper.zoom-2 #main.main-default { grid-column-gap: 5px; grid-row-gap: 5px; grid-template-rows: 30px 15vh repeat(4, calc((100vh - 30px - 15vh) / 3 )); }
+#wrapper.zoom-2 #main.main-default { grid-column-gap: 5px; grid-row-gap: 5px; grid-template-rows: 30px 15vh repeat(3, calc((100vh - 30px - 15vh) / 3 )); }
 
 #wrapper.zoom-0 #main.settings-view { grid-column-gap: 2px; grid-row-gap: 2px; }
 #wrapper.zoom-1 #main.settings-view { grid-column-gap: 4px; grid-row-gap: 4px; }

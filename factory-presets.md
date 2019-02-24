@@ -317,3 +317,4 @@
 | Density                                              | 0%         |
 | Attack Time                                          | 63         |
 | Vibrato Depth                                        | 0%         |
+
