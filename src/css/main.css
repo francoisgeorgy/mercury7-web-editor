@@ -201,7 +201,7 @@ html {
     /*height: 100px;*/
     /*border-radius: 6px;*/
     border: 1px solid #333;
-    color: yellow;
+    color: var(--messages-color);
     background: var(--messages-bg)!important;
 }
 
@@ -450,7 +450,7 @@ div.btc.on {
 
 .lity-container {
     vertical-align: top;
-    margin-top: 2em;
+    margin-top: 60px;
 }
 
 .lity-close {

@@ -89,12 +89,8 @@ html[data-theme="blue"] {
     --preset-hover-color: #fff;
     --preset-hover-bg-color: #4f98ff;
     --preset-on-color: #fff;
-    /*--preset-on-bg-color: #eaea02;*/
-    /*--preset-on-bg-color: #f8f812;*/
-    --preset-on-bg-color: #60a2ff;
 
     --bt-text: #a4caff;
-    /*--bt-on-bg-color: #f0f008;*/
     --bt-border: #71acff;
     --bt-on-bg-color: #60a2ff;
 
@@ -112,7 +108,6 @@ html[data-theme="blue"] {
     --paused: #706c58;
     --running: red;
 
-    /*--mercury7-blue: blue;*/
     --mercury7-blue: #a28700;
 
 }
@@ -151,24 +146,14 @@ html[data-theme="blue"] .knob-bg {
     stroke: #000;
 }
 
-html[data-theme="blue"] .preset.on {
-    background-color: var(--preset-on-bg-color);
-    color: var(--preset-on-color)!important;
-    text-shadow: none;
-    box-shadow: inset 0 0 6px var(--inset-shadow-color);
-    /*border: 1px solid #1d1c17;*/
-}
-
-html[data-theme="blue"] div.bt.on,
-html[data-theme="blue"] div.btc.on {
+html[data-theme="gold"] .preset.on,
+html[data-theme="gold"] div.bt.on,
+html[data-theme="gold"] div.btc.on {
     background-color: var(--bt-on-bg-color);
     color: var(--preset-on-color)!important;
-    /*text-shadow: 0 0 8px lightyellow;*/
-    /*border: 1px solid var(--value);*/
     text-shadow: none;
     box-shadow: inset 0 0 6px var(--inset-shadow-color);
 }
-
 
 html[data-theme="blue"] .on {
     color: #000!important;

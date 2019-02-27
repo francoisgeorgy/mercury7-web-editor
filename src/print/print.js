@@ -7,7 +7,6 @@ import {URL_PARAM_SYSEX} from "./../constants";
 import {log} from "../debug";
 
 function renderControlName(control_number) {
-    log(`renderControlName(${control_number})`);
     return MODEL.control[control_number].name;
 }
 
@@ -49,7 +48,10 @@ function loadTemplate(data, filename) {
 */
         let ok = false;
         if (data) {
-            ok = MODEL.setValuesFromSysEx(data)
+            const valid = MODEL.setValuesFromSysEx(data);
+            if (valid.error) {
+                ok = false;
+            }
         } else {
             ok = true;
         }

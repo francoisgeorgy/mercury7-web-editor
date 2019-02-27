@@ -1,5 +1,6 @@
 import {log, TRACE, warn} from "./debug";
 import * as WebMidi from "webmidi";
+import MODEL from "./model";
 import {detect} from "detect-browser";
 import {VERSION} from "./constants";
 import {loadSettings, saveSettings, settings} from "./settings";
@@ -9,6 +10,7 @@ import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
 import {getMidiOutputPort, setMidiOutputPort} from "./midi_out";
 import {initFromBookmark, setupBookmarkSupport, startBookmarkAutomation} from "./hash";
+import "./css/lity.min.css";    // order important
 import "./css/themes.css";
 import "./css/main.css";
 import "./css/zoom.css";
@@ -16,7 +18,6 @@ import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
 import "./css/grid-app-preferences.css";
 import "./css/knob.css";
-import "./css/lity.min.css";
 
 const browser = detect();
 
@@ -39,6 +40,13 @@ if (browser) {
 
 //==================================================================================================================
 
+function setupModel() {
+    MODEL.init();
+    MODEL.setDeviceId(settings.midi_channel);   // the device_id is the midi channel
+}
+
+//==================================================================================================================
+
 function setMidiChannel(midi_channel) {
 
     // Note: output does not use any event listener, so there's nothing to update on the output device when we only
@@ -50,6 +58,8 @@ function setMidiChannel(midi_channel) {
     // Set new channel:
     log(`setMidiChannel(${midi_channel}): set new channel`);
     saveSettings({midi_channel});
+
+    MODEL.setDeviceId(settings.midi_channel);
 
     log(`setMidiChannel(${midi_channel}): reconnect input ${settings.input_device_id}`);
     connectInputDevice(settings.input_device_id);
@@ -255,6 +265,7 @@ $(function () {
     // if (settings.theme) document.documentElement.setAttribute('data-theme', settings.theme);
     document.documentElement.setAttribute('data-theme', "blue");
 
+    setupModel();
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice);
     setupBookmarkSupport();
     startBookmarkAutomation();

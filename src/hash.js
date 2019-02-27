@@ -5,6 +5,7 @@ import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {toHexString} from "./utils";
 import {saveSettings, settings, SETTINGS_UPDATE_URL} from "./settings";
+import {appendErrorMessage} from "./ui_messages";
 
 let ignoreNextHashChange = false;
 
@@ -25,12 +26,14 @@ export function initFromBookmark(updateConnectedDevice = true) {
     const s = window.location.hash.substring(1);
     if (s) {
         log("sysex hash present");               //TODO: check that the hash is a sysex hex string
-        if (MODEL.setValuesFromSysEx(Utils.fromHexString(s))) {
+        const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s));
+        if (valid.error) {
+            log("unable to set value from hash");
+            appendErrorMessage(valid.message);
+        } else {
             log("sysex loaded in device");
             updateUI();
             if (updateConnectedDevice) fullUpdateDevice();
-        } else {
-            log("unable to set value from hash");
         }
     }
 }

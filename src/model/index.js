@@ -134,6 +134,12 @@ const getMidiMessagesForCC = function (ctrl) {
     return CC;
 };
 
+const setDeviceId = function (id) {
+    meta.device_id.value = id;
+};
+
+//TODO: getHumanValue() or getValue()
+
 export default {
     name: "Mercury7",
     meta,
@@ -141,6 +147,7 @@ export default {
     control,
     init,
     randomize,
+    setDeviceId,
     getControl,
     getControlValue,
     getMappedControlValue,

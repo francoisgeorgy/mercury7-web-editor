@@ -3,6 +3,7 @@ import MODEL from "./model";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import * as lity from "lity";
+import {appendErrorMessage} from "./ui_messages";
 
 //==================================================================================================================
 // Preset file handling
@@ -39,16 +40,21 @@ export function readFile() {
                 data.push(view[i]);
                 if (view[i] === SYSEX_END) break;
             }
-            if (MODEL.setValuesFromSysEx(data)) {
+            const valid = MODEL.setValuesFromSysEx(data);
+            if (valid.error) {
+                log("unable to set value from file");
+
+                $("#load-preset-error").show().text(valid.message);
+                appendErrorMessage(valid.message);
+
+            } else {
+
                 log("file read OK");
                 if (lightbox) lightbox.close();
 
                 updateUI();
                 fullUpdateDevice();
 
-            } else {
-                log("unable to set value from file");
-                $("#load-preset-error").show().text("The file is invalid.");
             }
         };
         reader.readAsArrayBuffer(f);

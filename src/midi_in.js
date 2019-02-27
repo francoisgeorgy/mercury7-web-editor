@@ -1,11 +1,19 @@
 import {showMidiInActivity} from "./ui_midi_activity";
 import {displayPreset, setPresetNumber} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
-import {getLastSendTime} from "./midi_out";
+import {getLastSendTime, sendCC} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
-import {clearError, clearStatus, setStatus, setStatusError} from "./ui_messages";
+import {
+    appendErrorMessage,
+    appendMessage,
+    clearError,
+    clearStatus,
+    monitorMessage,
+    setStatus,
+    setStatusError
+} from "./ui_messages";
 
 let midi_input = null;
 
@@ -26,6 +34,7 @@ export function setSuppressSysexEcho(v = true) {
 const monitors = new Array(127);
 
 function monitorCC(control_number) {
+    if (!MODEL.control[control_number]) return;
     clearTimeout(monitors[control_number]);
     monitors[control_number] = setTimeout(() => {
         const v = MODEL.control[control_number].raw_value;
@@ -88,19 +97,23 @@ export function handleCC(msg) {
 }
 
 export function handleSysex(data) {
+
     log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold");
+
     if (suppress_sysex_echo) {
         log("handleSysex: suppress echo (ignore sysex received)");
         suppress_sysex_echo = false;
         return;
     }
-    if (MODEL.setValuesFromSysEx(data)) {
+
+    const valid = MODEL.setValuesFromSysEx(data);
+    if (valid.error) {
+        appendErrorMessage(valid.message);
+    } else {
         updateUI();
         clearError();
         setStatus(`SysEx received with preset #${MODEL.meta.preset_id.value}.`);
         log("Device updated with SysEx");
-    } else {
-        clearStatus();
-        setStatusError("Unable to update from SysEx data.")
     }
+
 }

@@ -9,37 +9,82 @@ const saveLastSysEx = function(data) {
     last_sysex = data;
 };
 
-/**
- *
- * @param data
- * @returns {boolean}
- */
 const validate = function (data) {
 
-    // console.log("validate", data);
+    log("validate", toHexString(data, ' '));
 
     const SYSEX_START = 0xF0;
     const SYSEX_END = 0xF7;
 
     if (data[0] !== SYSEX_START) {
         warn("validate: invalid start byte", data[0]);
-        return false;
+        return {
+            valid: false,
+            error: "invalid start byte",
+            message: ""
+        };
     }
 
     let offset = meta.signature.sysex.offset;
     for (let i = 0; i < meta.signature.sysex.value.length; i++) {
         if (data[offset + i] !== meta.signature.sysex.value[i]) {
-            // console.log(`validate: invalid sysex at offset ${offset + i}. Expected ${meta.signature.sysex.value[i]}. Found ${data[offset + i]}`);
-            return false;
+            log(`validate: invalid sysex at offset ${offset + i}. Expected ${meta.signature.sysex.value[i]}. Found ${data[offset + i]}`);
+            return {
+                valid: false,
+                error: "invalid manufacturer ID",
+                message: ""
+            };
         }
     }
+
+    if ((data[meta.device_id.sysex.offset] > 0) && (data[meta.device_id.sysex.offset] !== meta.device_id.value)) {
+        log(`validate: invalid device_id: ${data[meta.device_id.sysex.offset]}`);
+        return {
+            valid: false,
+            error: "invalid device ID",
+            message: ""
+        };
+    }
+
+    if (data[meta.group_id.sysex.offset] !== meta.group_id.value) {
+        log(`validate: invalid group_id: ${data[meta.group_id.sysex.offset]}`);
+        return {
+            valid: false,
+            error: "invalid group ID",
+            message: ""
+        };
+    }
+
+    if (data[meta.model_id.sysex.offset] !== meta.model_id.value) {
+        log(`validate: invalid model_id: ${data[meta.model_id.sysex.offset]}`);
+        return {
+            valid: false,
+            error: "invalid model ID",
+            message: "SysEx is for another Meris product."
+        };
+    }
+
     let last_byte = 0;
     for (let i = 0; i < data.length; i++) {
         last_byte = data[i];
     }
 
     // console.log("validate, last_byte", last_byte);
-    return last_byte === SYSEX_END;
+    if (last_byte === SYSEX_END) {
+        return {
+            valid: true,
+            error: "",
+            message: ""
+        }
+    } else {
+        log(`validate: invalid end marker: ${last_byte}`);
+        return {
+            valid: last_byte === SYSEX_END,
+            error: "invalid end marker",
+            message: ""
+        }
+    }
+
 };
 
 /**
@@ -91,14 +136,21 @@ function decodeControls(data, controls) {
 /**
  * Set values from a SysEx dump
  * @param data
- * @returns {boolean}
+ * @returns {*}
  */
 const setDump = function (data) {
-    if (!validate(data)) return false;
+    const valid = validate(data);
+    if (valid.error) {
+        return valid;
+    }
     saveLastSysEx(data);
     decodeMeta(data);
     decodeControls(data, control);
-    return true;
+    return {
+        valid: true,
+        error: "",
+        message: ""
+    };
 };
 
 /**
