@@ -66,6 +66,7 @@ html {
 }
 
 .knob-value {
+    font-family: "Roboto", sans-serif;
     font-weight: 300;
     stroke: none;
     fill: var(--knob-value);
