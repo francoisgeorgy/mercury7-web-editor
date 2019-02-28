@@ -7,11 +7,17 @@ import {sendPC, updateDevice} from "./midi_out";
 import MODEL from "./model";
 import {displayPreset, presetDec, presetInc, setPresetNumber} from "./ui_presets";
 import {init, randomize} from "./presets";
-import {tapDown, tapRelease, updateBypassSwitch} from "./ui_switches";
-import {SYNTH_MODES, WAVESHAPES} from "./model/constants";
+import {tapRelease, updateBypassSwitch, updateSwellSwitch} from "./ui_switches";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeSettingsPanel} from "./ui_global_settings";
 
+
+function toggleSwell() {
+    const c = MODEL.control[MODEL.control_id.swell];
+    const v = MODEL.getControlValue(c) === 0 ? 127 : 0;
+    updateDevice(c.cc_type, c.cc_number, v);
+    updateSwellSwitch(v);
+}
 
 function toggleBypass() {
     const c = MODEL.control[MODEL.control_id.bypass];
@@ -159,8 +165,8 @@ function keyDown(code, alt, shift) {
         case 78:                // N    max sustain
             animateTo(MODEL.control_id.sustain, shift ? 63 : 127);
             break;
-        case 84:                // T            tap
-            tapDown("cc-28-127");
+        case 83:                // S    swell
+            toggleSwell();
             break;
         case 90:                // Z
             animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 0);

@@ -41,7 +41,7 @@ export default {
     },
     model_id: {
         name: "Device Id",  // Model # (0=Ottobit Jr, 1=Mercury7, 2=Polymoon, 3=Enzo)
-        value: 3,
+        value: 1,
         sysex: {
             offset: 6,
             range: [0, 127],

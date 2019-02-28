@@ -17,7 +17,7 @@
 
 #wrapper.zoom-0 #main.main-default { grid-column-gap: 2px; grid-row-gap: 2px; padding-bottom: 10px; }
 #wrapper.zoom-1 #main.main-default { grid-column-gap: 4px; grid-row-gap: 4px; }
-#wrapper.zoom-2 #main.main-default { grid-column-gap: 5px; grid-row-gap: 5px; grid-template-rows: 30px 15vh repeat(3, calc((100vh - 30px - 15vh) / 3 )); }
+#wrapper.zoom-2 #main.main-default { grid-column-gap: 5px; grid-row-gap: 5px; grid-template-rows: 30px 15vh repeat(3, calc((100vh - 30px - 20vh) / 3 )); }
 
 #wrapper.zoom-0 #main.settings-view { grid-column-gap: 2px; grid-row-gap: 2px; }
 #wrapper.zoom-1 #main.settings-view { grid-column-gap: 4px; grid-row-gap: 4px; }
@@ -56,7 +56,7 @@
 */
 
 #wrapper.zoom-0 #messages-list { padding: 4px; height: 80px; border-radius: 3px; font-size: 0.80rem; }
-#wrapper.zoom-1 #messages-list { padding: 4px 6px; height: 100px; border-radius: 4px; font-size: 1rem; }
+#wrapper.zoom-1 #messages-list { padding: 4px 6px; height: 100px; border-radius: 4px; font-size: 0.9rem; }
 #wrapper.zoom-2 #messages-list { padding: 6px; height: calc(15vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }
 
 .zoom-0 #options {font-size: 0.85rem;}

@@ -126,6 +126,7 @@ const randomize = function() {
  * Returns an array of "midi messages" to send to update control to value
  * @param ctrl
  */
+/*
 const getMidiMessagesForCC = function (ctrl) {
     if (ctrl.cc_type !== "cc") return [];
     let CC = [];
@@ -133,6 +134,7 @@ const getMidiMessagesForCC = function (ctrl) {
     CC.push([ctrl.cc_number, value]);
     return CC;
 };
+*/
 
 const setDeviceId = function (id) {
     meta.device_id.value = id;
@@ -155,6 +157,5 @@ export default {
     setValuesFromSysEx: sysex.setDump,     // set values from a SysEx dump
     getSysEx: sysex.getDump,     // export all values as a SysEx dump
     getSysexDataForGlobalConfig: sysex.getSysexDataForGlobalConfig,
-    validate: sysex.validate,   // validate a SysEx dump
-    getMidiMessagesForCC
+    validate: sysex.validate   // validate a SysEx dump
 };

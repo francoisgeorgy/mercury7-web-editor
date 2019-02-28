@@ -20,20 +20,20 @@
             <div id="title">
                 <div class="neon">MERCURY7</div>
                 <div class="menu">
-                    <span class="menu-entry"><a id="menu-init" href="#"><i class="fa fa-bolt" aria-hidden="true"></i> <span class="menu-text">Init</span></a></span>
-                    <span class="menu-entry"><a id="menu-randomize" href="#"><i class="fa fa-random" aria-hidden="true"></i> <span class="menu-text">Randomize</span></a></span>
-                    <span class="menu-entry"><a id="menu-get-url" href="#" title="Get a bookmarkable URL for the current preset"><i class="far fa-bookmark" aria-hidden="true"></i> <span class="menu-text">URL</span></a></span>
-                    <span class="menu-entry"><a id="menu-send" href="#" title="Update the Mercury7 with the current preset"><i class="fas fa-upload"></i> <span class="menu-text">Send</span></a></span> <!--&#8651;-->
-                    <span class="menu-entry"><a id="menu-print-preset" href="#" title="display the current preset for printing"><i class="fas fa-print" aria-hidden="true"></i> <span class="menu-text">Print</span></a></span>
-                    <span class="menu-entry"><a id="menu-load-preset" href="#" title="Load a preset from a .syx file"><i class="far fa-folder-open" aria-hidden="true"></i> <span class="menu-text">Load</span></a></span>
-                    <span class="menu-entry"><a id="menu-download-sysex" href="#" title="Download the current preset as a SysEx file"><i class="fas fa-file-download"></i> <span class="menu-text">Download</span></a></span> <!--&#8651;-->
-                    <span class="menu-entry"><a id="menu-midi" href="#"><i class="fas fa-exchange-alt" aria-hidden="true"></i> <span class="menu-text">Midi</span></a></span>
-                    <span class="menu-entry"><a id="menu-global" href="#"><i class="fas fa-cog" aria-hidden="true"></i> <span class="menu-text">Global</span></a></span>    <!--&#x2699;-->
-                    <span class="menu-entry"><a id="menu-prefs" href="#"><i class="fas fa-sliders-h" aria-hidden="true"></i> <span class="menu-text">Prefs</span></a></span>    <!--&#x2699;-->
-                    <span class="menu-entry"><a id="menu-help" href="#"><i class="fas fa-question"></i> <span class="menu-text">Help</span></a></span>
-                    <span class="menu-entry"><a id="menu-about" href="#"><i class="fas fa-info"></i> <span class="menu-text">About</span></a></span>      <!--&#x3f;-->
-                    <span class="menu-entry"><a id="menu-zoom-out" href="#"><i class="fas fa-search-minus"></i></a></span>
-                    <span class="menu-entry"><a id="menu-zoom-in" href="#"><i class="fas fa-search-plus"></i></a></span>
+                    <span class="menu-entry"><a id="menu-init" href="#" title="Set all the control to a basic 'init' preset."><i class="fa fa-bolt" aria-hidden="true"></i> <span class="menu-text">Init</span></a></span>
+                    <span class="menu-entry"><a id="menu-randomize" href="#" title="Set all the controls to random values."><i class="fa fa-random" aria-hidden="true"></i> <span class="menu-text">Randomize</span></a></span>
+                    <span class="menu-entry"><a id="menu-get-url" href="#" title="Update the URL with the current preset values."><i class="far fa-bookmark" aria-hidden="true"></i> <span class="menu-text">URL</span></a></span>
+                    <span class="menu-entry"><a id="menu-send" href="#" title="Update the Mercury7 with the current preset."><i class="fas fa-upload"></i> <span class="menu-text">Send</span></a></span> <!--&#8651;-->
+                    <span class="menu-entry"><a id="menu-print-preset" href="#" title="Display the current preset for printing."><i class="fas fa-print" aria-hidden="true"></i> <span class="menu-text">Print</span></a></span>
+                    <span class="menu-entry"><a id="menu-load-preset" href="#" title="Load a preset from a file."><i class="far fa-folder-open" aria-hidden="true"></i> <span class="menu-text">Load</span></a></span>
+                    <span class="menu-entry"><a id="menu-download-sysex" href="#" title="Download the current preset as a sysex file."><i class="fas fa-file-download"></i> <span class="menu-text">Download</span></a></span> <!--&#8651;-->
+                    <span class="menu-entry"><a id="menu-midi" href="#" title="Open a popup that will display all the MIDI messages sent and received."><i class="fas fa-exchange-alt" aria-hidden="true"></i> <span class="menu-text">Midi</span></a></span>
+                    <span class="menu-entry"><a id="menu-global" href="#" title="View and edit the Global Settings of the Mercury7."><i class="fas fa-cog" aria-hidden="true"></i> <span class="menu-text">Global</span></a></span>    <!--&#x2699;-->
+                    <span class="menu-entry"><a id="menu-prefs" href="#" title="View and edit the preferences of this application."><i class="fas fa-sliders-h" aria-hidden="true"></i> <span class="menu-text">Prefs</span></a></span>    <!--&#x2699;-->
+                    <span class="menu-entry"><a id="menu-help" href="#" title="Help informations about this application."><i class="fas fa-question"></i> <span class="menu-text">Help</span></a></span>
+                    <span class="menu-entry"><a id="menu-about" href="#" title="About this application."><i class="fas fa-info"></i> <span class="menu-text">About</span></a></span>      <!--&#x3f;-->
+                    <span class="menu-entry"><a id="menu-zoom-out" href="#" title="Make the application smaller."><i class="fas fa-search-minus"></i></a></span>
+                    <span class="menu-entry"><a id="menu-zoom-in" href="#" title="Make the application bigger."><i class="fas fa-search-plus"></i></a></span>
                 </div>
             </div>
 
@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div id="options-col-2">
-                    <div id="url-auto-toggle" class="paused" title="When ON, update the URL every 500ms."><i class="fas fa-circle"></i></div>
+                    <div id="url-auto-toggle" class="paused" title="When ON, update the URL every 500ms.">REC <i class="fas fa-circle"></i></div>
                 </div>
             </div>
 
@@ -100,11 +100,6 @@
                 PRESET CHANGE AND QUICK ACCESS
             -->
             <div id="presets">
-<!--
-                <div class="header">
-                    <div>preset</div>
-                </div>
--->
                 <!--<div class="preset-selection">-->
 <!--
                     <div id="pc-down" class="preset preset-sel">&lt;</div>
@@ -296,15 +291,19 @@
             -->
             <div id="C1" class="grid-default">
                 <div class="header">
-                    <div class="header-shortcut hidden">[T]</div>
+                    <div class="header-shortcut hidden">[S]</div>
                     <div>SWELL</div>
                 </div>
                 <div class="controls">
                     <div class="stompswitch">
+<!--
                         <div id="cc-28-127" class="swm">
                             <i id="cc-28-127-off" class="fas fa-circle" aria-hidden="true" title="click to switch on"></i>
                             <i id="cc-28-127-on" class="sw-off sw-on fas fa-circle" aria-hidden="true" title="click to switch off"></i>
                         </div>
+-->
+                        <div id="cc-28-127" class="sw"><i class="fas fa-circle" aria-hidden="true" title="click to switch on"></i></div>
+                        <div id="cc-28-0" class="sw sw-off sw-on"><i class="fas fa-circle" aria-hidden="true" title="click to switch off"></i></div>
                     </div>
                 </div>
             </div>
@@ -665,7 +664,7 @@
                  src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"
                  alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
         <div class="mercury7-gold" style="font-size:2rem;font-weight:bold">
-            Mercury7 Web Interface <span class="version">2.0.0</span>
+            Mercury7 Editor <span class="version"></span>
         </div>
         <p>
             <i class="fas fa-exclamation-triangle"></i>
@@ -691,18 +690,18 @@
     </div>
 
     <div id="help-dialog" class="dialog lity-hide">
+        <div id="more-help">More help online at <a href="https://sysex.io/mercury7/help">sysex.io/mercury7/help</a>.</div>
         <h2>Instructions</h2>
         <ol>
             <li>Allow the browser to access your MIDI devices.</li>
             <li>If it's not already done, connect your Mercury7 to its MIDI adapter.</li>
             <li>When the Mercury7 is connected the logo will glow.</li>
             <li>Move a knob on your Mercury7, the corresponding on-screen control must move accordingly.</li>
-        </ol>
-        <h4>Knobs:</h4>
         <ul>
             <li>To move the knobs, use the mouse.</li>
             <li>Click and drag over the knob. You can also use the mousewheel.</li>
         </ul>
+        </ol>
         <h4>Keyboard shortcuts:</h4>
         <div style="display:flex;flex-direction: row">
             <ul style="margin-top: 0;">
@@ -731,7 +730,7 @@
                 <li>DEL: animate sustain to 0</li>
             </ul>
         </div>
-        Use shift to play animation until 50%.
+        Use shift to play animations until 50%.
         <div class="dialog-info">
             <span style="float:right">ESC to close</span>
         </div>

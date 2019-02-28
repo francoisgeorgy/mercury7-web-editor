@@ -1,3 +1,8 @@
+html {
+    --controls-row-start: 3;
+    --controls-col-start: 1;
+}
+
 #main.main-default {
     display: grid;
     grid-column-gap: 5px;
@@ -130,11 +135,3 @@
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 5);
 }
-
-
-/*
-#status-bar {
-    grid-row: calc(var(--controls-row-start) + 4);
-    grid-column: calc(var(--controls-col-start) + 0) / span 6;
-}
-*/

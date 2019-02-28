@@ -13,7 +13,7 @@ export function init() {
     setPresetNumber(0);
     displayPreset();
     updateUI(true);
-    fullUpdateDevice();
+    fullUpdateDevice(false, true);
     clearError();
     if ((settings.update_URL & SETTINGS_UPDATE_URL.on_init) ||
         (settings.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) updateBookmark();
@@ -27,7 +27,7 @@ export function randomize() {
     setPresetNumber(0);
     displayPreset();
     updateUI();
-    fullUpdateDevice(true);    // true == update only updated values (values which have been marked as changed)
+    fullUpdateDevice(true, true);    // true == update only updated values (values which have been marked as changed)
     clearError();
     if ((settings.update_URL & SETTINGS_UPDATE_URL.on_randomize) ||
         (settings.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) updateBookmark();

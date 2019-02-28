@@ -1,6 +1,8 @@
+import {control} from "./cc.js";
 import meta from "./meta.js";
-import {control, control_id} from "./cc.js";
-import {log, warn} from "../debug.js";
+import {control_id} from "./cc";
+import {log, warn} from "../debug";
+import {toHexString} from "../utils";
 
 // will store the last sysex received (all bytes, without any transformation).
 let last_sysex = Array.from(new Uint8Array(39));
@@ -168,7 +170,14 @@ const getDump = function () {
     data[2] = 0x20;
     data[3] = 0x10;
 
+    data[4] = 0;    // We set device ID to 0 in order to get a sysex dump that can be sent to any Mercury7.
+    data[5] = meta.group_id.value;
+    data[6] = meta.model_id.value;
+
+    data[7] = 0x26; // Mercury7 always sent this value when sending a sysex.
+
     data[8] = meta.preset_id.value;
+
     data[9] = control[control_id.space_decay].raw_value;
     data[10] = control[control_id.modulate].raw_value;
     data[11] = control[control_id.mix].raw_value;

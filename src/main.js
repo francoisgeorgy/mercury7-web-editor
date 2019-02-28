@@ -17,7 +17,6 @@ import "./css/zoom.css";
 import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
 import "./css/grid-app-preferences.css";
-import "./css/knob.css";
 
 const browser = detect();
 
@@ -263,7 +262,7 @@ $(function () {
 
     // The documentElement is the "<html>" element for HTML documents.
     // if (settings.theme) document.documentElement.setAttribute('data-theme', settings.theme);
-    document.documentElement.setAttribute('data-theme', "blue");
+    // document.documentElement.setAttribute('data-theme', "blue");
 
     setupModel();
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice);

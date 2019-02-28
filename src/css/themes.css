@@ -1,77 +1,20 @@
-
-/* default theme */
 html {
-
-    --messages-bg: #4b3f00;
-
-    --controls-row-start: 4;
-    --controls-col-start: 1;
-
-    --value: #f9d000;
-    --knob-back-border: #999;
-    /*--knob-value: #d3d347;*/
-    --knob-value: #e7c100;
-    /*--knob-track-init: #bc9d00;*/
-    /*--knob-back-track-color: #303030;   !*373738*!*/
-
-    --bt-text: #ddd;
-    /*--label: #bbb;*/
-
-    --body-bg-from: #202023;
-    --body-bg-to: #3E3E46;
-
-    --title-text: #fff;
-    --header-text: #ccc;
-    --header-shortcut-text: #999;
-
-    --menu-icon: #ccc;
-    --menu-text: #ddd;
-    --menu-text-hover: yellow;
-
-    --preset-border: #4b3f00;
-    --preset-color: #fff;
-    --preset-hover-color: #f9d000;
-    --preset-hover-bg-color: #transparent;
-    --preset-on-color: #f9d000;
-
-    --sw-color: #999;
-    --sw-on-color: #f9d000;
-    --sw-on-shadow-color: yellow;
-
-    --stompswitch-color: #b3a1f1;
-    --stompswitch-on-color: #fff;
-
-    --default-bg-from: #454547;
-    --default-bg-to: #373738;
-
-    --inset-shadow-color: #0707ff;
-
-    --select-border: #777;
-
-    --paused: #777;
-    --running: #fff;
-
-    /*--mercury7-blue: #006ab7;*/
-    /*--mercury7-blue: blue;*/
-    --mercury7-blue: #a28700;
-}
-
-html[data-theme="blue"] {
 
     /* http://www.0to255.com/0059d7 */
 
-    --messages-bg: #0000003b;
+    --mercury7-blue: #a28700;
 
-    --controls-row-start: 4;
-    --controls-col-start: 1;
+    --body-bg-color: #111111;
+
+    --messages-bg: #0000003b;
+    --messages-color: #ddd;
+    --messages-border: #999;
 
     --value: #f9d000;
-    --knob-back-border: #999;
-    /*--knob-value: #d3d347;*/
-    --knob-value: #ddd;
-    /*--knob-track-init: #bc9d00;*/
-    /*--knob-back-track-color: #303030;   !*373738*!*/
+    --dialog-link: #f9d000;
 
+    --knob-back-border: #999;
+    --knob-value: #ddd;
 
     --body-bg-from: #202023;
     --body-bg-to: #3E3E46;
@@ -84,77 +27,50 @@ html[data-theme="blue"] {
     --menu-text: #a4caff;
     --menu-text-hover: #fff;
 
-    --preset-border: #71acff;
-    --preset-color: #a4caff;
-    --preset-hover-color: #fff;
-    --preset-hover-bg-color: #4f98ff;
-    --preset-on-color: #fff;
-
-    --bt-text: #a4caff;
+    --bt-color: #a4caff;
     --bt-border: #71acff;
+    --bt-hover-color: #ffffff;
+    --bt-hover-bg-color: #4f98ff;
+    --bt-on-color: #ffffff;
     --bt-on-bg-color: #60a2ff;
+    --bt-on-border: #cec5ff;
 
     --sw-color: #b3a1f1;
     --sw-on-color: #fff;
     --sw-on-shadow-color: #fff;
 
-    --default-bg-from: #454547;
-    --default-bg-to: #373738;
+    --inset-shadow-color: #070707;
 
-    --inset-shadow-color: #0707ff;
-
+    --select-color: #e8f1ff;
+    --select-bg: #004bb5;
     --select-border: #71acff;
 
+    --on-color: #000;
+    --midi-on: #000;
     --paused: #706c58;
     --running: red;
 
-    --mercury7-blue: #a28700;
-
 }
 
-/*
-html #main {
-    background-color: var(--mercury7-blue);
-}
-*/
-
-html[data-theme="blue"] #wrapper {
-    /*background: linear-gradient(to right, #feda9e, #fdb53e 2%, #fdb53e 98%, #feda9e);*/
+#wrapper {
     background: linear-gradient(to right, #60a2ff, #0059d7 1%, #0059d7 99%, #60a2ff);
 }
 
-html[data-theme="blue"] #main > div {
+#main > div {
     background: transparent;
 }
 
-html[data-theme="blue"] #messages-list {
-    box-shadow: inset 0 0 6px #000000;
-}
-
-html[data-theme="blue"] .cell {
-    box-shadow: inset 0 0 6px #000000;
-}
-
-html[data-theme="blue"] .header {
-    text-align: center;
-    text-transform: uppercase;
-}
-
-html[data-theme="blue"] .knob-bg {
+.knob-bg {
     fill: url("#grad2");
-    /*fill: #000;*/
     stroke: #000;
 }
 
-html[data-theme="gold"] .preset.on,
-html[data-theme="gold"] div.bt.on,
-html[data-theme="gold"] div.btc.on {
-    background-color: var(--bt-on-bg-color);
-    color: var(--preset-on-color)!important;
-    text-shadow: none;
-    box-shadow: inset 0 0 6px var(--inset-shadow-color);
+.knob-value {
+    font-weight: 300;
+    stroke: none;
+    fill: var(--knob-value);
 }
 
-html[data-theme="blue"] .on {
-    color: #000!important;
+.knob-cursor {
+    stroke-linecap: butt;
 }

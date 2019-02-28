@@ -58,8 +58,7 @@ export function setupAppPreferences() {
         displayCurrentPreferences();
     });
 
-    $("#update_URL").on("change", function(e) {
-        // console.log(event.target.value);
+    $("#update_URL").on("change", function() {
         const v = parseInt(event.target.value, 10);
         saveSettings({update_URL: v});
         if (v === SETTINGS_UPDATE_URL.every_second) {
@@ -69,8 +68,7 @@ export function setupAppPreferences() {
         }
     });
 
-    $("#settings_zoom_level").on("change", function(e) {
-        // console.log(event.target.value);
+    $("#settings_zoom_level").on("change", function() {
         const v = parseInt(event.target.value, 10);
         saveSettings({zoom_level: v});
     });

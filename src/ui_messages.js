@@ -65,8 +65,8 @@ export function monitorMessage(control_number, raw_value) {
         warn(`monitorMessage: unknown control ${control_number}`);
         return;
     }
-    if (control_number === MODEL.control_id.tap) {
-        appendMessage(`TAP`);
+    if (control_number === MODEL.control_id.swell) {
+        appendMessage(`${c.name} ${raw_value > 0 ? 'ON' : 'OFF'}`);
     } else if (control_number === MODEL.control_id.bypass) {
         appendMessage(`${c.name} ${raw_value > 0 ? 'ON' : 'OFF'}`);
     } else {

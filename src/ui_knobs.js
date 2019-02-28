@@ -1,7 +1,7 @@
 import {log} from "./debug";
 import MODEL from "./model";
 import Knob from "svg-knob";
-import {KNOB_THEME_BLUE} from "./ui_knobs_theme";
+import {KNOB_THEME_DEFAULT} from "./ui_knobs_theme";
 
 export const knobs = {};         // svg-knob
 
@@ -16,7 +16,7 @@ export function setupKnobs(userActionCallback) {
 
         const c = MODEL.control[i];
         if (typeof c === "undefined") {
-            log("device undefined", i);
+            // log("device undefined", i);
             continue;
         }
 
@@ -31,8 +31,7 @@ export function setupKnobs(userActionCallback) {
 
         log(`configure #${id}: range=${c.cc_range}, init-value=${v}`);
 
-        // knobs[id] = new Knob(elem, KNOB_THEME_DEFAULT);
-        knobs[id] = new Knob(elem, KNOB_THEME_BLUE);
+        knobs[id] = new Knob(elem, KNOB_THEME_DEFAULT);
         knobs[id].config = {
             value_min: Math.min(...c.cc_range),
             value_max: Math.max(...c.cc_range),

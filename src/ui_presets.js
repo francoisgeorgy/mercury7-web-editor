@@ -33,6 +33,7 @@ export function setupPresetSelectors(callback) {
 
     log("setupPresetSelectors()");
 
+/*
     $("div#pc-down").click(function() {
         log(`click on ${this.id}`);
         presetDec(callback);
@@ -42,6 +43,7 @@ export function setupPresetSelectors(callback) {
         log(`click on ${this.id}`);
         presetInc(callback);
     });
+*/
 
     $("div.preset-id").click(function() {
         log(`click on ${this.id}`);
@@ -50,7 +52,6 @@ export function setupPresetSelectors(callback) {
             this.classList.add("on");
         }
         callback(...this.id.split("-"));
-        // callback(this.id.split("-")[1]);
     });
 
 }

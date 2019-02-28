@@ -7,12 +7,9 @@ import {log} from "./debug";
 import MODEL from "./model";
 import {
     appendErrorMessage,
-    appendMessage,
     clearError,
-    clearStatus,
     monitorMessage,
-    setStatus,
-    setStatusError
+    setStatus
 } from "./ui_messages";
 
 let midi_input = null;
@@ -70,11 +67,10 @@ export function handlePC(msg) {
  */
 export function handleCC(msg) {
 
-    const t = performance.now();
-    // console.log(last_send_time, t);
-
     // suppress echo:
+    const t = performance.now();
     if (t < (getLastSendTime() + 100)) {
+        log("ignore CC echo");
         return;
     }
 
@@ -89,11 +85,7 @@ export function handleCC(msg) {
 
     logIncomingMidiMessage("CC", cc, v);
 
-    // if (MODEL.control[cc]) {
     updateModelAndUI("cc", cc, v);
-    // } else {
-    //     warn(`unsupported CC: ${cc}`)
-    // }
 }
 
 export function handleSysex(data) {

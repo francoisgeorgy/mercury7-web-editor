@@ -210,8 +210,7 @@ function defineControls() {
     control[control_id.swell] = { // 28,
         name: "Swell",
         no_init: true,
-        no_randomize: true,
-        map_raw: () => 127,
+        map_raw: _2_steps,
         sysex: {
             offset: 22,
             mask: [0x7F]
