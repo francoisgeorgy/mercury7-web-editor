@@ -108,7 +108,7 @@ export function fullUpdateDevice(onlyChanged = false, silent = false) {
         }
     }
     if (!silent && midi_output) {
-        appendMessage("Current settings sent to the Enzo.")
+        appendMessage("Current settings sent to the Mercury7.")
     }
     if (TRACE) console.groupEnd();
 }

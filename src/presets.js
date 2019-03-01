@@ -16,7 +16,9 @@ export function init() {
     fullUpdateDevice(false, true);
     clearError();
     if ((settings.update_URL & SETTINGS_UPDATE_URL.on_init) ||
-        (settings.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) updateBookmark();
+        (settings.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {
+        updateBookmark();
+    }
     setStatus("Mercury7 set to 'init' configuration.");
     return false;   // disable the normal href behavior
 }
@@ -30,7 +32,9 @@ export function randomize() {
     fullUpdateDevice(true, true);    // true == update only updated values (values which have been marked as changed)
     clearError();
     if ((settings.update_URL & SETTINGS_UPDATE_URL.on_randomize) ||
-        (settings.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) updateBookmark();
+        (settings.update_URL & SETTINGS_UPDATE_URL.on_randomize_and_init)) {
+        updateBookmark();
+    }
     setStatus("Mercury7 randomized.");
     return false;   // disable the normal href behavior
 }

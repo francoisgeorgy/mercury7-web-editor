@@ -16,7 +16,7 @@ export let settings = {
     output_device_id: null,     // web midi port ID
     theme: "",                  // empty means default theme,
     zoom_level: 1,
-    update_URL: SETTINGS_UPDATE_URL.manually
+    update_URL: SETTINGS_UPDATE_URL.on_randomize_and_init
 };
 
 export function loadSettings() {

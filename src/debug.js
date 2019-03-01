@@ -1,5 +1,5 @@
 
-export const TRACE = true;
+export const TRACE = false;
 
 export function log() {
     if (TRACE) console.log(...arguments);
