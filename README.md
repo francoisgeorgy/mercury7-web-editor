@@ -3,7 +3,7 @@ Mercury7 web editor
 
 Control your Meris Mercury7 pedal with your web browser. View all the pedal's settings at once.
 
---screenshot--
+![Mercury7 Editor screenshot](/images/screenshots/mercury7-editor-436x322.jpg "Mercury7 Editor screenshot")
 
 
 Requirements
@@ -26,7 +26,7 @@ Usage
 5. Connect the MIDI I/O interface to your computer.
 6. Open https://sysex.io/mercury7/editor 
 7. Allow the browser to access your MIDI devices.
-8. In the top-right of the application, select the MIDI input and output devices corresponding to the the MIDI I/O and the MIDI port corresponding to your Mercury7 MIDI port setting.
+8. In the top-right of the application, select the MIDI input and output devices corresponding to the MIDI I/O and the MIDI port corresponding to your Mercury7 MIDI port setting.
 9. Move a knob on your Mercury7, the corresponding on-screen control must move accordingly. This tests the MIDI IN communication.
 10. Play some sound through the Mercury7 and move a knob on the Editor. The sound should change as if you have moved the same control on the Mercury7. This tests the MIDI OUT communication.
 11. Enjoy your Mercury7!
@@ -71,23 +71,41 @@ Currently, only the following browsers [support](https://caniuse.com/#feat=midi)
 
 The first time you access an application that uses the WebMIDI API, the browser will ask you for permission.
 
---TODO: screenshot--
+![Chrome asks for MIDI permission](/images/screenshots/chrome-midi-ask.jpg "Chrome asks for MIDI permission")
 
-If you refuse access, then the Mercury7 Editor will display the following message:
+You need to click "Allow" to authorize the application to use the Web MIDI API.
+
+If you refuse access, the application will display the following message:
+
+![MIDI access refused](/images/screenshots/message-midi-blocked.jpg "MIDI access refused")
 
     Waiting for MIDI interface access...
     ERROR: WebMidi could not be enabled.
-    
+           
 You can change the permission at any time:
 
---TODO: screenshots--    
+![Chrome change MIDI permission](/images/screenshots/chrome-midi-allow.jpg "Chrome change MIDI permission")
+
+#### MIDI icon in the URL
+
+Chrome display an icon in the URL to remind you that you are on a page that have access to MIDI. You can click this icon to access the MIDI permission settings.
+
+![Chrome MIDI icon in URL](/images/screenshots/chrome-midi-url-icon.jpg "Chrome MIDI icon in URL")
+
+![Chrome MIDI icon in URL](/images/screenshots/chrome-midi-url-icon-dialog.jpg "Chrome MIDI icon in URL")
+
     
-Menu: Settings / Advanced / Content settings / MIDI devices    
+#### MIDI configuration in the browser settings:    
+    
+You can also access the MIDI permissions via the browser Settings page. 
 
-Menu: Settings / search for "midi" 
+In Chrome, follow this path: Menu Settings / Advanced / Content settings / MIDI devices    
 
-Application usage
-=================
+You can also open the Settings page and search for "MIDI".
+ 
+
+Using the Editor
+================
 
 Setting up:
 -----------
@@ -102,11 +120,16 @@ Once you have your Mercury7 connected to the MIDI I/O interface, you must config
     
 The applications preferences (settings) are saved in your browser's _Local Storage_.      
     
-Using the application:
-----------------------
+Synchronizing to Mercury7 with Sysex:
+---------------------------------
 
 **IMPORTANT:** please keep in mind that the application has no possibility to _read_ the Mercury7 settings. When the application starts, 
 the values displayed by the application will not reflect the current preset of the Mercury7. 
+
+The application will tell remind you to send a Sysex from the Mercury7:
+
+![Send SysEx reminder](/images/screenshots/message-send-sysex.jpg "Send SysEx reminder")
+
 
 You have two possibilities to synchronize the application with the Mercury7:
 
@@ -114,7 +137,7 @@ You have two possibilities to synchronize the application with the Mercury7:
 To do that, press the Bypass LED switch while holding the ALT button. The application will tell you when it has received a 
 preset as SysEx.
 
---TODO: screenshots--
+![SysEx received](/images/screenshots/sysex-received.jpg "SysEx received")
 
 2. From the application, use the INIT or RANDOMIZE menu options to set all the values at once. 
 
@@ -133,17 +156,22 @@ A small Bluetooth MIDI adapter such as the [Quicco Sound mi.1](https://www.thoma
 or [Yamaha MD-BT01](https://www.thomann.de/intl/yamaha_md_bt01_wireless_midi_adapter.htm) is a very convenient way to connect the 
 MIDI I/O interface to your computer. 
 
-![Quicco Sound mi.1](/images/quicco_sound_mi1.jpg "Quicco Sound mi.1")
+![Quicco Sound mi.1](/images/quicco_sound_mi1-33.jpg "Quicco Sound mi.1")
 
-![Yamaha MD-BT01](/images/yamaha_md_bt01.jpg "Yamaha MD-BT01")
+![Yamaha MD-BT01](/images/yamaha_md_bt01-33.jpg "Yamaha MD-BT01")
 
-If you have a Mac, here is how to connect with such an adapter:
+If you have a Mac, use the Audio MIDI Setup application. 
 
---TODO: screenshot Mac config--    
+![Mac Audio Setup Application](/images/screenshots/mac-audio-setup.jpg "Mac Audio Setup Application")
+
 
 --TODO: photo MIDI I/O with adapter--
 
  
+MIDI tools
+==========
+
+If you use a Mac, check out the tools available at https://www.snoize.com/. 
 
 
 Limitations of this application
@@ -159,15 +187,16 @@ done with success with Chrome under Linux Mint 17.1 and with Chrome under Window
 Still under active development. Feel free to log bugs/issues. This is a development I'm doing during my freetime. 
 
 
-# MIDI in your browser
+Known issues
+============
 
-You need to allow your browser to use your MIDI device:
+The TEMPO value is not saved. If a preset uses a tempo value different from 0, then you have to set the tempo 
+manually after loading the preset.
 
-![screenshot](/images/help-01.png "midi settings in Chrome")
+There's still some issues with the preset loading from a bookmarked URL.
 
-In case you didn't allow the use of MIDI device and want to change that, you can right-click on the URL icon and change the setting:
-        
-![screenshot](/images/help-02.png "midi settings in Chrome")
+It is not possible to capture the press & hold of the TAP footswitch because the Mercury7 only sends a message for when 
+the footswitch is pressed, but not for when it is released.
 
 
 Contribute
