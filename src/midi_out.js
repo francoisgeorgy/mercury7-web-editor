@@ -178,13 +178,6 @@ export function sendSysEx(data) {
 function sendSysexCommand(command) {
     log(`sendSysexCommand(${toHexString(command)})`);
     sendSysEx([0x00, GROUP_ID.pedal, MODEL_ID.mercury7, command]);
-    // if (midi_output) {
-    //     showMidiOutActivity();
-    //     // setSuppressSysexEcho();
-    //     const data = [0x00, GROUP_ID.pedal, MODEL_ID.enzo, command];
-    //     midi_output.sendSysex(MODEL.meta.signature.sysex.value, data);
-    //     logOutgoingMidiMessage("SysEx", data);
-    // }
 }
 
 export function requestPreset() {

@@ -4,8 +4,9 @@ import * as Utils from "./utils";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {toHexString} from "./utils";
-import {saveSettings, settings, SETTINGS_UPDATE_URL} from "./settings";
-import {appendErrorMessage} from "./ui_messages";
+import {settings, SETTINGS_UPDATE_URL} from "./settings";
+import {appendErrorMessage, appendMessage} from "./ui_messages";
+import {SYSEX_PRESET} from "./model/sysex";
 
 let ignoreNextHashChange = false;
 
@@ -20,22 +21,71 @@ export function updateBookmark() {
     window.location.hash = h;
 }
 
-export function initFromBookmark(updateConnectedDevice = true) {
-    log(`initFromHash: ${window.location.hash}`);
+/**
+ * return true if a hash representing a valid sysex is present
+ */
+export function hashSysexPresent() {
+    log(`hashSysexPresent: ${window.location.hash}`);
     // let s = Utils.getParameterByName(URL_PARAM_SYSEX);
     const s = window.location.hash.substring(1);
     if (s) {
         log("sysex hash present");               //TODO: check that the hash is a sysex hex string
+        const valid = MODEL.validate(Utils.fromHexString(s));
+        // const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s));
+        if (valid.type === SYSEX_PRESET) {
+            log("hashSysexPresent: hash if a valid sysex");
+            // updateUI();
+            // if (updateConnectedDevice) fullUpdateDevice();
+            return true;
+        // } else {
+        //     log("hash value is not a preset sysex");
+        //     appendErrorMessage(valid.message);
+        }
+    }
+    return false;
+}
+
+/**
+ *
+ * @param updateConnectedDevice
+ * @returns {boolean} true if we found a valid hash to initialize from
+ */
+export function initFromBookmark(updateConnectedDevice = true) {
+    log(`initFromBookmark: ${window.location.hash}`);
+
+    if (hashSysexPresent()) {
+        const s = window.location.hash.substring(1);
         const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s));
-        if (valid.error) {
-            log("unable to set value from hash");
-            appendErrorMessage(valid.message);
+        if (valid.type === SYSEX_PRESET) {
+            log("sysex loaded in device");
+            updateUI();
+            appendMessage("Initialization from the bookmark.");
+            if (updateConnectedDevice) fullUpdateDevice();
+            return true;
         } else {
+            log("hash value is not a preset sysex");
+            appendErrorMessage(valid.message);
+        }
+    }
+
+    // let s = Utils.getParameterByName(URL_PARAM_SYSEX);
+/*
+    const s = window.location.hash.substring(1);
+    if (s) {
+        log("sysex hash present");               //TODO: check that the hash is a sysex hex string
+        const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s));
+        if (valid.type === SYSEX_PRESET) {
             log("sysex loaded in device");
             updateUI();
             if (updateConnectedDevice) fullUpdateDevice();
+            return true;
+        } else {
+            log("hash value is not a preset sysex");
+            appendErrorMessage(valid.message);
         }
     }
+*/
+    return false;
 }
 
 let automationHandler = null;
