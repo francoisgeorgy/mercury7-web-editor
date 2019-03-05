@@ -5421,10 +5421,10 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
-svg-knob@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/svg-knob/-/svg-knob-1.7.0.tgz#7c6980ecc48b3adb1205df83b9bb04b64f24e339"
-  integrity sha1-fGmA7MSLOtsSBd+DubsEtk8k4zk=
+svg-knob@^1.8.3:
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/svg-knob/-/svg-knob-1.8.4.tgz#53554e984c9a7436b9298c0d8c7710bab380b4d0"
+  integrity sha512-PHMA6xTVwIhZ4MEX/sW5pbRrFglpeNtLJQ6NT9TMJ07JnEoDN3xkc2SCWdDSDyq8JOerk2HweueFxyzwAfMutw==
 
 tapable@^1.0.0, tapable@^1.1.0:
   version "1.1.1"

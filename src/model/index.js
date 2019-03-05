@@ -1,6 +1,7 @@
 import {control_id, control} from "./cc.js";
 import meta from "./meta.js";
 import sysex from "./sysex.js";
+import {global_conf, global_id} from "./global_conf";
 
 /**
  *
@@ -147,6 +148,8 @@ export default {
     meta,
     control_id,
     control,
+    global_id,
+    global_conf,
     init,
     randomize,
     setDeviceId,

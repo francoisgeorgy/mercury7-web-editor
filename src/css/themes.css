@@ -50,6 +50,9 @@ html {
     --paused: #706c58;
     --running: red;
 
+    --option-panel-header-color: #e8f1ff;
+    --option-panel-header-border: #ccc;
+
 }
 
 #wrapper {

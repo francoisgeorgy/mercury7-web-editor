@@ -3,13 +3,20 @@ import meta from "./meta.js";
 import {control_id} from "./cc";
 import {log, warn} from "../debug";
 import {toHexString} from "../utils";
+import {SYSEX_CMD} from "./constants";
+import {global_conf} from "./global_conf";
 
 // will store the last sysex received (all bytes, without any transformation).
 let last_sysex = Array.from(new Uint8Array(39));
 
-const saveLastSysEx = function(data) {
-    last_sysex = data;
-};
+// const saveLastSysEx = function(data) {
+//     last_sysex = data;
+// };
+
+export const SYSEX_INVALID = 0;
+export const SYSEX_IGNORE = 1;
+export const SYSEX_PRESET = 2;
+export const SYSEX_GLOBALS = 3;
 
 const validate = function (data) {
 
@@ -18,12 +25,14 @@ const validate = function (data) {
     const SYSEX_START = 0xF0;
     const SYSEX_END = 0xF7;
 
+    let type = SYSEX_INVALID;   // default value
+
     if (data[0] !== SYSEX_START) {
         warn("validate: invalid start byte", data[0]);
         return {
-            valid: false,
+            type: SYSEX_INVALID,
             error: "invalid start byte",
-            message: ""
+            message: "Invalid header"
         };
     }
 
@@ -32,9 +41,9 @@ const validate = function (data) {
         if (data[offset + i] !== meta.signature.sysex.value[i]) {
             log(`validate: invalid sysex at offset ${offset + i}. Expected ${meta.signature.sysex.value[i]}. Found ${data[offset + i]}`);
             return {
-                valid: false,
+                type: SYSEX_IGNORE,
                 error: "invalid manufacturer ID",
-                message: ""
+                message: "Invalid signature"
             };
         }
     }
@@ -42,46 +51,92 @@ const validate = function (data) {
     if ((data[meta.device_id.sysex.offset] > 0) && (data[meta.device_id.sysex.offset] !== meta.device_id.value)) {
         log(`validate: invalid device_id: ${data[meta.device_id.sysex.offset]}`);
         return {
-            valid: false,
+            type: SYSEX_IGNORE,
             error: "invalid device ID",
-            message: ""
+            message: "Invalid device ID"
         };
     }
 
     if (data[meta.group_id.sysex.offset] !== meta.group_id.value) {
         log(`validate: invalid group_id: ${data[meta.group_id.sysex.offset]}`);
         return {
-            valid: false,
+            type: SYSEX_IGNORE,
             error: "invalid group ID",
-            message: ""
+            message: "Invalid group ID"
         };
     }
 
     if (data[meta.model_id.sysex.offset] !== meta.model_id.value) {
         log(`validate: invalid model_id: ${data[meta.model_id.sysex.offset]}`);
         return {
-            valid: false,
+            type: SYSEX_IGNORE,
             error: "invalid model ID",
             message: "SysEx is for another Meris product."
         };
     }
 
-    let last_byte = 0;
-    for (let i = 0; i < data.length; i++) {
-        last_byte = data[i];
+    // we ignore known commands, we let the other pass
+    const cmd = data[meta.command.sysex.offset];
+    // log("***", toHexString(data), data, meta.command.sysex.offset, data[meta.command.sysex.offset], cmd);
+    switch(cmd) {
+        case SYSEX_CMD.preset_request:
+            log("validate: sysex is request for preset");
+            type = SYSEX_IGNORE;
+            break;
+        case SYSEX_CMD.preset_response:
+            log("validate: sysex is preset data");
+            type = SYSEX_PRESET;
+            break;
+        case SYSEX_CMD.globals_request:
+            log("validate: sysex is request for globals");
+            type = SYSEX_IGNORE;
+            break;
+        case SYSEX_CMD.globals_response:
+            log("validate: sysex is globals data");
+            type = SYSEX_GLOBALS;
+            break;
+        case SYSEX_CMD.preset_write:
+            log("validate: sysex is preset write");
+            type = SYSEX_IGNORE;
+            break;
+        default:
+            log(`validate: sysex is unknown command: ${cmd}`);
+            type = SYSEX_IGNORE;
+            break;
     }
+
+/*
+    if ([SYSEX_CMD.globals_request, SYSEX_CMD.patch_write, SYSEX_CMD.preset_request].includes(cmd)) {
+        if (cmd === 0x28) {
+        } else {
+            log(`validate: sysex ignored (command: ${cmd.toString(16)})`);
+            return {
+                type: SYSEX_IGNORE,
+                // valid: false,
+                error: "ignored sysex command",
+                message: ""
+            };
+        }
+    }
+*/
+
+    const last_byte = data[data.length - 1];
+    // for (let i = 0; i < data.length; i++) {
+    //     last_byte = data[i];
+    // }
 
     // console.log("validate, last_byte", last_byte);
     if (last_byte === SYSEX_END) {
+        log("validate: the sysex is valid");
         return {
-            valid: true,
+            type,
             error: "",
             message: ""
         }
     } else {
         log(`validate: invalid end marker: ${last_byte}`);
         return {
-            valid: last_byte === SYSEX_END,
+            type: SYSEX_INVALID,
             error: "invalid end marker",
             message: ""
         }
@@ -132,6 +187,23 @@ function decodeControls(data, controls) {
     }
 
     // console.groupEnd();
+}
+
+function decodeGlobals(data, globals) {
+
+    //TODO: decodeControls and decodeGlobals should be the same function
+
+    for (let i = 0; i < globals.length; i++) {
+
+        if (typeof globals[i] === "undefined") continue;
+        if (!globals[i].hasOwnProperty("sysex")) continue;
+
+        const sysex = globals[i].sysex;
+        if (!sysex.hasOwnProperty("mask")) continue;
+
+        globals[i]["value"] = data[sysex.offset] & sysex.mask[0];
+
+    }
 
 }
 
@@ -142,17 +214,31 @@ function decodeControls(data, controls) {
  */
 const setDump = function (data) {
     const valid = validate(data);
-    if (valid.error) {
-        return valid;
+    switch (valid.type) {
+        case SYSEX_PRESET:
+            // saveLastSysEx(data);
+            decodeMeta(data);
+            decodeControls(data, control);
+            return {
+                type: SYSEX_PRESET,
+                // valid: true,
+                error: "",
+                message: ""
+            };
+        case SYSEX_GLOBALS:
+            decodeGlobals(data, global_conf);
+            return {
+                type: SYSEX_GLOBALS,
+                // valid: true,
+                error: "",
+                message: ""
+            };
+        default:
+            return valid;
     }
-    saveLastSysEx(data);
-    decodeMeta(data);
-    decodeControls(data, control);
-    return {
-        valid: true,
-        error: "",
-        message: ""
-    };
+    // if (valid.error) {
+    //     return valid;
+    // }
 };
 
 /**
@@ -161,6 +247,11 @@ const setDump = function (data) {
  * @returns {Uint8Array}
  */
 const getDump = function () {
+
+    // exemple of dump sent by the Enzo with all values set to 0:
+    // 00 20 10 00 01 03 26 04 00 00 00 00 00 00 00 00 00 00 00 00 00 7F 00 00
+    // 1  2  3  4  5  6  7  8  9  10                16          20          24
+
 
     // const data = new Uint8Array(39); // TODO: create CONST for sysex length  // By default, the bytes are initialized to 0
     const data = Uint8Array.from(last_sysex);

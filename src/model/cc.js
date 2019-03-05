@@ -77,7 +77,7 @@ const _algorithm = function (v) {
 
 function defineControls() {
     // control[control_id.exp_pedal] = { // 4,
-        name: "Exp pedal"   //,
+    //     name: "Exp pedal"   //,
         // sysex: {
         //     offset: 22,
         //     mask: [0x7F]
@@ -220,7 +220,7 @@ function defineControls() {
     // add the missing default properties
     control.forEach(function (obj) {
 
-        obj.cc_number = control.indexOf(obj);   // is also the msb
+        obj.cc_number = control.indexOf(obj);
         obj.cc_type = "cc";
 
         let bits = 7;

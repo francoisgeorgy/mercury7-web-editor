@@ -8,7 +8,7 @@ import {
     updateMomentaryStompswitch,
     updateOptionSwitch
 } from "./ui_switches";
-import {fullUpdateDevice, sendPC, updateDevice} from "./midi_out";
+import {fullUpdateDevice, requestPreset, sendPC, updateDevice} from "./midi_out";
 import {VERSION} from "./constants";
 import {setMidiInStatus} from "./ui_messages";
 import {setupKeyboard} from "./ui_keyboard";
@@ -24,6 +24,7 @@ import "webpack-jquery-ui/effects";
 import {setupAppPreferences, openAppPreferencesPanel} from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
 import {downloadLastSysEx} from "./download";
+import {openHelpPanel, setupHelpPanel} from "./ui_help";
 
 /**
  * Handles a change made by the user in the UI.
@@ -183,19 +184,20 @@ function setupMenu() {
     log("setupMenu()");
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
+    // $("#menu-read").click(() => requestPreset());       //TODO: create function
     $("#menu-load-preset").click(loadPresetFromFile);
     $("#menu-print-preset").click(printPreset);
     $("#menu-download-sysex").click(downloadLastSysEx);
     $("#menu-midi").click(openMidiWindow);
     $("#menu-get-url").click(reloadWithSysexParam);
     $("#menu-send").click(() => {fullUpdateDevice(false); return false});
-    $("#menu-help").click(openHelpDialog);
-    $("#menu-about").click(openCreditsDialog);
     $("#preset-file").change(readFile);     // in load-preset-dialog
     $("#menu-zoom-in").click(zoomIn);
     $("#menu-zoom-out").click(zoomOut);
     $("#menu-global").click(openSettingsPanel);
     $("#menu-prefs").click(openAppPreferencesPanel);
+    $("#menu-help").click(openHelpPanel);
+    $("#menu-about").click(openCreditsDialog);
     $("#url-auto-toggle").click(toggleBookmarkAutomation);
     // in settings dialog:
     // $("#midi-channel").change(setMidiChannel);
@@ -219,6 +221,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupMomentarySwitches(tapDown, tapRelease);
     setupGlobalConfig();
     setupAppPreferences();
+    setupHelpPanel();
     setupMenu();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();

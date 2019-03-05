@@ -3,7 +3,8 @@ import MODEL from "./model";
 import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import * as lity from "lity";
-import {appendErrorMessage} from "./ui_messages";
+import {appendMessage} from "./ui_messages";
+import {SYSEX_PRESET} from "./model/sysex";
 
 //==================================================================================================================
 // Preset file handling
@@ -41,19 +42,21 @@ export function readFile() {
                 if (view[i] === SYSEX_END) break;
             }
             const valid = MODEL.setValuesFromSysEx(data);
-            if (valid.error) {
-                log("unable to set value from file");
-
-                $("#load-preset-error").show().text(valid.message);
-                appendErrorMessage(valid.message);
-
-            } else {
+            if (valid.type === SYSEX_PRESET) {
 
                 log("file read OK");
                 if (lightbox) lightbox.close();
 
+                appendMessage("File read OK");
+
                 updateUI();
                 fullUpdateDevice();
+
+            } else {
+                log("unable to set value from file; file is not a preset sysex", valid);
+
+                $("#load-preset-error").show().text(valid.message);
+                // appendErrorMessage(valid.message);
 
             }
         };

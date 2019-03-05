@@ -43,7 +43,6 @@ export function updateMomentaryStompswitch(id, value) {
     }
 }
 
-
 export function tapDown(id) {
     updateMomentaryStompswitch(id, 127);
     handleUserAction(...id.split("-"));
@@ -52,8 +51,6 @@ export function tapDown(id) {
 export function tapRelease(id) {
     updateMomentaryStompswitch(id, 0);
 }
-
-
 
 /**
  *

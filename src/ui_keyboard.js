@@ -10,7 +10,8 @@ import {init, randomize} from "./presets";
 import {tapRelease, updateBypassSwitch, updateSwellSwitch} from "./ui_switches";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeSettingsPanel} from "./ui_global_settings";
-
+import {switchKnobsDisplay} from "./ui_knobs";
+import {closeHelpPanel} from "./ui_help";
 
 function toggleSwell() {
     const c = MODEL.control[MODEL.control_id.swell];
@@ -26,40 +27,16 @@ function toggleBypass() {
     updateBypassSwitch(v);
 }
 
-function selectSquarewave() {
-    const c = MODEL.control[MODEL.control_id.synth_waveshape];
-    updateDevice(c.cc_type, c.cc_number, WAVESHAPES.square);
-    updateControl(c.cc_type, c.cc_number, WAVESHAPES.square);
+function setExpMin() {
+    const c = MODEL.control[MODEL.control_id.exp_pedal];
+    updateDevice(c.cc_type, c.cc_number, 0);
+    updateControl(c.cc_type, c.cc_number, 0);
 }
 
-function selectSawtooth() {
-    const c = MODEL.control[MODEL.control_id.synth_waveshape];
-    updateDevice(c.cc_type, c.cc_number, WAVESHAPES.sawtooth);
-    updateControl(c.cc_type, c.cc_number, WAVESHAPES.sawtooth);
-}
-
-function selectDry() {
-    const c = MODEL.control[MODEL.control_id.synth_mode];
-    updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.dry);
-    updateControl(c.cc_type, c.cc_number, SYNTH_MODES.dry);
-}
-
-function selectMono() {
-    const c = MODEL.control[MODEL.control_id.synth_mode];
-    updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.mono);
-    updateControl(c.cc_type, c.cc_number, SYNTH_MODES.mono);
-}
-
-function selectPoly() {
-    const c = MODEL.control[MODEL.control_id.synth_mode];
-    updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.poly);
-    updateControl(c.cc_type, c.cc_number, SYNTH_MODES.poly);
-}
-
-function selectArp() {
-    const c = MODEL.control[MODEL.control_id.synth_mode];
-    updateDevice(c.cc_type, c.cc_number, SYNTH_MODES.arp);
-    updateControl(c.cc_type, c.cc_number, SYNTH_MODES.arp);
+function setExpMax() {
+    const c = MODEL.control[MODEL.control_id.exp_pedal];
+    updateDevice(c.cc_type, c.cc_number, 127);
+    updateControl(c.cc_type, c.cc_number, 127);
 }
 
 /**
@@ -79,9 +56,9 @@ export function setupKeyboard() {
 
     keyPresses.subscribe(function(e) {
         if (e.type === "keydown") {
-            keyDown(e.keyCode, e.altKey, e.shiftKey);
+            keyDown(e.keyCode, e.altKey, e.shiftKey, e.metaKey);
         } else if (e.type === "keyup") {
-            keyUp(e.keyCode, e.altKey, e.shiftKey);
+            keyUp(e.keyCode, e.altKey, e.shiftKey, e.metaKey);
         }
     });
 
@@ -103,7 +80,9 @@ function animateTo(cc, to) {
     // });
 }
 
-function keyDown(code, alt, shift) {
+function keyDown(code, alt, shift, meta) {
+
+    log("keyDown", code, alt, shift, meta);
 
     if (code === 48) {   // 0
         setPresetNumber(10);
@@ -123,32 +102,33 @@ function keyDown(code, alt, shift) {
     switch (code) {
         case 18:                // ALT
             $(".header-shortcut").removeClass("hidden");
+            switchKnobsDisplay(true);
             break;
         case 67:                // C
-            animateTo(MODEL.control_id.pitch, shift ? 63 : 0);
+            // animateTo(MODEL.control_id.pitch, shift ? 63 : 0);
             // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), shift ? 63 : 0, animate_callback);
             break;
         case 86:                // V
-            animateTo(MODEL.control_id.pitch, shift ? 63 : 127);
+            // animateTo(MODEL.control_id.pitch, shift ? 63 : 127);
             // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), shift ? 63 : 127);
             break;
         case 70:                // F
-            animateTo(MODEL.control_id.filter, shift ? 63 : 0);
+            // animateTo(MODEL.control_id.filter, shift ? 63 : 0);
             break;
         case 71:                // G
-            animateTo(MODEL.control_id.filter, shift ? 63 : 127);
+            // animateTo(MODEL.control_id.filter, shift ? 63 : 127);
             break;
         case 72:                // H
-            animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 0);
+            // animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 0);
             break;
         case 74:                // J
-            animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 127);
+            // animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 127);
             break;
         case 75:                // K    delay level
-            animateTo(MODEL.control_id.delay_level, shift ? 63 : 0);
+            // animateTo(MODEL.control_id.delay_level, shift ? 63 : 0);
             break;
         case 76:                // L    delay level
-            animateTo(MODEL.control_id.delay_level, shift ? 63 : 127);
+            // animateTo(MODEL.control_id.delay_level, shift ? 63 : 127);
             break;
         case 89:                // Y    min mix
             animateTo(MODEL.control_id.mix, shift ? 63 : 0);
@@ -157,65 +137,75 @@ function keyDown(code, alt, shift) {
             animateTo(MODEL.control_id.mix, shift ? 63 : 127);
             break;
         case 8:                 // DEL  min sustain
-            animateTo(MODEL.control_id.sustain, 0);
+            // animateTo(MODEL.control_id.sustain, 0);
             break;
         case 66:                // B    min sustain
-            animateTo(MODEL.control_id.sustain, shift ? 63 : 0);
+            // animateTo(MODEL.control_id.sustain, shift ? 63 : 0);
             break;
         case 78:                // N    max sustain
-            animateTo(MODEL.control_id.sustain, shift ? 63 : 127);
+            // animateTo(MODEL.control_id.sustain, shift ? 63 : 127);
             break;
         case 83:                // S    swell
             toggleSwell();
             break;
         case 90:                // Z
-            animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 0);
+            // animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 0);
             break;
         case 85:                // U
-            animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 127);
+            // animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 127);
             break;
         case 32:                // SPACE
             toggleBypass();
             break;
         case 109:               // num keypad "-"
-            animateTo(MODEL.control_id.modulation, shift ? 63 : 0);
+            // animateTo(MODEL.control_id.modulation, shift ? 63 : 0);
             break;
         case 107:               // num keypad "+"
-            animateTo(MODEL.control_id.modulation, shift ? 63 : 127);
+            // animateTo(MODEL.control_id.modulation, shift ? 63 : 127);
             break;
         case 79:                   // O
-            const v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
-            animateFromTo(MODEL.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
+            // const v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
+            // animateFromTo(MODEL.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
             break;
         case 82:                // R Randomize
             randomize();
             break;
         case 77:                // M Mono
-            selectMono();
+            // selectMono();
             break;
         case 80:                // P Poly
-            selectPoly();
+            // selectPoly();
             break;
         case 65:                // A ARP
-            selectArp();
+            // selectArp();
             break;
         case 68:                // D Dry
-            selectDry();
+            // selectDry();
             break;
         case 73:                // I Init
             init();
             break;
         case 81:                // Q Squarewave
-            selectSquarewave();
+            // selectSquarewave();
             break;
         case 87:                // W Sawtooth wave
-            selectSawtooth();
+            // selectSawtooth();
+            break;
+        case 33:                // PageUp
+            setExpMax();
+            break;
+        case 34:                // PageDown
+            setExpMin();
             break;
         case 38:                // Up arrow
+            animateTo(MODEL.control_id.exp_pedal, shift ? 63 : 127);
+            break;
         case 39:                // Right arrow
             presetInc(handleUserAction);
             break;
         case 40:                // Down arrow
+            animateTo(MODEL.control_id.exp_pedal, shift ? 63 : 0);
+            break;
         case 37:                // Left arrow
             presetDec(handleUserAction);
             break;
@@ -223,14 +213,16 @@ function keyDown(code, alt, shift) {
 }
 
 // noinspection JSUnusedLocalSymbols
-function keyUp(code, alt, shift) {
+function keyUp(code, alt, shift, meta) {
     switch (code) {
         case 18:                // ALT
             $(".header-shortcut").addClass("hidden");
+            switchKnobsDisplay(false);
             break;
         case 27:                // close all opened panel with ESC key
             closeAppPreferencesPanel();
             closeSettingsPanel();
+            closeHelpPanel();
             showDefaultPanel();
             break;
         case 84:                // T            tap

@@ -37,6 +37,28 @@
                 </div>
             </div>
 
+            <!--
+                PRESET CHANGE AND QUICK ACCESS
+            -->
+            <div id="presets">
+                <div id="pc-1" class="preset preset-id">1</div>
+                <div id="pc-2" class="preset preset-id">2</div>
+                <div id="pc-3" class="preset preset-id">3</div>
+                <div id="pc-4" class="preset preset-id">4</div>
+                <div id="pc-5" class="preset preset-id">5</div>
+                <div id="pc-6" class="preset preset-id">6</div>
+                <div id="pc-7" class="preset preset-id">7</div>
+                <div id="pc-8" class="preset preset-id">8</div>
+                <div id="pc-9" class="preset preset-id">9</div>
+                <div id="pc-10" class="preset preset-id">10</div>
+                <div id="pc-11" class="preset preset-id">11</div>
+                <div id="pc-12" class="preset preset-id">12</div>
+                <div id="pc-13" class="preset preset-id">13</div>
+                <div id="pc-14" class="preset preset-id">14</div>
+                <div id="pc-15" class="preset preset-id">15</div>
+                <div id="pc-16" class="preset preset-id">16</div>
+            </div>
+
             <div id="messages">
                 <div id="messages-list">
                 </div>
@@ -94,34 +116,6 @@
                 <div id="options-col-2">
                     <div id="url-auto-toggle" class="paused" title="When ON, update the URL every 500ms.">REC <i class="fas fa-circle"></i></div>
                 </div>
-            </div>
-
-            <!--
-                PRESET CHANGE AND QUICK ACCESS
-            -->
-            <div id="presets">
-                <!--<div class="preset-selection">-->
-<!--
-                    <div id="pc-down" class="preset preset-sel">&lt;</div>
-                    <div id="pc-up" class="preset preset-sel">&gt;</div>
--->
-                    <div id="pc-1" class="preset preset-id">1</div>
-                    <div id="pc-2" class="preset preset-id">2</div>
-                    <div id="pc-3" class="preset preset-id">3</div>
-                    <div id="pc-4" class="preset preset-id">4</div>
-                    <div id="pc-5" class="preset preset-id">5</div>
-                    <div id="pc-6" class="preset preset-id">6</div>
-                    <div id="pc-7" class="preset preset-id">7</div>
-                    <div id="pc-8" class="preset preset-id">8</div>
-                    <div id="pc-9" class="preset preset-id">9</div>
-                    <div id="pc-10" class="preset preset-id">10</div>
-                    <div id="pc-11" class="preset preset-id">11</div>
-                    <div id="pc-12" class="preset preset-id">12</div>
-                    <div id="pc-13" class="preset preset-id">13</div>
-                    <div id="pc-14" class="preset preset-id">14</div>
-                    <div id="pc-15" class="preset preset-id">15</div>
-                    <div id="pc-16" class="preset preset-id">16</div>
-                <!--</div>-->
             </div>
 
             <!--
@@ -251,7 +245,7 @@
                 <div class="header">
                     <div>PITCH VECTOR</div>
                 </div>
-                <div id="cc-23-options" class="grid-3x2">
+                <div id="cc-23-options" class="grid-3x2 controls-options-grid">
                     <div id="cc-20-33" class="bt">P DN</div>
                     <div id="cc-20-81" class="bt">P UP</div>
                     <div id="cc-20-1" class="bt">- OCT</div>
@@ -345,7 +339,7 @@
                 <div class="header">
                     <div>ALGORITHM</div>
                 </div>
-                <div id="cc-30-options" class="options">
+                <div id="cc-30-options" class="grid-2x1 controls-options-grid">
                     <div id="cc-29-0" class="bt">ULTRAPLATE</div>
                     <div id="cc-29-127" class="bt">CATHEDRA</div>
                 </div>
@@ -367,16 +361,20 @@
                 </div>
             </div>
 
-            <div id="global-settings" class="grid-global-settings closed">
+            <!--
+                GLOBAL SETTINGS
+            -->
+            <div id="global-settings" class="options-panel closed">
+
                 <div class="header">
                     <span style="float:right" class="close-settings-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
                     GLOBAL SETTINGS
                 </div>
 
-                <div style="margin:20px 0">
-                    Unfortunately, at the moment, the application is not able to read the current global configuration of the pedal. That's why nothing is selected below.<br />
-                    To set a global parameter, just click the radio button and the parameter will be set in the pedal.
-                </div>
+                <!--<div style="margin:20px 0">-->
+                    <!--Unfortunately, at the moment, the application is not able to read the current global configuration of the pedal. That's why nothing is selected below.<br />-->
+                    <!--To set a global parameter, just click the radio button and the parameter will be set in the pedal.-->
+                <!--</div>-->
 
                 <div class="settings-columns">
 
@@ -388,11 +386,11 @@
                         <div></div>
                         <div>
                             <label>
-                                <input type="radio" class="global-config" name="global-0" value="0">
+                                <input type="radio" class="global-config" name="global-0" id="global-0-0" value="0">
                                 mono in
                             </label>
                             <label>
-                                <input type="radio" class="global-config" name="global-0" value="127">
+                                <input type="radio" class="global-config" name="global-0" id="global-0-127" value="127">
                                 stereo in (TRS)
                             </label>
                         </div>
@@ -405,11 +403,11 @@
                         <div></div>
                         <div>
                             <label>
-                                <input type="radio" class="global-config" name="global-2" value="0">
+                                <input type="radio" class="global-config" name="global-2" id="global-2-0" value="0">
                                 buffered bypass
                             </label>
                             <label>
-                                <input type="radio" class="global-config" name="global-2" value="127">
+                                <input type="radio" class="global-config" name="global-2" id="global-2-127" value="127">
                                 relay bypass
                             </label>
                         </div>
@@ -422,11 +420,11 @@
                         <div></div>
                         <div>
                             <label>
-                                <input type="radio" class="global-config" name="global-5" value="0">
+                                <input type="radio" class="global-config" name="global-5" id="global-5-0" value="0">
                                 global tempo
                             </label>
                             <label>
-                                <input type="radio" class="global-config" name="global-5" value="127">
+                                <input type="radio" class="global-config" name="global-5" id="global-5-127" value="127">
                                 preset tempo
                             </label>
                         </div>
@@ -443,11 +441,11 @@
                         <div></div>
                         <div>
                             <label>
-                                <input type="radio" class="global-config" name="global-1" value="0">
+                                <input type="radio" class="global-config" name="global-1" id="global-1-0" value="0">
                                 instrument level
                             </label>
                             <label>
-                                <input type="radio" class="global-config" name="global-1" value="127">
+                                <input type="radio" class="global-config" name="global-1" id="global-1-127" value="127">
                                 line level
                             </label>
                         </div>
@@ -460,11 +458,11 @@
                         <div></div>
                         <div>
                             <label>
-                                <input type="radio" class="global-config" name="global-3" value="0">
+                                <input type="radio" class="global-config" name="global-3" id="global-3-0" value="0">
                                 dry active
                             </label>
                             <label>
-                                <input type="radio" class="global-config" name="global-3" value="127">
+                                <input type="radio" class="global-config" name="global-3" id="global-3-127" value="127">
                                 dry muted
                             </label>
                         </div>
@@ -478,114 +476,30 @@
                         <div></div>
                         <div>
                             <label>
-                                <input type="radio" class="global-config" name="global-4" value="0">
+                                <input type="radio" class="global-config" name="global-4" id="global-4-0" value="0">
                                 trails off
                             </label>
                             <label>
-                                <input type="radio" class="global-config" name="global-4" value="127">
+                                <input type="radio" class="global-config" name="global-4" id="global-4-127" value="127">
                                 trails on
                             </label>
-
-    <!--
-                            <label>
-                                <input type="checkbox" class="global-config" name="global-4-0" value="0">
-                                trails
-                            </label>
-                            <label>
-                                <input type="checkbox" class="global-config" name="global-4-1" value="1">
-                                split
-                            </label>
-    -->
                         </div>
                         <div>
                         </div>
-
 
                     </div>
                 </div>
-
-
-                <!--
-                            <div class="settings-rows">
-                                    <div class="g0">
-                                        EXPRESSION MODE
-                                        <div>
-                                            <div>
-                                                <label>
-                                                    <input type="radio" class="global-config" name="global-x" value="0">
-                                                    expression
-                                                </label>
-                                                The expression pedal works by morphing between two complete settings of all of the knob values (even the second layer
-                                                knob values).
-                                            </div>
-                                            <div>
-                                            <label>
-                                                <input type="radio" class="global-config" name="global-x" value="63">
-                                                tap
-                                                </label>
-                                                    The external switch controls Tap Tempo and has all of the same functionality as the tap button on the main
-                                                    pedal, this includes max feedback.
-                                                </div>
-                                            <div>
-                                                <label>
-                                                    <input type="radio" class="global-config" name="global-x" value="95">
-                                                    preset
-                                                </label>
-                                                This mode gives you access to and instant enabling of presets 1 through 4, when connected with a proprietary Meris 4
-                                                button switch.
-                                            </div>
-                                            <div>
-                                                <label>
-                                                    <input type="radio" class="global-config" name="global-x" value="127">
-                                                    MIDI
-                                                </label>
-                                                To connect to a Meris MIDI adapter.
-                                            </div>
-                                        </div>
-                                    </div>
-                -->
-        <!--
-                        <div>
-                            MIDI CHANNEL
-                            <div>
-                                <select>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            MIDI THRU
-                        </div>
-                </div>
-        -->
             </div>
 
-            <div id="app-preferences" class="grid-global-settings closed">
+            <!--
+                APP PREFERENCES
+            -->
+            <div id="app-preferences" class="options-panel closed">
+
                 <div class="header">
                     <span style="float:right" class="close-app-prefs-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
                     EDITOR PREFERENCES
                 </div>
-
-<!--
-                <div style="margin:40px 0">
-                    Feature available soon...
-                </div>
--->
 
                 <div class="settings-rows">
                     <div class="g0">
@@ -602,6 +516,21 @@
                         <div>output device: </div>
                         <div id="settings_output_device"></div>
                         <div><button id="settings_clear_output_device">clear</button></div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+
+                <div class="settings-rows">
+                    <div class="g0">
+                        INITIALIZE FROM BOOKMARK
+                    </div>
+                    <div></div>
+                    <div>
+                        <select id="init_from_bookmark">
+                            <option value="0">NO (init from the device and ignore bookmark)</option>
+                            <option value="1">YES (and set values to the device)</option>
+                        </select>
                     </div>
                     <div>
                     </div>
@@ -627,7 +556,7 @@
 
                 <div class="settings-rows">
                     <div class="g0">
-                        APPLICATION DISPLAY
+                        APPLICATION SIZE
                     </div>
                     <div></div>
                     <div>
@@ -643,13 +572,62 @@
 
             </div>
 
+            <!--
+                HELP
+            -->
+            <div id="help-panel" class="options-panel closed">
+
+                <div class="header">
+                    <span style="float:right" class="close-help-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
+                    HELP
+                </div>
+
+                <div id="more-help">More help online at <a href="https://sysex.io/mercury7/editor/help/" target="_blank">sysex.io/mercury7/editor/help/</a>.</div>
+
+                <h4>Instructions</h4>
+                <ol style="margin-top: 0;">
+                    <li>Allow the browser to access your MIDI devices.</li>
+                    <li>Connect your Mercury7 to the MIDI adapter.</li>
+                    <li>Select input & output devices and MIDI channel.</li>
+                    <li>Move a knob on your Mercury7, the corresponding on-screen control must move accordingly.</li>
+                    <ul>
+                        <li>To move the knobs, use the mouse.</li>
+                        <li>Click and drag over the knob. You can also use the mousewheel.</li>
+                    </ul>
+                </ol>
+                <h4>Keyboard shortcuts:</h4>
+                <div style="display:flex;flex-direction: row">
+                    <ul style="margin-top: 0;">
+                        <li>ESC: close dialogs and settings</li>
+                        <li>0..9: presets 1..10</li>
+                        <li>Right, +: next preset</li>
+                        <li>Left, -: previous preset</li>
+                        <li>Alt: keep pressed to view raw values</li>
+                        <li>SPACE BAR: BYPASS on/off</li>
+                        <li>S: SWELL</li>
+                    </ul>
+                    <ul style="margin-top: 0;margin-left:30px">
+                        <li>I: Init</li>
+                        <li>R: Randomize</li>
+                        <li>PageUp: EXP max</li>
+                        <li>PageDn: EXP min</li>
+                    </ul>
+                    <ul style="margin-top: 0;margin-left:30px">
+                    </ul>
+                    <ul style="margin-top: 0;margin-left:30px">
+                        <li>Up, Dn: animate exp</li>
+                    </ul>
+                </div>
+                <!--Use shift to play animations until 50%.-->
+            </div>
+
         </div>
     </div>
 
     <div id="load-preset-dialog" class="dialog lity-hide">
         <h2>Load preset from file</h2>
         <div id="import-dialog-instructions">
-            Select a file containing an Mercury7 preset (.syx file):
+            Select a file containing a Mercury7 preset (.syx file):
         </div>
         <div style="margin:10px 0;">
             <input type="file" id="preset-file" placeholder="preset file" />
@@ -687,53 +665,6 @@
         <p class="trademarks">
             This application is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.<br />
         </p>
-    </div>
-
-    <div id="help-dialog" class="dialog lity-hide">
-        <div id="more-help">More help online at <a href="https://sysex.io/mercury7/editor/help/">sysex.io/mercury7/editor/help/</a>.</div>
-        <h2>Instructions</h2>
-        <ol>
-            <li>Allow the browser to access your MIDI devices.</li>
-            <li>If it's not already done, connect your Mercury7 to its MIDI adapter.</li>
-            <li>When the Mercury7 is connected the logo will glow.</li>
-            <li>Move a knob on your Mercury7, the corresponding on-screen control must move accordingly.</li>
-        <ul>
-            <li>To move the knobs, use the mouse.</li>
-            <li>Click and drag over the knob. You can also use the mousewheel.</li>
-        </ul>
-        </ol>
-        <h4>Keyboard shortcuts:</h4>
-        <div style="display:flex;flex-direction: row">
-            <ul style="margin-top: 0;">
-                <li>ESC: close dialogs and settings</li>
-                <li>SPACE BAR: Bypass on/off</li>
-                <li>0..9: presets 1..10</li>
-                <li>Up, Right, +: next preset</li>
-                <li>Down, Left, -: previous preset</li>
-                <li>T: TAP</li>
-                <li>I: Init</li>
-                <li>R: Randomize</li>
-                <li>D,A,M,P: Dry, Arp, Mono, Poly</li>
-                <li>W: Sawtooth wave</li>
-                <li>Q: Square wave</li>
-            </ul>
-            <ul style="margin-top: 0;margin-left:40px">
-                <li>C, V: animate pitch</li>
-                <li>B, N: animate sustain</li>
-                <li>F, G: animate filter</li>
-                <li>H, J: animate filter Q</li>
-                <li>Y, X: animate mix</li>
-                <li>K, L: animate delay level</li>
-                <li>Z, U: animate ring mod</li>
-                <li>-, +: animate modulation</li>
-                <li>O: animate portamento</li>
-                <li>DEL: animate sustain to 0</li>
-            </ul>
-        </div>
-        Use shift to play animations until 50%.
-        <div class="dialog-info">
-            <span style="float:right">ESC to close</span>
-        </div>
     </div>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="1" height="0" style="display:block">

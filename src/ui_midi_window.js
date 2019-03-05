@@ -2,6 +2,8 @@
 //
 // Popup to display MIDI messages
 //
+import {toHexString} from "./utils";
+
 let midi_window = null;
 
 /**
@@ -25,18 +27,18 @@ let midi_out_messages = 0;
  * @param control
  * @param value
  */
-export function logIncomingMidiMessage(type, control, value) {
+export function logIncomingMidiMessage(type, data) {
     if (midi_window) {
-        const ctrl = parseInt(control);
-        const v = parseInt(value);
+        // const ctrl = parseInt(control);
+        // const v = parseInt(value);
         midi_in_messages++;
         // log at max 1000 messages:
         if (midi_in_messages > 1000) $("#midi-messages-in div:last-child", midi_window.document).remove();
-        let s = type + " " +
-            ctrl.toString(10).padStart(3, "0") + " " +
-            v.toString(10).padStart(3, "0") + " (" +
-            ctrl.toString(16).padStart(2, "0") + " " +
-            v.toString(16).padStart(2, "0") + ")";
+        let s = type + " " + toHexString(data, " ");
+            // ctrl.toString(10).padStart(3, "0") + " " +
+            // v.toString(10).padStart(3, "0") + " (" +
+            // ctrl.toString(16).padStart(2, "0") + " " +
+            // v.toString(16).padStart(2, "0") + ")";
         $("#midi-messages-in", midi_window.document).prepend(`<div>${s.toUpperCase()}</div>`);
     }
 }
@@ -47,26 +49,35 @@ export function logIncomingMidiMessage(type, control, value) {
  * @param control
  * @param value
  */
-export function logOutgoingMidiMessage(type, control, value) {
+export function logOutgoingMidiMessage(type, data) {
     if (midi_window) {
-        const ctrl = parseInt(control);
-        const v = parseInt(value);
+        if (!type) return;
+        // const ctrl = parseInt(control);
+        // const v = parseInt(value);
         midi_out_messages++;
         // log at max 1000 messages:
         if (midi_out_messages > 1000) $("#midi-messages-out div:last-child", midi_window.document).remove();
-        let s = '';
-        if (type === 'CC') {
-            s = type + " " +
-                ctrl.toString(10).padStart(3, "0") + " " +
-                v.toString(10).padStart(3, "0") + " (" +
-                ctrl.toString(16).padStart(2, "0") + " " +
-                v.toString(16).padStart(2, "0") + ")";
-        } else if (type === 'PC') {
-            s = type + " " +
-                ctrl.toString(10).padStart(3, "0") + " " +
-                ctrl.toString(16).padStart(2, "0");
-        } else {
-            s = 'unknown message'
+        let s = "";
+        switch (type.toUpperCase()) {
+            case "CC":
+                s = type + " " + toHexString(data, " ");
+                    // ctrl.toString(10).padStart(3, "0") + " " +
+                    // v.toString(10).padStart(3, "0") + " (" +
+                    // ctrl.toString(16).padStart(2, "0") + " " +
+                    // v.toString(16).padStart(2, "0") + ")";
+                break;
+            case "PC":
+                s = type + " " + toHexString(data, " ");
+                    // ctrl.toString(10).padStart(3, "0") + " " +
+                    // ctrl.toString(16).padStart(2, "0");
+                break;
+            case "SYSEX":
+                s = type + " " + toHexString(data, ' ');
+                    // ctrl.toString(10).padStart(3, "0") + " " +
+                    // ctrl.toString(16).padStart(2, "0");
+                break;
+            default:
+                s = "unknown message";
         }
         $("#midi-messages-out", midi_window.document).prepend(`<div>${s.toUpperCase()}</div>`);
     }

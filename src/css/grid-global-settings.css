@@ -5,20 +5,33 @@
     grid-template-columns: repeat(6, 1fr);
 }
 
-#global-settings {
+/*#global-settings {*/
+    /*grid-row: 3 / span 4;*/
+    /*grid-column: 1 / span 6;*/
+    /*color: var(--header-text);*/
+/*}*/
+
+/*#global-settings,*/
+/*#app-preferences {*/
+    /*margin-top: 10px;*/
+/*}*/
+
+.options-panel {
+    margin-top: 10px;
     grid-row: 3 / span 4;
     grid-column: 1 / span 6;
     color: var(--header-text);
 }
 
-#global-settings,
-#app-preferences {
-    margin-top: 10px;
-}
+/*#global-settings .header,*/
+/*#app-preferences .header {*/
+    /*border-bottom: 1px solid #4b3f00;*/
+    /*text-align: left;*/
+/*}*/
 
-#global-settings .header,
-#app-preferences .header {
-    border-bottom: 1px solid #4b3f00;
+.options-panel .header {
+    margin: 0;
+    border-bottom: 1px solid var(--option-panel-header-border);
     text-align: left;
 }
 
@@ -39,7 +52,7 @@
     align-items: start;
     justify-items: start;
     justify-content: start;
-    grid-column-gap: 20px;
+    grid-column-gap: 50px;
     margin-bottom: 15px;
 }
 

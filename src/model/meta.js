@@ -48,6 +48,15 @@ export default {
             mask: [0x7F]
         }
     },
+    command: {
+        name: "Command",
+        value: 0,
+        sysex: {
+            offset: 7,
+            range: [0, 127],
+            mask: [0x7F]
+        }
+    },
     preset_id: {
         name: "Preset Number",
         value: 0,

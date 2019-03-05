@@ -1,6 +1,6 @@
 {
     "name": "mercury7-web-editor",
-    "version": "0.5.0",
+    "version": "0.10.0",
     "main": "main.js",
     "repository": "https://github.com/francoisgeorgy/mercury7-web-editor.git",
     "author": "François Georgy <francois.georgy@gmail.com>",
@@ -33,7 +33,7 @@
         "mustache": "^3.0.1",
         "rxjs": "^6.4.0",
         "storejs": "^1.0.25",
-        "svg-knob": "^1.7.0",
+        "svg-knob": "^1.8.3",
         "webmidi": "^2.3.2",
         "webpack-jquery-ui": "^2.0.1"
     },

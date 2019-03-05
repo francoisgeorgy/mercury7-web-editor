@@ -5,8 +5,8 @@ html {
 
 #main.main-default {
     display: grid;
-    grid-column-gap: 5px;
-    grid-row-gap: 5px;
+    /*grid-column-gap: 5px;*/
+    /*grid-row-gap: 5px;*/
     grid-template-columns: repeat(6, 1fr);
 }
 

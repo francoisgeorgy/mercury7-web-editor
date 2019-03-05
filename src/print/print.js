@@ -5,6 +5,7 @@ import {hexy} from "hexy";
 import "./print.css";
 import {URL_PARAM_SYSEX} from "./../constants";
 import {log} from "../debug";
+import {SYSEX_PRESET} from "../model/sysex";
 
 function renderControlName(control_number) {
     return MODEL.control[control_number].name;
@@ -46,14 +47,14 @@ function loadTemplate(data, filename) {
             }
         }
 */
-        let ok = false;
+        let ok = true;
         if (data) {
             const valid = MODEL.setValuesFromSysEx(data);
-            if (valid.error) {
+            if (valid.type !== SYSEX_PRESET) {                  //FIXME: check logic
                 ok = false;
             }
-        } else {
-            ok = true;
+        // } else {
+        //     ok = true;
         }
         if (ok) {
             renderPreset(template, filename);
@@ -107,6 +108,9 @@ $(function () {
                     data.push(view[i]);
                     if (view[i] === SYSEX_END) break;
                 }
+
+                //FIXME: check data validity here and load error template in case of error
+
                 loadTemplate(data, f.name);
             };
             reader.readAsArrayBuffer(f);
@@ -151,20 +155,23 @@ $(function () {
 
     MODEL.init();
 
-    let valid = false;
+    let ok = false;
     let data = null;
     const s = Utils.getParameterByName(URL_PARAM_SYSEX);
     if (s) {
         try {
             // data = Utils.fromHexString(LZString.decompressFromBase64(decodeURI(s)));
             data = Utils.fromHexString(decodeURI(s));
-            valid = MODEL.setValuesFromSysEx(data);
+            const valid = MODEL.setValuesFromSysEx(data);
+            if (valid.type === SYSEX_PRESET) {
+                ok = true;
+            }
         } catch (error) {
             console.warn(error);
         }
     }
 
-    if (valid) {
+    if (ok) {
         loadTemplate();
     } else {
         loadErrorTemplate(data);

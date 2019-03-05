@@ -8,11 +8,11 @@
 }
 */
 
-#app-preferences {
-    grid-row: 3 / span 4;
-    grid-column: 1 / span 6;
-    color: var(--header-text);
-}
+/*#app-preferences {*/
+    /*grid-row: 3 / span 4;*/
+    /*grid-column: 1 / span 6;*/
+    /*color: var(--header-text);*/
+/*}*/
 
 /*
 #global-settings .header,
