@@ -1,4 +1,3 @@
-import {control} from "./cc";
 
 export const global_id = {
     input_mode: 0,

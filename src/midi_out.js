@@ -1,12 +1,11 @@
 import MODEL from "./model";
-import {log, TRACE} from "./debug";
+import {log} from "./debug";
 import {settings} from "./settings";
 import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
 import {setPresetNumber} from "./ui_presets";
-import {appendMessage, monitorMessage, MSG_SEND_SYSEX, setStatus} from "./ui_messages";
+import {appendMessage, monitorMessage} from "./ui_messages";
 import {toHexString} from "./utils";
-// import {setSuppressSysexEcho} from "./midi_in";
 import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
 
 let midi_output = null;
@@ -57,6 +56,7 @@ export function getLastSendTime() {
 /**
  * Send a control value to the connected device.
  * @param control
+ * @param monitor
  */
 export function sendCC(control, monitor = true) {
 
@@ -185,9 +185,9 @@ export function requestPreset() {
     sendSysexCommand(SYSEX_CMD.preset_request);
 }
 
-export function savePreset(preset_number) {
-    log("TODO: savePreset(preset_number)");
-    // sendSysexCommand(SYSEX_CMD.preset_write);
+export function savePreset() {
+    log("TODO: savePreset");
+    sendSysexCommand(SYSEX_CMD.preset_write);
 }
 
 export function requestGlobalConfig() {

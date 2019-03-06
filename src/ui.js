@@ -8,13 +8,13 @@ import {
     updateMomentaryStompswitch,
     updateOptionSwitch
 } from "./ui_switches";
-import {fullUpdateDevice, requestPreset, sendPC, updateDevice} from "./midi_out";
+import {fullUpdateDevice, savePreset, sendPC, updateDevice} from "./midi_out";
 import {VERSION} from "./constants";
 import {setMidiInStatus} from "./ui_messages";
 import {setupKeyboard} from "./ui_keyboard";
 import {init, randomize} from "./presets";
 import {loadPresetFromFile, readFile} from "./read_file";
-import {openCreditsDialog, openHelpDialog, printPreset} from "./ui_dialogs";
+import {openCreditsDialog, printPreset} from "./ui_dialogs";
 import {openMidiWindow} from "./ui_midi_window";
 import {initZoom, zoomIn, zoomOut} from "./ui_zoom";
 import {settings} from "./settings";
@@ -185,20 +185,21 @@ function setupMenu() {
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
     // $("#menu-read").click(() => requestPreset());       //TODO: create function
-    $("#menu-load-preset").click(loadPresetFromFile);
+    $("#menu-send").click(() => {fullUpdateDevice(false); return false});
+    $("#menu-save").click(savePreset);
+    $("#menu-get-url").click(reloadWithSysexParam);
     $("#menu-print-preset").click(printPreset);
+    $("#menu-load-preset").click(loadPresetFromFile);
     $("#menu-download-sysex").click(downloadLastSysEx);
     $("#menu-midi").click(openMidiWindow);
-    $("#menu-get-url").click(reloadWithSysexParam);
-    $("#menu-send").click(() => {fullUpdateDevice(false); return false});
-    $("#preset-file").change(readFile);     // in load-preset-dialog
-    $("#menu-zoom-in").click(zoomIn);
-    $("#menu-zoom-out").click(zoomOut);
     $("#menu-global").click(openSettingsPanel);
     $("#menu-prefs").click(openAppPreferencesPanel);
     $("#menu-help").click(openHelpPanel);
     $("#menu-about").click(openCreditsDialog);
+    $("#menu-zoom-in").click(zoomIn);
+    $("#menu-zoom-out").click(zoomOut);
     $("#url-auto-toggle").click(toggleBookmarkAutomation);
+    $("#preset-file").change(readFile);     // in load-preset-dialog
     // in settings dialog:
     // $("#midi-channel").change(setMidiChannel);
 }

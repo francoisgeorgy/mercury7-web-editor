@@ -1,7 +1,7 @@
 import {showMidiInActivity} from "./ui_midi_activity";
 import {displayPreset, setPresetNumber} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
-import {getLastSendTime, sendCC} from "./midi_out";
+import {getLastSendTime} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
@@ -17,7 +17,7 @@ import {updateGlobalConfig} from "./ui_global_settings";
 
 let midi_input = null;
 
-let suppress_sysex_echo = false;
+// let suppress_sysex_echo = false;
 
 export function getMidiInputPort() {
     return midi_input;

@@ -1,7 +1,7 @@
 import {warn} from "./debug";
 import MODEL from "./model";
 
-export const MSG_SEND_SYSEX = "&#x27A4; To view the current pedal's preset, send a sysex from the Mercury7 by pressing the Bypass LED switch while holding the Alt button.";
+// export const MSG_SEND_SYSEX = "&#x27A4; To view the current pedal's preset, send a sysex from the Enzo by pressing the Bypass LED switch while holding the Alt button.";
 
 /**
  * Makes the app name glows, or not.

@@ -24,8 +24,7 @@ let midi_out_messages = 0;
 /**
  *
  * @param type
- * @param control
- * @param value
+ * @param data
  */
 export function logIncomingMidiMessage(type, data) {
     if (midi_window) {
@@ -46,8 +45,7 @@ export function logIncomingMidiMessage(type, data) {
 /**
  *
  * @param type
- * @param control
- * @param value
+ * @param data
  */
 export function logOutgoingMidiMessage(type, data) {
     if (midi_window) {

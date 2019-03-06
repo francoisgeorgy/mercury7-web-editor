@@ -304,6 +304,7 @@ function deviceDisconnected(info) {
 
 //==================================================================================================================
 
+/*
 function autoConnect() {
     if (settings) {
         log(`autoConnect()`);
@@ -313,6 +314,7 @@ function autoConnect() {
         updateSelectDeviceList();
     }
 }
+*/
 
 //==================================================================================================================
 // Main
@@ -366,7 +368,7 @@ $(function () {
 
             // autoConnect();
 /*
-            if (!initFromBookmark()) {  //TODO: ask the user if he wants to initilize from the hash or if he wants to get the pedal's current preset
+            if (!initFromBookmark()) {  //TODO: ask the user if he wants to initialize from the hash or if he wants to get the pedal's current preset
                 // requestPreset();
             }
 */

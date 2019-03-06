@@ -6,10 +6,12 @@ import MODEL from "./model";
 
 let dialogLightbox = null;
 
+/*
 export function openHelpDialog() {
     dialogLightbox = lity("#help-dialog");
     return false;   // disable the normal href behavior
 }
+*/
 
 export function openCreditsDialog() {
     dialogLightbox = lity("#credits-dialog");

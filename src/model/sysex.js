@@ -7,7 +7,7 @@ import {SYSEX_CMD} from "./constants";
 import {global_conf} from "./global_conf";
 
 // will store the last sysex received (all bytes, without any transformation).
-let last_sysex = Array.from(new Uint8Array(39));
+// let last_sysex = Array.from(new Uint8Array(39));
 
 // const saveLastSysEx = function(data) {
 //     last_sysex = data;
@@ -254,7 +254,8 @@ const getDump = function () {
 
 
     // const data = new Uint8Array(39); // TODO: create CONST for sysex length  // By default, the bytes are initialized to 0
-    const data = Uint8Array.from(last_sysex);
+    // const data = Uint8Array.from(last_sysex);
+    const data = new Uint8Array(26);
 
     data[0] = 0xF0;
     data[1] = 0x00;
