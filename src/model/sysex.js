@@ -255,7 +255,7 @@ const getDump = function () {
 
     // const data = new Uint8Array(39); // TODO: create CONST for sysex length  // By default, the bytes are initialized to 0
     // const data = Uint8Array.from(last_sysex);
-    const data = new Uint8Array(26);
+    const data = new Uint8Array(25);
 
     data[0] = 0xF0;
     data[1] = 0x00;
@@ -286,7 +286,7 @@ const getDump = function () {
     data[22] = control[control_id.swell].raw_value;
     data[23] = control[control_id.algorithm].raw_value;
 
-    data[38] = 0xF7;   // end-of-sysex marker
+    data[24] = 0xF7;   // end-of-sysex marker
 
     log(data, meta.preset_id.value);
 
