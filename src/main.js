@@ -72,7 +72,7 @@ function setMidiChannel(midi_channel) {
 }
 
 //==================================================================================================================
-// WebMidi events handling
+// MIDI INPUT:
 
 function connectInputPort(input) {
 
@@ -218,7 +218,7 @@ function connectOutputDevice(id) {
 
 /**
  * The is the event handler for the "device connected" event.
- * If we have a prefered device set in settings AND if there is no device connected yet and if the saved device corresponds
+ * If we have a preferred device set in settings AND if there is no device connected yet and if the saved device corresponds
  * to the event's device, then we connect it. Otherwise we just update the device list.
  * @param info
  */
@@ -254,7 +254,6 @@ function deviceConnected(info) {
     updateSelectDeviceList();
 
     if (new_connection && getMidiInputPort() && getMidiOutputPort()) {
-
         log("deviceConnected: we can sync", settings.init_from_bookmark);
 
         // let initFromDevice = false;

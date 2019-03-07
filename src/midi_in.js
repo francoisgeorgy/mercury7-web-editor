@@ -103,7 +103,7 @@ export function handleSysex(data) {
         return;
     }
 */
-
+    showMidiInActivity();
     const valid = MODEL.setValuesFromSysEx(data);
     switch (valid.type) {
         case SYSEX_PRESET:
