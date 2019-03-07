@@ -109,6 +109,14 @@ You can not save to preset number different than the current number.
 To save the preset, use the WRITE menu option in the editor or press and hold the ALT button on the Mercury7. If you save on the Mercury7,
 select the preset in the editor to make sure it remains in sync with the Mercury7.    
         
+Loading presets
+---------------
+
+Presets can be stored in files (binary .syx files) and, with this editor, presets can also be stored as URLs. 
+
+When you load a preset, it is sent to the Mercury7 and replace the current _live_ values. It does not replace the preset _stored in memory_. If you want to keep the preset you loaded
+in the Mercury7, then you need to store it, either by using the menu SAVE command of this editor or by pressing and holding the ALT button on the Mercury7.  
+        
 Synchronizing with Sysex
 ------------------------
 
