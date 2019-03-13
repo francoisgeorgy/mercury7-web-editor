@@ -41,9 +41,11 @@ body {
     cursor: pointer;
 }
 
+/*
 .on {
     color: var(--value)!important;
 }
+*/
 
 .error {
     color: red;
@@ -290,6 +292,7 @@ div.controls-slider {
 
 .slider-value {
     text-align: center;
+    color: var(--knob-value);
 }
 
 div.bt,     /* "radio button"-like switches */

@@ -76,8 +76,12 @@ export function setupSwitches(userActionCallback) {
 }
 
 export function setupMomentarySwitches(tapDownCallback, releaseCallback) {
-
     // momentary stompswitches:
-    $(".swm").mousedown(function() { tapDownCallback(this.id) }).mouseup(function() { releaseCallback(this.id) });
-
+    $(".swm")
+        .mousedown(function() {
+            tapDownCallback(this.id)
+        })
+        .mouseup(function() {
+            releaseCallback(this.id)
+        });
 }
