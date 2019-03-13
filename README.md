@@ -48,7 +48,7 @@ If you can't get the MIDI communication working, check the following on the Merc
 - The MIDI I/O interface is connected to your PC.
 - The MIDI editor uses the same channel as the Mercury7's MIDI channel defined in the Global Settings.
 
-Check the [Meris Mercury7 User Manual](https://www.meris.us/wp-content/uploads/2018/06/Meris_Mercury7_Manual_v1c.pdf) and 
+Check the [Meris Mercury7 User Manual](https://www.meris.us/wp-content/uploads/2017/03/Meris-Mercury7-Manual-v2.pdf) and 
 the [Meris MIDI I/O User Manual](https://www.meris.us/wp-content/uploads/2018/03/Meris_MIDI_IO_Full_Manual_v1b.pdf) 
 for more informations and instructions about how to set the Mercury7's Global Settings.
 
@@ -194,7 +194,7 @@ For each of its knobs, the Mercury7 stores two values:
 
 When you move the expression pedal between its min and max position, the Mercury7 will morph the values between those two sets of values.
 
-Please read the [Meris Mercury7 User Manual](https://www.meris.us/wp-content/uploads/2018/06/Meris_Mercury7_Manual_v1c.pdf), section 5, for more informations.
+Please read the [Meris Mercury7 User Manual](https://www.meris.us/wp-content/uploads/2017/03/Meris-Mercury7-Manual-v2.pdf), section 3, for more informations.
 
 This editor lets you define the values for the two positions of the expression pedal.   
 
