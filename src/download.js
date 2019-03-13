@@ -1,22 +1,17 @@
 import MODEL from "./model";
-// import {log} from "./debug";
-// import {toHexString} from "./utils";
 
 export function downloadLastSysEx() {
 
-    let data = MODEL.getSysEx();   // return Uint8Array
-
-    // log("downloadLastSysEx", data, toHexString(data, ' '));
-    // log("downloadLastSysEx", encodeURIComponent(data));
+    let data = MODEL.getPreset();
 
     const now = new Date();
     const timestamp =
         now.getUTCFullYear() + "-" +
         ("0" + (now.getUTCMonth()+1)).slice(-2) + "-" +
         ("0" + now.getUTCDate()).slice(-2) + "-" +
-        ("0" + now.getUTCHours()).slice(-2) + "" +
-        ("0" + now.getUTCMinutes()).slice(-2) + "" +
-        ("0" + now.getUTCSeconds()).slice(-2);
+        ("0" + now.getUTCHours()).slice(-2) + "h" +
+        ("0" + now.getUTCMinutes()).slice(-2) + "m" +
+        ("0" + now.getUTCSeconds()).slice(-2) + "s";
 
     const preset_num = MODEL.meta.preset_id.value;
 
@@ -35,5 +30,5 @@ export function downloadLastSysEx() {
         return window.URL.revokeObjectURL(url);
     }, 1000);
 
-    return false;   // disable the normal href behavior
+    return false;   // disable the normal href behavior when called from an onclick event
 }

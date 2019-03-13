@@ -5426,6 +5426,11 @@ svg-knob@^1.8.3:
   resolved "https://registry.yarnpkg.com/svg-knob/-/svg-knob-1.8.4.tgz#53554e984c9a7436b9298c0d8c7710bab380b4d0"
   integrity sha512-PHMA6xTVwIhZ4MEX/sW5pbRrFglpeNtLJQ6NT9TMJ07JnEoDN3xkc2SCWdDSDyq8JOerk2HweueFxyzwAfMutw==
 
+svg-slider@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/svg-slider/-/svg-slider-1.3.2.tgz#e139d77f426198550f2dc6869792ca351e87dc22"
+  integrity sha1-4TnXf0JhmFUPLcaGl5LKNR6H3CI=
+
 tapable@^1.0.0, tapable@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.1.1.tgz#4d297923c5a72a42360de2ab52dadfaaec00018e"

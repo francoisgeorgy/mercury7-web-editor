@@ -1,15 +1,4 @@
-
-/*
-const getStringValue = function(bytes) {
-    let s = "";
-    for (let i = 0; i < bytes.length; i++) {
-        if (bytes[i] > 0) {
-            s += String.fromCharCode(bytes[i]);
-        }
-    }
-    return s;
-};
-*/
+import {GROUP_ID, MODEL_ID} from "./constants";
 
 export default {
     signature: {
@@ -32,7 +21,7 @@ export default {
     },
     group_id: {
         name: "Device Id",  // Group ID (01 = pedal series)
-        value: 1,
+        value: GROUP_ID.pedal,
         sysex: {
             offset: 5,
             range: [0, 127],
@@ -41,7 +30,7 @@ export default {
     },
     model_id: {
         name: "Device Id",  // Model # (0=Ottobit Jr, 1=Mercury7, 2=Polymoon, 3=Enzo)
-        value: 1,
+        value: MODEL_ID.mercury7,
         sysex: {
             offset: 6,
             range: [0, 127],

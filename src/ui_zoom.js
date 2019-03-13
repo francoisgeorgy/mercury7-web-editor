@@ -1,9 +1,8 @@
-import {saveSettings} from "./settings";
+import {saveSettings} from "./preferences";
 
 let zoom_level = 1;     // 0 = S, 1 = M, 2 = L
 
 function applyZoom() {
-    // $("#main").removeClass("zoom-0 zoom-1 zoom-2").addClass(`zoom-${zoom_level}`)
     $("#wrapper").removeClass("zoom-0 zoom-1 zoom-2").addClass(`zoom-${zoom_level}`)
 }
 

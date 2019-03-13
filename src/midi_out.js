@@ -1,12 +1,17 @@
 import MODEL from "./model";
 import {log} from "./debug";
-import {settings} from "./settings";
+import {preferences} from "./preferences";
 import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
-import {setPresetNumber} from "./ui_presets";
+import {setPresetClean} from "./ui_presets";
 import {appendMessage, monitorMessage} from "./ui_messages";
 import {toHexString} from "./utils";
 import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
+import {control_id} from "./model/cc";
+import {updateControls} from "./ui";
+import {updateExpSlider} from "./ui_sliders";
+import {inExpMode} from "./exp";
+import {suppressSysexEcho} from "./midi_in";
 
 let midi_output = null;
 
@@ -62,19 +67,21 @@ export function sendCC(control, monitor = true) {
 
     if (monitor) monitorCC(control.cc_number);   // TODO: check that control exists
 
-    const v = MODEL.getControlValue(control);
+    // If we edit the EXP value then we send value2
+
+    const v = inExpMode() ? MODEL.getControlValueExp(control) : MODEL.getControlValue(control);
 
     if (midi_output) {
-        log(`send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${settings.midi_channel}`);
+        log(`send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${preferences.midi_channel}`);
 
         showMidiOutActivity();
 
         last_send_time = performance.now(); // for echo suppression
 
-        midi_output.sendControlChange(control.cc_number, v, settings.midi_channel);
+        midi_output.sendControlChange(control.cc_number, v, preferences.midi_channel);
 
     } else {
-        log(`(send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${settings.midi_channel})`);
+        log(`(send CC ${control.cc_number} ${v} (${control.name}) on MIDI channel ${preferences.midi_channel})`);
     }
 
     logOutgoingMidiMessage("CC", [control.cc_number, v]);
@@ -90,26 +97,35 @@ export function sendCC(control, monitor = true) {
  * @param control_type
  * @param control_number
  * @param value_float
+ * @param in_exp_mode
  */
-export function updateDevice(control_type, control_number, value_float) {
+export function updateDevice(control_type, control_number, value_float, in_exp_mode = false) {
 
     let value = Math.round(value_float);
 
     log("updateDevice", control_type, control_number, value_float, value);
 
-    sendCC(MODEL.setControlValue(control_type, control_number, value));
+    sendCC(MODEL.setControlValue(control_type, control_number, value, in_exp_mode));
+
+    // EXP
+    if (control_number === control_id.exp_pedal) {   //TODO: must be done when receiving CC 4 too
+        log("updateDevice: control is EXP, interpolate and update");
+        MODEL.interpolateExpValues(value);
+        updateExpSlider(value);
+        updateControls(true);
+    }
 }
 
-let fullUpdateRunning = false;
+// let fullUpdateRunning = false;
 
 /**
  * Send all values to the connected device
  * Wait 40ms between each CC
  */
-export function fullUpdateDevice(onlyChanged = false, silent = false) {
+export function fullUpdateDevice(onlyChanged = false /*, silent = false*/) {
 
     log(`fullUpdateDevice(${onlyChanged})`);
-
+/*
     if (fullUpdateRunning) return;
 
     fullUpdateRunning = true;
@@ -131,53 +147,54 @@ export function fullUpdateDevice(onlyChanged = false, silent = false) {
             }
         } else {
             // log(`fullUpdateDevice: send CC ${i}`);
-            if (!onlyChanged || c[i].randomized) {
+            if (!onlyChanged) {
                 sendCC(c[i], false);
-                c[i].randomized = false;
             }
             setTimeout(f, 40);
         }
     }
 
     f();
-
+*/
+    sendSysex(MODEL.getPreset(false));
 }
 
+/**
+ * 1. Send a PC command
+ * 2. Wait 50 ms
+ * 3. Read the preset (send sysex read preset command)
+ * @param pc
+ */
 export function sendPC(pc) {
-
-    setPresetNumber(pc);
-
+    // setPresetNumber(pc);
     appendMessage(`Preset ${pc} selected.`);
-
     MODEL.meta.preset_id.value = pc;
-
     if (midi_output) {
         log(`send program change ${pc}`);
         showMidiOutActivity();
-
-        midi_output.sendProgramChange(pc, settings.midi_channel);
-
-        // appendMessage(MSG_SEND_SYSEX);
+        midi_output.sendProgramChange(pc, preferences.midi_channel);
+    } else {
+        log(`(send program change ${pc})`);
     }
     logOutgoingMidiMessage("PC", [pc]);
-
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
 }
 
-export function sendSysEx(data) {
-    log(`%csendSysEx: ${toHexString(data, ' ')}`, "color: red; font-weight: bold");
-    // log(`%cconnectInputPort: ${input.name} is now listening on channel ${settings.midi_channel}`, "color: orange; font-weight: bold");
+export function sendSysex(data) {
     if (midi_output) {
+        log(`%csendSysex: ${data.length} bytes: ${toHexString(data, ' ')}`, "color:red;font-weight:bold");
         showMidiOutActivity();
-        // setSuppressSysexEcho(); //TODO: still needed?
+        suppressSysexEcho(data);
         midi_output.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
+    } else {
+        log(`%c(sendSysex: ${data.length} bytes: ${toHexString(data, ' ')})`, "color:red;font-weight:bold");
     }
     logOutgoingMidiMessage("SysEx", data);
 }
 
 function sendSysexCommand(command) {
-    log(`sendSysexCommand(${toHexString(command)})`);
-    sendSysEx([0x00, GROUP_ID.pedal, MODEL_ID.mercury7, command]);
+    log(`sendSysexCommand(${toHexString(command, ' ')})`);
+    sendSysex([0x00, GROUP_ID.pedal, MODEL_ID.mercury7, command]);
 }
 
 export function requestPreset() {
@@ -186,12 +203,14 @@ export function requestPreset() {
 }
 
 export function savePreset() {
-    log("TODO: savePreset");
+    log("savePreset");
     sendSysexCommand(SYSEX_CMD.preset_write);
+    // cleanPreset();
+    setPresetClean();
 }
 
-export function requestGlobalConfig() {
-    log("requestGlobalConfig");
+export function requestGlobalSettings() {
+    log("requestGlobalSettings");
     sendSysexCommand(SYSEX_CMD.globals_request);
 }
 

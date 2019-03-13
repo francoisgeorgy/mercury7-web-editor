@@ -1,5 +1,5 @@
 import {showMidiInActivity} from "./ui_midi_activity";
-import {displayPreset, setPresetNumber} from "./ui_presets";
+import {showPreset, setPresetClean} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
 import {getLastSendTime} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
@@ -13,11 +13,10 @@ import {
 } from "./ui_messages";
 import {toHexString} from "./utils";
 import {SYSEX_GLOBALS, SYSEX_PRESET} from "./model/sysex";
-import {updateGlobalConfig} from "./ui_global_settings";
+import {updateGlobalSettings} from "./ui_global_settings";
+import {resetExp} from "./ui_sliders";
 
 let midi_input = null;
-
-// let suppress_sysex_echo = false;
 
 export function getMidiInputPort() {
     return midi_input;
@@ -31,12 +30,6 @@ export function setMidiInputPort(port) {
         log("setMidiInputPort: midi_input set to null");
     }
 }
-
-/*
-export function setSuppressSysexEcho(v = true) {
-    suppress_sysex_echo = v;
-}
-*/
 
 const monitors = new Array(127);
 
@@ -55,17 +48,14 @@ function monitorCC(control_number) {
  * @param msg
  */
 export function handlePC(msg) {
-
     log("handlePC", msg);
-
     if (msg.type !== "programchange") return;
-
     // appendMessage(`Preset ${pc} selected`);  //TODO: filter if we are the one sending the PC; otherwise display the message.
-
     showMidiInActivity();
     logIncomingMidiMessage("PC", [msg.value]);
-    setPresetNumber(msg.value);
-    displayPreset();
+    MODEL.setPresetNumber(msg.value);
+    setPresetClean();
+    showPreset();
 }
 
 /**
@@ -92,37 +82,50 @@ export function handleCC(msg) {
     updateModelAndUI("cc", cc, v);
 }
 
+let suppress_sysex_echo = null;
+
+/**
+ * Set a flag to ignore the next incoming sysex only. The following sysex will not be ignored.
+ * @param data Data to ignore
+ */
+export function suppressSysexEcho(data) {
+    suppress_sysex_echo = data === null ? null : data.slice();
+}
+
+export function isSysexEcho(data) {
+    if (suppress_sysex_echo === null) return false;
+    // the sysex received contains the header, footer and manufacturer id bytes. The sysex we have as reference does not.
+    if (suppress_sysex_echo.length !== (data.length - 5)) return false;
+    for (let i=0; i < suppress_sysex_echo.length; i++) {
+        if (data[i+4] !== suppress_sysex_echo[i]) return false;
+    }
+    return true;
+}
+
 export function handleSysex(data) {
 
-    log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold", toHexString(data, ' '));
-
-/*
-    if (suppress_sysex_echo) {
-        log("handleSysex: suppress echo (ignore sysex received)");
-        suppress_sysex_echo = false;
+    if (isSysexEcho(data)) {
+        log("handleSysex: ignore sysex echo");
+        suppress_sysex_echo = null;
         return;
     }
-*/
+
+    log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold", toHexString(data, ' '));
     showMidiInActivity();
     const valid = MODEL.setValuesFromSysEx(data);
     switch (valid.type) {
         case SYSEX_PRESET:
-            log("handleSysex: sysex is preset data");
+            resetExp();
             updateUI();
             clearError();
-            // setStatus(`SysEx received with preset #${MODEL.meta.preset_id.value}.`);
             setStatus(`Preset ${MODEL.meta.preset_id.value} settings received.`);
-            // log("handleSysex: device updated with SysEx");
             break;
         case SYSEX_GLOBALS:
-            log("handleSysex: sysex is globals data");
-            updateGlobalConfig();
+            updateGlobalSettings();
             clearError();
             setStatus(`Global config settings received.`);
-            // log("handleSysex: device updated with SysEx");
             break;
         default:
-            log("handleSysex: sysex is not preset nor globals; probably an echo; ignored");
             appendErrorMessage(valid.message);
     }
 

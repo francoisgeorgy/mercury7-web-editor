@@ -1,16 +1,16 @@
 import store from "storejs";
 
-const LOCAL_STORAGE_KEY = "mercury7.settings";
+const LOCAL_STORAGE_KEY = "mercury7.preferences";
 
 export const SETTINGS_UPDATE_URL = {
     manually: 0,
     on_randomize: 1,
     on_init: 2,
     on_randomize_and_init: 4,
-    every_second: 8
+    every_second: 8             // TODO: change to a open value
 };
 
-export let settings = {
+export let preferences = {
     midi_channel: "all",
     input_device_id: null,      // web midi port ID
     output_device_id: null,     // web midi port ID
@@ -23,10 +23,10 @@ export let settings = {
 
 export function loadSettings() {
     const s = store.get(LOCAL_STORAGE_KEY);
-    if (s) settings = Object.assign(settings, settings, JSON.parse(s));
+    if (s) preferences = Object.assign(preferences, preferences, JSON.parse(s));
 }
 
 export function saveSettings(options = {}) {
-    Object.assign(settings, settings, options);
-    store(LOCAL_STORAGE_KEY, JSON.stringify(settings));
+    Object.assign(preferences, preferences, options);
+    store(LOCAL_STORAGE_KEY, JSON.stringify(preferences));
 }

@@ -1,4 +1,4 @@
-import {closeSettingsPanel} from "./ui_global_settings";
+import {closeGlobalSettingsPanel} from "./ui_global_settings";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
 import {closeAppPreferencesPanel} from "./ui_app_prefs";
 
@@ -6,7 +6,7 @@ const CONTAINER = "#help-panel";
 
 export function openHelpPanel() {
     hideDefaultPanel();
-    closeSettingsPanel();
+    closeGlobalSettingsPanel();
     closeAppPreferencesPanel();
     $(CONTAINER).removeClass("closed");
     return false;

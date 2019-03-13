@@ -70,19 +70,6 @@ body {
     color: var(--running);
 }
 
-/*
-.options {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.options .bt {
-    width: 80%;
-}
-*/
-
 .grid-2x1 {
     display: grid;
     grid-template-rows: auto auto;
@@ -104,10 +91,6 @@ body {
     margin-bottom: 0;
 }
 
-/*.grid-3x2 .bt:nth-child(2n+1) {*/
-    /*margin-right: 0;*/
-/*}*/
-
 .grid-3x3 {
     display: grid;
     grid-template-rows: auto auto auto;
@@ -119,13 +102,7 @@ body {
     grid-row-gap: 5px;
 }
 
-/*#wrapper {*/
-    /*margin: 10px auto 0 auto;*/
-    /*padding: 0 10px;*/
-/*}*/
-
 #main {
-    /*padding: 5px;*/
     justify-content: stretch;
     align-content: stretch;
     align-items: start;
@@ -136,6 +113,7 @@ body {
     display: none;
 }
 
+/*noinspection CssUnusedSymbol*/
 #main.settings-view .grid-default {
     display: none;
 }
@@ -163,7 +141,6 @@ select option {
 #messages-list {
     position: relative;
     overflow-y: auto;
-    /*border: 1px solid var(--messages-border);*/
     color: var(--messages-color);
     background: var(--messages-bg)!important;
     box-shadow: inset 0 0 6px var(--inset-shadow-color);
@@ -178,7 +155,6 @@ select option {
     border-top-color: transparent !important;
     border-left-color: transparent !important;
     border-right-color: transparent !important;
-    /*padding: 4px 4px 0 4px !important;*/
     display: flex;
     align-items: flex-end;
     color: var(--header-text);
@@ -217,6 +193,56 @@ div.controls {
     align-items: flex-start;
 }
 
+div.exp_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.lowercase {
+    text-transform: lowercase;
+}
+
+#exp-a1 {
+    grid-row: 1;
+    grid-column: 1;
+}
+#exp-a2 {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    justify-self: center;
+}
+#exp-close {
+    grid-row: 1;
+    grid-column: 3;
+}
+#exp-b1 {
+    grid-row: 2;
+    grid-column: 1;
+}
+#exp-open {
+    grid-row: 2;
+    grid-column: 3;
+    align-self: end;
+}
+#exp-c1 {
+    grid-row: 3;
+    grid-column: 1;
+}
+#exp-c2 {
+    grid-row: 3;
+    grid-column: 2;
+}
+#exp-c3 {
+    grid-row: 3;
+    grid-column: 3;
+}
+
+div.controls-slider {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
 .stompswitch {
     font-size: 5rem;
     color: var(--sw-color);
@@ -238,12 +264,6 @@ div.controls {
     color: var(--menu-text-hover)!important;
 }
 
-/*
-#tools {
-    color: var(--header-text);
-}
-*/
-
 #options {
     display: flex;
     flex-direction: row;
@@ -260,35 +280,22 @@ div.controls {
     color: var(--header-text);
 }
 
-/*
-#presets .header {
-    text-align: left;
+.slider-combo {
+    padding-top: 5px;
 }
-*/
 
-/*
-.knob-combo {
+.slider {
+    height: 85px;
+}
+
+.slider-value {
     text-align: center;
 }
-*/
-
-/*
-.no-margin {
-    margin: 0;
-}
-*/
 
 div.bt,     /* "radio button"-like switches */
 div.btc {   /* "checkbox"-like switches: */
     text-align: center;
 }
-
-/*
-.preset-selection {
-    display: flex;
-    margin: 5px 0 10px 0;
-}
-*/
 
 .preset {
     justify-self: stretch;
@@ -325,6 +332,15 @@ div.btc {   /* "checkbox"-like switches: */
     border: 1px solid var(--bt-on-border);
 }
 
+.preset.dirty,
+.preset.on.dirty {
+    background: transparent;
+    /*color: var(--bt-on-bg-color)!important;*/
+    text-shadow: none;
+    box-shadow: inset 0 0 6px var(--inset-shadow-color);
+    border: 1px solid var(--bt-border);
+}
+
 .on {
     color: var(--on-color)!important;
 }
@@ -338,6 +354,20 @@ div.btc {   /* "checkbox"-like switches: */
     color: var(--sw-on-color);
 }
 
+.exp-switch {
+    cursor: pointer;
+}
+
+.exp-on {
+    color: var(--sw-on-color);
+    animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        text-shadow: 0 0 16px red;
+    }
+}
 
 .options-panel .header {
     color: var(--option-panel-header-color);
@@ -352,7 +382,7 @@ h4 {
 }
 
 #more-help a {
-    color: var(--dialog-link);
+    color: var(--panel-link);
 }
 
 .dialog {
@@ -372,21 +402,13 @@ h4 {
     color: var(--dialog-link);
 }
 
-/*
-.dialog-info {
-    margin: 1.5rem 0 0 0;
-    padding-top: 6px;
-    border-top: 1px solid #aaa;
-    font-size: 0.8rem;
-    color: #ddd;
-}
-*/
-
+/*noinspection CssUnusedSymbol*/
 .lity-container {
     vertical-align: top;
     margin-top: 60px;
 }
 
+/*noinspection CssUnusedSymbol*/
 .lity-close {
     position: absolute!important;
     color: #aaa!important;
@@ -414,34 +436,3 @@ h4 {
 .dialog h2, .dialog h3 {
     margin-top: 0;
 }
-
-/*
-.panel h2 span {
-    cursor: pointer;
-}
-
-.panel input,
-.panel select,
-.panel textarea {
-    background-color: #eee;
-    margin: 0.5vh 0;
-}
-
-select option {
-    background-color: #333;
-}
-
-.panel button {
-    font-size: 1rem;
-    border-radius: 6px;
-}
-*/
-
-/*
-#credits-dialog a,
-#credits-dialog a:active,
-#credits-dialog a:visited {
-    color: #8585FF!important;
-    text-decoration: none;
-}
-*/

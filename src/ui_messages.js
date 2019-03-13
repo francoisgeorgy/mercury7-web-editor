@@ -51,7 +51,6 @@ export function clearStatus() {
 }
 
 export function setStatusError(msg) {
-    // $("#error-message").text(msg);
     appendErrorMessage(msg);
 }
 

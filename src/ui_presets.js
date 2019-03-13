@@ -1,57 +1,50 @@
 import {log} from "./debug";
+import MODEL from "./model";
+import {sendPC} from "./midi_out";
 
-let preset_number = 0;
-
-// export function getPresetNumber() {
-//     return preset_number;
-// }
-
-export function setPresetNumber(pc) {
-    preset_number = pc;
+export function setPresetClean() {
+    $(".preset-id").removeClass("dirty");
 }
 
-export function displayPreset() {
+export function setPresetDirty() {
+    $(".preset-id").removeClass("dirty");
+    $(`#pc-${MODEL.getPresetNumber()}`).addClass("dirty");
+}
+
+export function showPreset() {
+    log("showPreset()");
     $(".preset-id").removeClass("on");
-    $(`#pc-${preset_number}`).addClass("on");
+    $(`#pc-${MODEL.getPresetNumber()}`).addClass("on");
 }
 
-export function presetInc(callback) {
+/**
+ * Send PC to change preset in Mercury7 and update the preset selectors in UI.
+ * @param n
+ */
+export function presetSet(n) {
+    log(`presetSet(${n})`);
+    MODEL.setPresetNumber(n);
+    sendPC(n);
+    setPresetClean();
+    showPreset();
+}
+
+export function presetInc() {
     log("presetInc");
-    callback("pc", (preset_number % 16) + 1);
-    displayPreset();
+    presetSet((MODEL.getPresetNumber() % 16) + 1)
 }
 
-export function presetDec(callback) {
+export function presetDec() {
     log("presetDec");
-    preset_number--;
-    if (preset_number < 1) preset_number = 16;
-    callback("pc", preset_number);
-    displayPreset();
+    const n = MODEL.getPresetNumber() - 1;
+    presetSet(n < 1 ? 16 : n);
 }
 
-export function setupPresetSelectors(callback) {
-
-    log("setupPresetSelectors()");
-
-/*
-    $("div#pc-down").click(function() {
-        log(`click on ${this.id}`);
-        presetDec(callback);
-    });
-
-    $("div#pc-up").click(function() {
-        log(`click on ${this.id}`);
-        presetInc(callback);
-    });
-*/
-
+export function setupPresetSelectors() {
     $("div.preset-id").click(function() {
-        log(`click on ${this.id}`);
-        if (!this.classList.contains("on")) {   // if not already on...
-            $(this).siblings(".preset-id").removeClass("on");
-            this.classList.add("on");
-        }
-        callback(...this.id.split("-"));
+        log(`setupPresetSelectors: click on ${this.id}`);
+        const c = this.id.split("-");
+        const n = parseInt(c[1], 10);  //TODO: check if error
+        presetSet(n);
     });
-
 }

@@ -3,7 +3,7 @@ import * as WebMidi from "webmidi";
 import MODEL from "./model";
 import {detect} from "detect-browser";
 import {VERSION} from "./constants";
-import {loadSettings, saveSettings, settings} from "./settings";
+import {loadSettings, saveSettings, preferences} from "./preferences";
 import {
     clearError,
     clearStatus,
@@ -15,14 +15,13 @@ import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
 import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
-import {hashSysexPresent, initFromBookmark, setupBookmarkSupport, startBookmarkAutomation} from "./hash";
+import {hashSysexPresent, initFromBookmark, setupBookmarkSupport, startBookmarkAutomation} from "./url";
 import "./css/lity.min.css";    // order important
 import "./css/themes.css";
 import "./css/main.css";
 import "./css/zoom.css";
 import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
-import "./css/grid-app-preferences.css";
 
 const browser = detect();
 
@@ -47,7 +46,7 @@ if (browser) {
 
 function setupModel() {
     MODEL.init();
-    MODEL.setDeviceId(settings.midi_channel);   // the device_id is the midi channel
+    MODEL.setDeviceId(preferences.midi_channel);   // the device_id is the midi channel
 }
 
 //==================================================================================================================
@@ -65,10 +64,10 @@ function setMidiChannel(midi_channel) {
     log(`setMidiChannel(${midi_channel}): set new channel`);
     saveSettings({midi_channel});
 
-    MODEL.setDeviceId(settings.midi_channel);
+    MODEL.setDeviceId(preferences.midi_channel);
 
-    log(`setMidiChannel(${midi_channel}): reconnect input ${settings.input_device_id}`);
-    connectInputDevice(settings.input_device_id);
+    log(`setMidiChannel(${midi_channel}): reconnect input ${preferences.input_device_id}`);
+    connectInputDevice(preferences.input_device_id);
 }
 
 //==================================================================================================================
@@ -83,21 +82,21 @@ function connectInputPort(input) {
     setMidiInputPort(input);
 
     input
-        .on("programchange", settings.midi_channel, function(e) {
+        .on("programchange", preferences.midi_channel, function(e) {
             handlePC(e.data);
         })
-        .on("controlchange", settings.midi_channel, function(e) {
+        .on("controlchange", preferences.midi_channel, function(e) {
             handleCC(e.data);
         })
-        .on("sysex", settings.midi_channel, function(e) {
+        .on("sysex", preferences.midi_channel, function(e) {
             handleSysex(e.data);
         });
 
-    log(`%cconnectInputPort: ${input.name} is now listening on channel ${settings.midi_channel}`, "color: orange; font-weight: bold");
+    log(`%cconnectInputPort: ${input.name} is now listening on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
     setMidiInStatus(true);
     clearError();
     // setStatus(`${input.name} connected on MIDI channel ${settings.midi_channel}.`, MSG_SEND_SYSEX);
-    setStatus(`${input.name} connected on MIDI channel ${settings.midi_channel}.`);
+    setStatus(`${input.name} connected on MIDI channel ${preferences.midi_channel}.`);
 }
 
 function disconnectInputPort() {
@@ -160,7 +159,7 @@ function connectInputDevice(id) {
 function connectOutputPort(output) {
     log("connectOutputPort");
     setMidiOutputPort(output);
-    log(`%cconnectOutputPort: ${output.name} can no be use to send data on channel ${settings.midi_channel}`, "color: orange; font-weight: bold");
+    log(`%cconnectOutputPort: ${output.name} can no be use to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
 }
 
 function disconnectOutputPort() {
@@ -174,14 +173,14 @@ function disconnectOutputPort() {
 
 function connectOutputDevice(id) {
 
-    log(`connectOutputDevice(${id})`, settings.output_device_id);
+    log(`connectOutputDevice(${id})`, preferences.output_device_id);
 
     const p = getMidiOutputPort();
 
     if (!id && p) {
         log(`connectOutputDevice(): disconnect currently connected port`);
         // save in settings for autoloading at next restart:
-        settings.output_device_id = id;
+        preferences.output_device_id = id;
         saveSettings();
         // the user select no device, disconnect.
         disconnectOutputPort();
@@ -234,8 +233,8 @@ function deviceConnected(info) {
     let new_connection = false;
 
     if (info.port.type === 'input') {
-        if ((getMidiInputPort() === null) && (info.port.id === settings.input_device_id)) {
-            connectInputDevice(settings.input_device_id);
+        if ((getMidiInputPort() === null) && (info.port.id === preferences.input_device_id)) {
+            connectInputDevice(preferences.input_device_id);
             new_connection = true;
         } else {
             log("deviceConnected: input device ignored");
@@ -243,8 +242,8 @@ function deviceConnected(info) {
     }
 
     if (info.port.type === 'output') {
-        if ((getMidiOutputPort() === null) && (info.port.id === settings.output_device_id)) {
-            connectOutputDevice(settings.output_device_id);
+        if ((getMidiOutputPort() === null) && (info.port.id === preferences.output_device_id)) {
+            connectOutputDevice(preferences.output_device_id);
             new_connection = true;
         } else {
             log("deviceConnected: output device ignored");
@@ -254,12 +253,12 @@ function deviceConnected(info) {
     updateSelectDeviceList();
 
     if (new_connection && getMidiInputPort() && getMidiOutputPort()) {
-        log("deviceConnected: we can sync", settings.init_from_bookmark);
+        log("deviceConnected: we can sync", preferences.init_from_bookmark);
 
         // let initFromDevice = false;
 
         // if we have a hash sysex we ask the user if he want to initialize from the the hash or from the pedal
-        if (hashSysexPresent() && settings.init_from_bookmark === 1) {
+        if (hashSysexPresent() && preferences.init_from_bookmark === 1) {
             // if (window.confirm("Initialize from the bookmark sysex values?")) {
             // if (settings.init_from_bookmark) {
             //     initFromDevice = false;

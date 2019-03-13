@@ -34,6 +34,7 @@
         "rxjs": "^6.4.0",
         "storejs": "^1.0.25",
         "svg-knob": "^1.8.3",
+        "svg-slider": "^1.3.2",
         "webmidi": "^2.3.2",
         "webpack-jquery-ui": "^2.0.1"
     },

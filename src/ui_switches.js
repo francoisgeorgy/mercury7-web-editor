@@ -34,6 +34,7 @@ export function updateOptionSwitch(id, value) {
 }
 
 export function updateMomentaryStompswitch(id, value) {
+    log(`updateMomentaryStompswitch(${id}, ${value})`);
     if (value === 0) {
         $(`#${id}-off`).removeClass("sw-off");
         $(`#${id}-on`).addClass("sw-off");
@@ -56,9 +57,7 @@ export function tapRelease(id) {
  *
  */
 export function setupSwitches(userActionCallback) {
-
-    // log("setupSwitches()");
-
+    log("setupSwitches()");
     // "radio button"-like behavior:
     $("div.bt").click(function() {
         // log(`click on ${this.id}`);
@@ -68,14 +67,12 @@ export function setupSwitches(userActionCallback) {
             userActionCallback(...this.id.split("-"));
         }
     });
-
     // toggle stompswitches:
     $(".sw").click(function() {
         this.classList.add("sw-off");
         $(this).siblings(".sw").removeClass("sw-off");
         userActionCallback(...this.id.split("-"));
     });
-
 }
 
 export function setupMomentarySwitches(tapDownCallback, releaseCallback) {

@@ -350,15 +350,23 @@
             </div>
 
             <!--
-                EXPRESSION PEDAL
+                EXP
             -->
             <div id="C5" class="grid-default">
                 <div class="header">
-                    <div class="header-shortcut hidden"></div>
                     <div>EXP</div>
                 </div>
-                <div class="controls">
-                    <svg class="knob" id="cc-4"></svg>
+                <div class="exp_wrapper">
+                    <div id="exp-a1"></div>
+                    <div id="exp-a2" class="slider-combo">
+                        <svg id="cc-4" class="slider"></svg>
+                    </div>
+                    <div id="exp-close" class="exp-switch">close</div>
+                    <div id="exp-b1"></div>
+                    <div id="exp-open" class="exp-switch">open</div>
+                    <div id="exp-c1"></div>
+                    <div id="cc-4-value" class="slider-value">0</div>
+                    <div id="exp-c3"></div>
                 </div>
             </div>
 
@@ -371,11 +379,6 @@
                     <span style="float:right" class="close-settings-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
                     GLOBAL SETTINGS
                 </div>
-
-                <!--<div style="margin:20px 0">-->
-                    <!--Unfortunately, at the moment, the application is not able to read the current global configuration of the pedal. That's why nothing is selected below.<br />-->
-                    <!--To set a global parameter, just click the radio button and the parameter will be set in the pedal.-->
-                <!--</div>-->
 
                 <div class="settings-columns">
 

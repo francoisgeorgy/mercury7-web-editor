@@ -77,7 +77,8 @@ const _algorithm = function (v) {
 
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
-        name: "Exp pedal"   //,
+        name: "Exp pedal",
+        human: _percent
         // sysex: {
         //     offset: 22,
         //     mask: [0x7F]
@@ -90,6 +91,10 @@ function defineControls() {
         sysex: {
             offset: 9,
             mask: [0x7F]
+        },
+        sysex2: {
+            offset: 24,
+            mask: [0x7F]
         }
     };
     control[control_id.modulate] = { // 17,
@@ -98,6 +103,10 @@ function defineControls() {
         human: _percent,
         sysex: {
             offset: 10,
+            mask: [0x7F]
+        },
+        sysex2: {
+            offset: 25,
             mask: [0x7F]
         }
     };
@@ -108,6 +117,10 @@ function defineControls() {
         sysex: {
             offset: 11,
             mask: [0x7F]
+        },
+        sysex2: {
+            offset: 26,
+            mask: [0x7F]
         }
     };
     control[control_id.lo_freq] = { // 19,
@@ -116,6 +129,10 @@ function defineControls() {
         init_value: 127,
         sysex: {
             offset: 12,
+            mask: [0x7F]
+        },
+        sysex2: {
+            offset: 27,
             mask: [0x7F]
         }
     };
@@ -127,6 +144,10 @@ function defineControls() {
         sysex: {
             offset: 13,
             mask: [0x7F]
+        },
+        sysex2: {
+            offset: 28,
+            mask: [0x7F]
         }
     };
     control[control_id.hi_freq] = { // 21,
@@ -136,12 +157,20 @@ function defineControls() {
         sysex: {
             offset: 14,
             mask: [0x7F]
+        },
+        sysex2: {
+            offset: 29,
+            mask: [0x7F]
         }
     };
     control[control_id.predelay] = { // 22,
         name: "Predelay",
         sysex: {
             offset: 15,
+            mask: [0x7F]
+        },
+        sysex2: {
+            offset: 30,
             mask: [0x7F]
         }
     };
@@ -150,6 +179,10 @@ function defineControls() {
         init_value: 21,
         sysex: {
             offset: 16,
+            mask: [0x7F]
+        },
+        sysex2: {
+            offset: 31,
             mask: [0x7F]
         }
     };
@@ -160,6 +193,10 @@ function defineControls() {
         sysex: {
             offset: 17,
             mask: [0x7F]
+        },
+        sysex2: {
+            offset: 32,
+            mask: [0x7F]
         }
     };
     control[control_id.density] = { //  25,
@@ -169,6 +206,10 @@ function defineControls() {
         sysex: {
             offset: 18,
             mask: [0x7F]
+        },
+        sysex2: {
+            offset: 33,
+            mask: [0x7F]
         }
     };
     control[control_id.attack_time] = { // 26,
@@ -176,6 +217,10 @@ function defineControls() {
         init_value: 63,
         sysex: {
             offset: 19,
+            mask: [0x7F]
+        },
+        sysex2: {
+            offset: 34,
             mask: [0x7F]
         }
     };
@@ -185,6 +230,10 @@ function defineControls() {
         init_value: 0,
         sysex: {
             offset: 20,
+            mask: [0x7F]
+        },
+        sysex2: {
+            offset: 35,
             mask: [0x7F]
         }
     };
@@ -259,6 +308,15 @@ function defineControls() {
 
         if (!obj.hasOwnProperty("raw_value")) {
             obj.raw_value = obj.init_value;
+        }
+
+        //FIXME: decide between value2 and value_exp name.
+        if (obj.hasOwnProperty("sysex2")) {
+            obj.two_values = true;    // true for the controls that can have two values, available with the EXP pedal
+            obj.init_value2 = obj.init_value;
+            obj.raw_value2 = obj.raw_value;
+        } else {
+            obj.two_values = false;
         }
 
         obj.changed = function () {
