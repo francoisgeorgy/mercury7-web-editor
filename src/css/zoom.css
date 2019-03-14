@@ -3,20 +3,20 @@
 #wrapper.zoom-1 {width: 1040px; margin: 20px auto 0 auto; padding: 0 10px 10px 10px; border-radius: 3px; }
 #wrapper.zoom-2 {width: calc(100vw - 20px); height: calc(100vh - (0 * 5px)); margin: 0; padding: 0 10px 0 10px; }
 
-#wrapper.zoom-2 #main.main-default { grid-template-rows: 40px 16vh repeat(3, calc((100vh - 40px - 20vh) / 3 )); }
+.zoom-2 #main.main-default { grid-template-rows: 40px 16vh repeat(3, calc((100vh - 40px - 20vh) / 3 )); }
 
 .zoom-2 #title { padding: 4px 4px 0 4px; }
 .zoom-2 #title .neon { font-size: 1.25rem; }
 
-#wrapper.zoom-0 #main {font-size: 0.85rem; margin-top: 1vh; padding: 2px;}
-#wrapper.zoom-1 #main {font-size: 1rem; padding: 3px;}
-#wrapper.zoom-2 #main {font-size: 1rem; border-radius: 0; padding: 5px;}
+.zoom-0 #main {font-size: 0.85rem; margin-top: 1vh; padding: 2px;}
+.zoom-1 #main {font-size: 1rem; padding: 3px;}
+.zoom-2 #main {font-size: 1rem; border-radius: 0; padding: 5px;}
 
-#wrapper.zoom-0 #main > div { padding-bottom: 0; }
-#wrapper.zoom-1 #main > div { padding-bottom: 5px; }
-#wrapper.zoom-2 #main > div { padding-bottom: 5px; }
+.zoom-0 #main > div { padding-bottom: 0; }
+.zoom-1 #main > div { padding-bottom: 5px; }
+.zoom-2 #main > div { padding-bottom: 5px; }
 
-#wrapper.zoom-2 #main > div.grid-default { padding-top: 10px; }
+.zoom-2 #main > div.grid-default { padding-top: 10px; }
 
 .zoom-0 .menu {font-size: 0.85rem;}
 .zoom-1 .menu {font-size: 1rem;}
@@ -42,11 +42,11 @@
 .zoom-1 #options { padding-bottom: 10px!important; }
 .zoom-1 #presets { padding-bottom: 10px!important; }
 
-#wrapper.zoom-0 #messages-list { padding: 4px; height: 80px; border-radius: 3px; font-size: 0.80rem; }
-#wrapper.zoom-1 #messages-list { padding: 4px 6px; height: 100px; border-radius: 4px; font-size: 0.9rem; }
-#wrapper.zoom-2 #messages-list { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }
+.zoom-0 #messages-list { padding: 4px; height: 80px; border-radius: 3px; font-size: 0.75rem; }
+.zoom-1 #messages-list { padding: 4px 6px; height: 100px; border-radius: 4px; font-size: 0.9rem; }
+.zoom-2 #messages-list { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }
 
-.zoom-0 .header {font-size: 0.85rem;}
+.zoom-0 .header {font-size: 0.9rem;}
 .zoom-1 .header {font-size: 1.25rem;}
 .zoom-2 .header {font-size: 1.5rem;}
 
@@ -74,6 +74,16 @@
 .zoom-1 .knob {width: 125px; margin: 0;}
 .zoom-2 .knob {height: 16vh; margin: 0;}
 
-.zoom-0 .knob-value {font-size: 125%;}
+.zoom-0 .knob-value {font-size: 135%;}
 .zoom-1 .knob-value {font-size: 125%;}
 .zoom-2 .knob-value {font-size: 125%;}
+
+.zoom-0 div.exp_wrapper {margin-top: 0px;}
+.zoom-1 div.exp_wrapper {margin-top: 5px;}
+.zoom-2 div.exp_wrapper {margin-top: 10px;}
+
+.zoom-0 .slider {height: 65px;}
+.zoom-1 .slider {height: 100px;}
+.zoom-2 .slider {height: 16vh;}
+
+.zoom-1 #cc-4-value {font-size: 20px;}

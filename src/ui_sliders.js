@@ -7,33 +7,38 @@ export const sliders = {};
 
 export function resetExp() {
     log("resetExp()");
-    MODEL.setControlValue("cc", 4, 0);
-    const id = "cc-4";
-    sliders[id].value = 0;
+
+    const cc = MODEL.control_id.exp_pedal;
+    const v = MODEL.control[cc].init_value;
+
+    MODEL.setControlValue("cc", 4, v);  // TODO: create a resetControl() method in the model
+    const id = `cc-${cc}`;
+    sliders[id].value = v;
     const slider_value_element = document.getElementById(`${id}-value`);
-    slider_value_element.innerText = "0";   //TODO: display human value
+    slider_value_element.innerText = MODEL.control[MODEL.control_id.exp_pedal].human(v);
 
     editExpValues(false, false);
     $("#exp-close").removeClass("exp-on");
     $("#exp-open").removeClass("exp-on");
-
 }
 
 export function updateExpSlider(value) {
     log("updateExpSlider");
-    const id = "cc-4";
+    const cc = MODEL.control_id.exp_pedal;
+    const id = `cc-${cc}`;
     sliders[id].value = value;
     const slider_value_element = document.getElementById(`${id}-value`);
-    slider_value_element.innerText = value;
+    slider_value_element.innerText = MODEL.control[cc].human(value);
 }
 
 export function setupSliders(userActionCallback) {
 
     log("setupSlider()");
 
-    const id = "cc-4";
+    const cc = MODEL.control_id.exp_pedal;
+    const id = `cc-${cc}`;
 
-    let mixer_slider_scheme = {
+    const mixer_slider_scheme = {
         palette: "dark",
         value_min: 0,
         value_max: 127,
@@ -52,8 +57,10 @@ export function setupSliders(userActionCallback) {
     sliders[id] = new Slider(slider_element, mixer_slider_scheme);
 
     slider_element.addEventListener("change", function(event) {
-        userActionCallback("cc", 4, event.detail);
+        userActionCallback("cc", cc, event.detail);
     });
+
+    resetExp();
 
 }
 
