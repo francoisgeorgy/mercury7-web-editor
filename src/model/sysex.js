@@ -37,7 +37,7 @@ export function validate(data) {
             return {
                 type: SYSEX_IGNORE,
                 error: "invalid manufacturer ID",
-                message: "Invalid signature"
+                message: "Invalid signature. Try selecting a preset."
             };
         }
     }

@@ -1,49 +1,22 @@
 
-#wrapper.zoom-0 {width: 700px; margin: 10px auto 0 auto; padding: 0 10px 10px 10px; border-radius: 3px; } /* calc(50vw - 1vh); height: calc(50vh - 0.5vh);*/
+#wrapper.zoom-0 {width: 700px; margin: 10px auto 0 auto; padding: 0 10px 10px 10px; border-radius: 3px; }
 #wrapper.zoom-1 {width: 1040px; margin: 20px auto 0 auto; padding: 0 10px 10px 10px; border-radius: 3px; }
-/*#wrapper.zoom-1 {width: 1000px; margin: 10px auto 0 auto; padding-bottom: 10px; border-radius: 3px; }*/
-/*#wrapper.zoom-1 {width: 1000px; height: 680px; margin: 10px auto 0 auto; padding-bottom: 10px; border-radius: 3px; }*/
-/*#wrapper.zoom-1 {width: calc(70vw - 1vh);}*/
 #wrapper.zoom-2 {width: calc(100vw - 20px); height: calc(100vh - (0 * 5px)); margin: 0; padding: 0 10px 0 10px; }
 
-/*#wrapper { margin: 10px auto 0 auto; padding: 0 10px; }*/
-
-
-
-/*
-#wrapper.zoom-1 {width: 1000px; border-radius: 5px; grid-column-gap: 4px; grid-row-gap: 4px; }
-#wrapper.zoom-2 {width: calc(100vw - 20px); height: calc(100vh - (0 * 5px));}
-*/
-
-
-/*#wrapper.zoom-0 #main.main-default { grid-column-gap: 2px; grid-row-gap: 2px; padding-bottom: 10px; }*/
-/*#wrapper.zoom-1 #main.main-default { grid-column-gap: 4px; grid-row-gap: 4px; }*/
-/*#wrapper.zoom-2 #main.main-default { grid-column-gap: 5px; grid-row-gap: 5px; grid-template-rows: 30px 15vh repeat(3, calc((100vh - 30px - 20vh) / 3 )); }*/
 #wrapper.zoom-2 #main.main-default { grid-template-rows: 40px 16vh repeat(3, calc((100vh - 40px - 20vh) / 3 )); }
 
 .zoom-2 #title { padding: 4px 4px 0 4px; }
-
 .zoom-2 #title .neon { font-size: 1.25rem; }
 
-/*#wrapper.zoom-0 #main.settings-view { grid-column-gap: 2px; grid-row-gap: 2px; }*/
-/*#wrapper.zoom-1 #main.settings-view { grid-column-gap: 4px; grid-row-gap: 4px; }*/
-/*#wrapper.zoom-2 #main.settings-view { grid-column-gap: 5px; grid-row-gap: 5px; }*/
-
 #wrapper.zoom-0 #main {font-size: 0.85rem; margin-top: 1vh; padding: 2px;}
-/*#wrapper.zoom-1 #main {font-size: 1rem; margin-top: 20px;  padding: 3px;}*/
 #wrapper.zoom-1 #main {font-size: 1rem; padding: 3px;}
 #wrapper.zoom-2 #main {font-size: 1rem; border-radius: 0; padding: 5px;}
-
 
 #wrapper.zoom-0 #main > div { padding-bottom: 0; }
 #wrapper.zoom-1 #main > div { padding-bottom: 5px; }
 #wrapper.zoom-2 #main > div { padding-bottom: 5px; }
-/*#wrapper.zoom-0 #main > div { border-radius: 3px; padding-bottom: 0; }*/
-/*#wrapper.zoom-1 #main > div { border-radius: 5px; padding-bottom: 5px; }*/
-/*#wrapper.zoom-2 #main > div { border-radius: 6px; padding-bottom: 5px; }*/
 
 #wrapper.zoom-2 #main > div.grid-default { padding-top: 10px; }
-
 
 .zoom-0 .menu {font-size: 0.85rem;}
 .zoom-1 .menu {font-size: 1rem;}
@@ -55,25 +28,15 @@
 
 .zoom-0 .menu span.menu-text {display: none;}
 
-
 .zoom-0 #options {font-size: 0.85rem;}
 .zoom-1 #options {font-size: 1rem;}
 .zoom-2 #options {font-size: 1.5rem;}
 
-
-/*.zoom-0 #main select {font-size: 0.85rem;}*/
-/*.zoom-1 #main select {font-size: 1rem;}*/
 .zoom-2 #main select {font-size: 1rem;}
 
 .zoom-0 .preset {padding: 5px 0; font-size: 1rem;}
 .zoom-1 .preset {padding: 8px 0; font-size: 1.5rem;}
 .zoom-2 .preset {padding: 8px 0; font-size: 2rem;}
-
-/*
-.zoom-0 #error-message, .zoom-0 #info-message {font-size: 0.85rem;}
-.zoom-1 #error-message, .zoom-1 #info-message {font-size: 1rem;}
-.zoom-2 #error-message, .zoom-2 #info-message {font-size: 1.15rem;}
-*/
 
 .zoom-1 #messages { padding-bottom: 10px!important; }
 .zoom-1 #options { padding-bottom: 10px!important; }
@@ -95,19 +58,12 @@
 .zoom-1 .controls-options-grid { margin-top: 10px; grid-gap: 5px 5px; }
 .zoom-2 .controls-options-grid { margin-top: 15px; grid-gap: 5px 5px; }
 
-/*.zoom-0 .grid-3x2 { margin-top: 5px; grid-gap: 3px 3px; }*/
-/*.zoom-1 .grid-3x2 { margin-top: 10px; grid-gap: 5px 5px; }*/
-/*.zoom-2 .grid-3x2 { margin-top: 15px; grid-gap: 5px 5px; }*/
-
 .zoom-0 .options { margin-top: 5px;  }
 .zoom-1 .options { margin-top: 10px; }
 .zoom-2 .options { margin-top: 15px; }
 
-/*.zoom-0 .bt {margin: 2px 2px 0 2px; padding: 1px 0; font-size: 0.85rem;}*/
 .zoom-0 .bt {margin: 0; padding: 1px 0; font-size: 0.85rem;}
-/*.zoom-1 .bt {margin: 5px 5px 0 5px; padding: 3px 0 2px 0; font-size: 1.25rem; }*/
 .zoom-1 .bt {margin: 0; padding: 3px 0 2px 0; font-size: 1.25rem; }
-/*.zoom-2 .bt {margin: 5px 5px 0 5px; padding: 0 0; font-size: 1.5rem;}*/
 .zoom-2 .bt {margin: 0; padding: 0 0; font-size: 1.5rem;}
 
 .zoom-0 .stompswitch {font-size: 3rem; margin-top: 20px;}
@@ -116,7 +72,6 @@
 
 .zoom-0 .knob {height: 80px; margin: 0;}
 .zoom-1 .knob {width: 125px; margin: 0;}
-/*.zoom-1 .knob {height: 12vh; margin: 0;}*/
 .zoom-2 .knob {height: 16vh; margin: 0;}
 
 .zoom-0 .knob-value {font-size: 125%;}

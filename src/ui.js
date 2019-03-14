@@ -135,7 +135,7 @@ export function updateControls(onlyTwoValuesControls = false) {
  */
 function updateMeta() {
     if (MODEL.meta.preset_id.value) {
-        setPresetClean();
+        // setPresetClean();
         showPreset();
     }
 }

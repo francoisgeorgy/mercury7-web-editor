@@ -11,13 +11,13 @@ export const SETTINGS_UPDATE_URL = {
 };
 
 export let preferences = {
-    midi_channel: "all",
+    midi_channel: "1",
     input_device_id: null,      // web midi port ID
     output_device_id: null,     // web midi port ID
     theme: "",                  // empty means default theme,
     zoom_level: 1,
     update_URL: SETTINGS_UPDATE_URL.on_randomize_and_init,
-    init_from_bookmark: 1       // if 0 (NO), the app will init from the device and ignore the bookmark.
+    init_from_bookmark: 0       // if 0 (NO), the app will init from the device and ignore the bookmark.
                                 // if 1 (YES), the app will init from the bookmark's sysex and update the device;
 };
 

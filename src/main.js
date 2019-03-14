@@ -22,6 +22,7 @@ import "./css/main.css";
 import "./css/zoom.css";
 import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
+import {setPresetDirty} from "./ui_presets";
 
 const browser = detect();
 
@@ -96,7 +97,8 @@ function connectInputPort(input) {
     setMidiInStatus(true);
     clearError();
     // setStatus(`${input.name} connected on MIDI channel ${settings.midi_channel}.`, MSG_SEND_SYSEX);
-    setStatus(`${input.name} connected on MIDI channel ${preferences.midi_channel}.`);
+    setStatus(`Input ${input.name} connected on MIDI channel ${preferences.midi_channel}.`);
+
 }
 
 function disconnectInputPort() {
@@ -106,7 +108,8 @@ function disconnectInputPort() {
         p.removeListener();    // remove all listeners for all channels
         setMidiInputPort(null);
         log("disconnectInputPort: midi_input does not listen anymore");
-        setStatus(`Device is disconnected.`);
+        setStatus(`Input disconnected.`);
+        if (MODEL.getPresetNumber() !== 0) setPresetDirty();
     }
     setMidiInStatus(false);
 }
@@ -123,7 +126,7 @@ function connectInputDevice(id) {
         // the user select no device, disconnect.
         disconnectInputPort();
         clearStatus();
-        setStatusError(`Connect the Mercury7 or check the MIDI channel.`);
+        // setStatusError(`Connect the Enzo or check the MIDI channel.`);
         setMidiInStatus(false);
         return;
     }
@@ -146,9 +149,16 @@ function connectInputDevice(id) {
     const port = WebMidi.getInputById(id);
     if (port) {
         connectInputPort(port);
+
+        if ((MODEL.getPresetNumber() === 0) && getMidiInputPort() && getMidiOutputPort()) {
+            //TODO: init from URL if sysex present ?
+            setStatus("Request current preset");
+            requestPreset();
+        }
+
     } else {
         clearStatus();
-        setStatusError(`Connect the Mercury7  or check the MIDI channel.`);
+        setStatusError(`Connect the Enzo or check the MIDI channel.`);
         setMidiInStatus(false);
     }
 }
@@ -159,15 +169,18 @@ function connectInputDevice(id) {
 function connectOutputPort(output) {
     log("connectOutputPort");
     setMidiOutputPort(output);
-    log(`%cconnectOutputPort: ${output.name} can no be use to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
+    log(`%cconnectOutputPort: ${output.name} can now be used to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
+    setStatus(`Output ${output.name} connected on MIDI channel ${preferences.midi_channel}.`);
 }
 
 function disconnectOutputPort() {
-    const p = getMidiOutputPort();  // we check the current output_port only for print better log messages
+    const p = getMidiOutputPort();
     if (p) {
         log("disconnectOutputPort()");
         setMidiOutputPort(null);
-        log("disconnectOutputPort: connectOutputPort: midi_output can not be use anymore");
+        log("disconnectOutputPort: connectOutputPort: midi_output can not be used anymore");
+        setStatus(`Output disconnected.`);
+        if (MODEL.getPresetNumber() !== 0) setPresetDirty();
     }
 }
 
@@ -207,6 +220,13 @@ function connectOutputDevice(id) {
     const port = WebMidi.getOutputById(id);
     if (port) {
         connectOutputPort(port);
+
+        if ((MODEL.getPresetNumber() === 0) && getMidiInputPort() && getMidiOutputPort()) {
+            //TODO: init from URL if sysex present ?
+            setStatus("Request current preset");
+            requestPreset();
+        }
+
     } else {
         clearStatus();
         // setStatusError(`Please connect your device or check the MIDI channel.`);
@@ -252,6 +272,8 @@ function deviceConnected(info) {
 
     updateSelectDeviceList();
 
+    if (MODEL.getPresetNumber() === 0) new_connection = true;
+
     if (new_connection && getMidiInputPort() && getMidiOutputPort()) {
         log("deviceConnected: we can sync", preferences.init_from_bookmark);
 
@@ -268,7 +290,7 @@ function deviceConnected(info) {
             // }
         } else {
             // initFromDevice = true;
-            setStatus("Request current preset");
+            setStatus("Init from device, request current preset");
             requestPreset();
         }
 
@@ -319,13 +341,13 @@ function autoConnect() {
 
 $(function () {
 
-    log(`Mercury7 Web Interface ${VERSION}`);
+    log(`Enzo Web Interface ${VERSION}`);
 
     loadSettings();
 
     // The documentElement is the "<html>" element for HTML documents.
     // if (settings.theme) document.documentElement.setAttribute('data-theme', settings.theme);
-    // document.documentElement.setAttribute('data-theme', "blue");
+    // document.documentElement.setAttribute('data-theme', "gold");
 
     setupModel();
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice);

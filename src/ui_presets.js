@@ -25,7 +25,7 @@ export function presetSet(n) {
     log(`presetSet(${n})`);
     MODEL.setPresetNumber(n);
     sendPC(n);
-    setPresetClean();
+    // setPresetClean();
     showPreset();
 }
 

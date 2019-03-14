@@ -23,9 +23,15 @@ export function setStatus(msg, msg2) {  // TODO: change signature, use destructu
 let messages = 0;
 const MAX_MESSAGE_DISPLAYED = 200;
 
+let last_message = "";  // used to ignore duplicates
+
 export function appendMessage(msg) {
 
     if (!msg) return;
+
+    if (msg === last_message) return;
+
+    last_message = msg;
 
     if (messages >= MAX_MESSAGE_DISPLAYED) {
         console.log("remove first");

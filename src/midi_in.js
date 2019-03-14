@@ -48,6 +48,9 @@ function monitorCC(control_number) {
  * @param msg
  */
 export function handlePC(msg) {
+
+    //TODO: almost always an echo that could be ignored
+
     log("handlePC", msg);
     if (msg.type !== "programchange") return;
     // appendMessage(`Preset ${pc} selected`);  //TODO: filter if we are the one sending the PC; otherwise display the message.
@@ -117,8 +120,9 @@ export function handleSysex(data) {
         case SYSEX_PRESET:
             resetExp();
             updateUI();
+            setPresetClean();
             clearError();
-            setStatus(`Preset ${MODEL.meta.preset_id.value} settings received.`);
+            setStatus(`Preset ${MODEL.meta.preset_id.value} sysex received.`);
             break;
         case SYSEX_GLOBALS:
             updateGlobalSettings();
