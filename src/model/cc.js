@@ -20,9 +20,14 @@ export const control_id = {
 
 export const control = new Array(127);
 
+const _0_100 = function (v) {
+    return Math.floor(v / 127 * 100 + 0.5);
+};
+
 const _percent = function (v) {
     return Math.floor(v / 127 * 100 + 0.5) + '%';
 };
+
 /*
 const _off_when_zero = function (v) {
     return v === 0 ? 'OFF' : v;
@@ -78,7 +83,7 @@ const _algorithm = function (v) {
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
         name: "Exp pedal",
-        human: _percent
+        human: _0_100
         // sysex: {
         //     offset: 22,
         //     mask: [0x7F]

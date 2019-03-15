@@ -2,9 +2,10 @@ import {log, TRACE, warn} from "./debug";
 import * as WebMidi from "webmidi";
 import MODEL from "./model";
 import {detect} from "detect-browser";
-import {VERSION} from "./constants";
+import {URL_PARAM_SIZE, VERSION} from "./constants";
 import {loadSettings, saveSettings, preferences} from "./preferences";
 import {
+    appendMessage,
     clearError,
     clearStatus,
     setMidiInStatus,
@@ -23,6 +24,8 @@ import "./css/zoom.css";
 import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
 import {setPresetDirty} from "./ui_presets";
+import * as Utils from "./utils";
+import {initZoom} from "./ui_zoom";
 
 const browser = detect();
 
@@ -351,6 +354,31 @@ $(function () {
 
     setupModel();
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice);
+
+    const s = Utils.getParameterByName(URL_PARAM_SIZE);
+    if (s) {
+        let z = preferences.zoom_level;
+        switch (s.toUpperCase()) {
+            case "0" :
+            case "S" :
+            case "SMALL" :
+              z = 0; break;
+            case "1" :
+            case "M" :
+            case "NORMAL" :
+            case "DEFAULT" :
+                z = 1; break;
+            case "2" :
+            case "L" :
+            case "LARGE" :
+            case "BIG" :
+                z = 2; break;
+        }
+        if (z !== preferences.zoom_level) {
+            initZoom(z);
+        }
+    }
+
     setupBookmarkSupport();
     startBookmarkAutomation();
 
@@ -363,7 +391,8 @@ $(function () {
 
             warn("webmidi err", err);
 
-            setStatusError("ERROR: WebMidi could not be enabled.");
+            appendMessage("ERROR: WebMidi could not be enabled.");
+            appendMessage("-- PLEASE ENABLE MIDI IN YOUR BROWSER --");
 
             // Even we don't have MIDI available, we update at least the UI:
             initFromBookmark(false);

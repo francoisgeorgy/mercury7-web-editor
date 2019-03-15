@@ -43,7 +43,8 @@ module.exports = {
             { from: "./src/css/midi.css", to: "css" },
             { from: "./src/img/favicon-16x16.png" },
             { from: "./src/img/favicon-32x32.png" },
-            { from: "./src/img/favicon-96x96.png" }
+            { from: "./src/img/favicon-96x96.png" },
+            { from: "./src/img/editor-0.31.0.jpg", to: "img" }
         ]),
         new HtmlWebpackPlugin({
             chunks: ["app_bundle"],

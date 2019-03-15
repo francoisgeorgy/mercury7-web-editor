@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Control your Meris Mercury7 efefct pedal directly from your web browser." />
+    <meta name="description" content="Control your Meris Mercury7 effect pedal directly from your web browser." />
     <meta name="author" content="François Georgy" />
-    <title>Mercury7 Web Editor</title>
+    <meta property="og:title" content="Meris Mercury7 Editor">
+    <meta property="og:description" content="An editor for the Meris Mercury7 effect pedal. All you need, in addition to your Enzo, is the Meris MIDI I/O interface, a MIDI interface in your computer and a browser supporting the WebMIDI standard.">
+    <meta property="og:image" content="https://sysex.io/mercury7/editor/img/editor-0.31.0.jpg">
+    <meta property="og:url" content="https://sysex.io/mercury7/editor/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image:alt" content="An editor for the Meris Mercury7 effect pedal.">
+    <title>Enzo Web Editor</title>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -20,11 +26,11 @@
             <div id="title">
                 <div class="neon">MERCURY7</div>
                 <div class="menu">
-                    <span class="menu-entry"><a id="menu-init" href="#" title="Set convenient 'default' values (send as CC messages, not SysEx preset)."><i class="fa fa-bolt" aria-hidden="true"></i> <span class="menu-text">Init</span></a></span>
-                    <span class="menu-entry"><a id="menu-randomize" href="#" title="Set random values for all controls (send as CC messages, not SysEx preset)."><i class="fa fa-random" aria-hidden="true"></i> <span class="menu-text">Randomize</span></a></span>
+                    <span class="menu-entry"><a id="menu-init" href="#" title="Set convenient 'default' values."><i class="fa fa-bolt" aria-hidden="true"></i> <span class="menu-text">Init</span></a></span>
+                    <span class="menu-entry"><a id="menu-randomize" href="#" title="Set random values for all controls."><i class="fa fa-random" aria-hidden="true"></i> <span class="menu-text">Randomize</span></a></span>
                     <!--<span class="menu-entry"><a id="menu-read" href="#" title="Read the current preset from the Mercury7 and update the editor."><i class="fas fa-upload"></i> <span class="menu-text">Read</span></a></span>-->
-                    <span class="menu-entry"><a id="menu-send" href="#" title="Send the current editor's values to Mercury7 (send as CC messages, not SysEx preset)."><i class="fas fa-download" aria-hidden="true"></i> <span class="menu-text">Send</span></a></span>
-                    <span class="menu-entry"><a id="menu-save" href="#" title="Tell the Mercury7 to save in memory the current settings (updates the current preset)."><i class="fas fa-download" aria-hidden="true"></i> <span class="menu-text">Save</span></a></span>
+                    <span class="menu-entry"><a id="menu-send" href="#" title="Send the editor's current values to Mercury7 (does not save in Mercury7's memory)."><i class="fas fa-arrow-alt-circle-down" aria-hidden="true"></i> <span class="menu-text">Send</span></a></span>
+                    <span class="menu-entry"><a id="menu-save" href="#" title="Tell the Mercury7 to save in its memory the editor's current values (updates the current stored preset)."><i class="fas fa-download" aria-hidden="true"></i> <span class="menu-text">Save</span></a></span>
                     <span class="menu-entry"><a id="menu-get-url" href="#" title="Update the editor's URL with the current values. This makes a 'bookmarkable preset'."><i class="far fa-bookmark" aria-hidden="true" aria-hidden="true"></i> <span class="menu-text">URL</span></a></span>
                     <span class="menu-entry"><a id="menu-print-preset" href="#" title="Open a popup window with the currents settings displayed for printing (or saving as PDF)."><i class="fas fa-print" aria-hidden="true"></i> <span class="menu-text">Print</span></a></span>
                     <span class="menu-entry"><a id="menu-load-preset" href="#" title="Load a preset from a sysex file and send the values to the Mercury7 (send as CC messages, not SysEx preset)."><i class="far fa-folder-open" aria-hidden="true"></i> <span class="menu-text">Load</span></a></span>
@@ -124,7 +130,7 @@
                 SPACE DECAY
             -->
             <div id="A1" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div class="header-shortcut hidden">[C,V]</div>
                     <div>space decay</div>
                 </div>
@@ -137,7 +143,7 @@
                 PREDELAY
             -->
             <div id="B1" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div class="header-shortcut hidden">[O]</div>
                     <div>predelay</div>
                 </div>
@@ -150,7 +156,7 @@
                 MODULATE
             -->
             <div id="A2" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div class="header-shortcut hidden">[F,G]</div>
                     <div>modulate</div>
                 </div>
@@ -163,7 +169,7 @@
                 MOD SPEED
             -->
             <div id="B2" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div>MOD SPEED</div>
                 </div>
                 <div class="controls">
@@ -175,7 +181,7 @@
                 MIX
             -->
             <div id="A6" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div class="header-shortcut hidden">[Y,X]</div>
                     <div>mix</div>
                 </div>
@@ -188,7 +194,7 @@
                 PITCH VECTOR MIX
             -->
             <div id="B6" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div class="header-shortcut hidden">[K,L]</div>
                     <div>PITCH V. MIX</div>
                 </div>
@@ -201,7 +207,7 @@
                 LO FREQ
             -->
             <div id="A4" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div class="header-shortcut hidden">[DEL,B,N]</div>
                     <div>LO FREQ</div>
                 </div>
@@ -214,7 +220,7 @@
                 HI FREQ
             -->
             <div id="A5" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div class="header-shortcut hidden">[-,+]</div>
                     <div>HI FREQ</div>
                 </div>
@@ -227,7 +233,7 @@
                 DENSITY
             -->
             <div id="B4" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div class="header-shortcut hidden">[Z,U]</div>
                     <div>DENSITY</div>
                 </div>
@@ -240,7 +246,7 @@
                 PITCH VECTOR
             -->
             <div id="A3" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div>PITCH VECTOR</div>
                 </div>
                 <div id="cc-23-options" class="grid-3x2 controls-options-grid">
@@ -257,7 +263,7 @@
                 ATTACK TIME
             -->
             <div id="B3" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div class="header-shortcut hidden">[H,J]</div>
                     <div>ATTACK TIME</div>
                 </div>
@@ -270,7 +276,7 @@
                 VIBRATO DEPTH
             -->
             <div id="B5" class="grid-default">
-                <div class="header">
+                <div class="header exp">
                     <div>VIBRATO DEPTH</div>
                 </div>
                 <div class="controls">

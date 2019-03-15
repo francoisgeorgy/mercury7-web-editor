@@ -50,7 +50,8 @@ export function setupSliders(userActionCallback) {
         cursor_width: 26,
         cursor_color: "#e8f1ff",
         track_color: "#e8f1ff",
-        track_bg_color: "#333"
+        track_bg_color: "#333",
+        format: v => MODEL.control[cc].human(v)
     };
 
     const slider_element = document.getElementById(id);

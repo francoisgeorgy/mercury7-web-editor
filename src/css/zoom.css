@@ -1,5 +1,5 @@
 
-#wrapper.zoom-0 {width: 700px; margin: 10px auto 0 auto; padding: 0 10px 10px 10px; border-radius: 3px; }
+#wrapper.zoom-0 {width: 700px; margin: 10px auto 0 auto; padding: 0 10px 13px 10px; border-radius: 3px; }
 #wrapper.zoom-1 {width: 1040px; margin: 20px auto 0 auto; padding: 0 10px 10px 10px; border-radius: 3px; }
 #wrapper.zoom-2 {width: calc(100vw - 20px); height: calc(100vh - (0 * 5px)); margin: 0; padding: 0 10px 0 10px; }
 
@@ -32,6 +32,8 @@
 .zoom-1 #options {font-size: 1rem;}
 .zoom-2 #options {font-size: 1.5rem;}
 
+.zoom-0 #main select {font-size: 0.75rem; padding:0}
+.zoom-1 #main select {font-size: 0.9rem;}
 .zoom-2 #main select {font-size: 1rem;}
 
 .zoom-0 .preset {padding: 5px 0; font-size: 1rem;}

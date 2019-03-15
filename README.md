@@ -259,8 +259,8 @@ Menu commands
 |---|---|---|---|
 |   | Init | editor --> Mercury7 | Set convenient "default" values. |
 |   | Randomize  | editor --> Mercury7 | Set random values for all controls. |
-|   | Send  | editor --> Mercury7 | Send the current editor's values to Mercury7 (does _not_ save in Mercury7's memory). |
-|   | Save  | editor --> Mercury7 | Tell the Mercury7 to save in memory the current settings (updates the current preset). |
+|   | Send  | editor --> Mercury7 | Send the editor's current values to Mercury7 (does not _save_ in Mercury7's _memory_). |
+|   | Save  | editor --> Mercury7 | Tell the Mercury7 to save in its memory the editor's current values (updates the current stored preset). |
 |   | URL  | editor only | Update the editor's URL with the current values. This makes a "_bookmarkable preset_". |
 |   | Print  | editor only | Open a popup window with the currents settings displayed for printing (or saving as PDF). |
 |   | Load  | editor --> Mercury7 | Load a preset from a sysex file and send the values to the Mercury7. |
