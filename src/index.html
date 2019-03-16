@@ -7,12 +7,12 @@
     <meta name="description" content="Control your Meris Mercury7 effect pedal directly from your web browser." />
     <meta name="author" content="François Georgy" />
     <meta property="og:title" content="Meris Mercury7 Editor">
-    <meta property="og:description" content="An editor for the Meris Mercury7 effect pedal. All you need, in addition to your Enzo, is the Meris MIDI I/O interface, a MIDI interface in your computer and a browser supporting the WebMIDI standard.">
+    <meta property="og:description" content="An editor for the Meris Mercury7 effect pedal. All you need, in addition to your Mercury7, is the Meris MIDI I/O interface, a MIDI interface in your computer and a browser supporting the WebMIDI standard.">
     <meta property="og:image" content="https://sysex.io/mercury7/editor/img/editor-0.31.0.jpg">
     <meta property="og:url" content="https://sysex.io/mercury7/editor/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image:alt" content="An editor for the Meris Mercury7 effect pedal.">
-    <title>Enzo Web Editor</title>
+    <title>Mercury7 Editor</title>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -49,22 +49,22 @@
                 PRESET CHANGE AND QUICK ACCESS
             -->
             <div id="presets">
-                <div id="pc-1" class="preset preset-id">1</div>
-                <div id="pc-2" class="preset preset-id">2</div>
-                <div id="pc-3" class="preset preset-id">3</div>
-                <div id="pc-4" class="preset preset-id">4</div>
-                <div id="pc-5" class="preset preset-id">5</div>
-                <div id="pc-6" class="preset preset-id">6</div>
-                <div id="pc-7" class="preset preset-id">7</div>
-                <div id="pc-8" class="preset preset-id">8</div>
-                <div id="pc-9" class="preset preset-id">9</div>
-                <div id="pc-10" class="preset preset-id">10</div>
-                <div id="pc-11" class="preset preset-id">11</div>
-                <div id="pc-12" class="preset preset-id">12</div>
-                <div id="pc-13" class="preset preset-id">13</div>
-                <div id="pc-14" class="preset preset-id">14</div>
-                <div id="pc-15" class="preset preset-id">15</div>
-                <div id="pc-16" class="preset preset-id">16</div>
+                <div id="pc-1" class="preset preset-id">1<span>&bull;</span></div>
+                <div id="pc-2" class="preset preset-id">2<span>&bull;</span></div>
+                <div id="pc-3" class="preset preset-id">3<span>&bull;</span></div>
+                <div id="pc-4" class="preset preset-id">4<span>&bull;</span></div>
+                <div id="pc-5" class="preset preset-id">5<span>&bull;</span></div>
+                <div id="pc-6" class="preset preset-id">6<span>&bull;</span></div>
+                <div id="pc-7" class="preset preset-id">7<span>&bull;</span></div>
+                <div id="pc-8" class="preset preset-id">8<span>&bull;</span></div>
+                <div id="pc-9" class="preset preset-id">9<span>&bull;</span></div>
+                <div id="pc-10" class="preset preset-id">10<span>&bull;</span></div>
+                <div id="pc-11" class="preset preset-id">11<span>&bull;</span></div>
+                <div id="pc-12" class="preset preset-id">12<span>&bull;</span></div>
+                <div id="pc-13" class="preset preset-id">13<span>&bull;</span></div>
+                <div id="pc-14" class="preset preset-id">14<span>&bull;</span></div>
+                <div id="pc-15" class="preset preset-id">15<span>&bull;</span></div>
+                <div id="pc-16" class="preset preset-id">16<span>&bull;</span></div>
             </div>
 
             <div id="messages">
@@ -101,7 +101,7 @@
                     </div>
                     <div>
                         <select id="midi-channel">
-                            <option value="all">all</option>
+                            <!--<option value="all">all</option>-->
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -340,6 +340,25 @@
             </div>
 
             <!--
+                EXP
+            -->
+            <div id="C5" class="grid-default">
+                <div class="header">
+                    <div>EXP</div>
+                </div>
+                <div class="exp_wrapper">
+                    <div id="exp-a1"></div>
+                    <div id="exp-a2" class="slider-combo">
+                        <svg id="cc-4" class="slider"></svg>
+                    </div>
+                    <div id="exp-close" class="exp-switch"><div class="btx" id="exp-close-bt" title="Click to switch to edit the EXP (toe-down) values">down</div></div>
+                    <div id="exp-open">toe up</div>
+                    <div id="cc-4-value" class="slider-value"></div>
+                    <div id="exp-copy" class="btx" title="Click to copy the toe-up (normal) values to the tow-down values.">copy</div>
+                </div>
+            </div>
+
+            <!--
                 BYPASS
             -->
             <div id="C6" class="grid-default">
@@ -352,27 +371,6 @@
                         <div id="cc-14-127" class="sw"><i class="fas fa-circle" aria-hidden="true" title="click to switch on"></i></div>
                         <div id="cc-14-0" class="sw sw-off sw-on"><i class="fas fa-circle" aria-hidden="true" title="click to switch off"></i></div>
                     </div>
-                </div>
-            </div>
-
-            <!--
-                EXP
-            -->
-            <div id="C5" class="grid-default">
-                <div class="header">
-                    <div>EXP</div>
-                </div>
-                <div class="exp_wrapper">
-                    <div id="exp-a1"></div>
-                    <div id="exp-a2" class="slider-combo">
-                        <svg id="cc-4" class="slider"></svg>
-                    </div>
-                    <div id="exp-close" class="exp-switch">close</div>
-                    <div id="exp-b1"></div>
-                    <div id="exp-open" class="exp-switch">open</div>
-                    <div id="exp-c1"></div>
-                    <div id="cc-4-value" class="slider-value">0</div>
-                    <div id="exp-c3"></div>
                 </div>
             </div>
 
@@ -566,7 +564,7 @@
 
                 <div class="settings-rows">
                     <div class="g0">
-                        APPLICATION SIZE
+                        EDITOR SIZE
                     </div>
                     <div></div>
                     <div>
@@ -628,7 +626,7 @@
                         <li>Up, Dn: animate exp</li>
                     </ul>
                 </div>
-                <!--Use shift to play animations until 50%.-->
+                Use Ctrl to play animations until 50%.
             </div>
 
         </div>
@@ -658,9 +656,9 @@
             <i class="fas fa-exclamation-triangle"></i>
             Still under active development. Feel free to log bugs/issues.
         </p>
-        <p>Mercury7 Web Editor is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/mercury7-web-editor/blob/master/LICENSE" target="_blank" >View license</a>.</p>
+        <p>Mercury7 Editor is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/mercury7-web-editor/blob/master/LICENSE" target="_blank" >View license</a>.</p>
         <h1 style="margin-top:20px">Credits</h1>
-        <p>This application uses the following Open Source components:</p>
+        <p>This editor uses the following Open Source components:</p>
         <ul>
             <li><a href="https://github.com/cotejp/webmidi" target="_blank" rel="noopener">WebMidi.js</a> helps you tame the <a href="https://www.w3.org/TR/webmidi/" target="_blank">Web MIDI API</a>.</li>
             <li><a href="https://github.com/francoisgeorgy/svg-knob" target="_blank" rel="noopener">svg-knob</a>: a flexible and customizable knob for your web applications.</li>
@@ -673,7 +671,7 @@
             <li><a href="https://fonts.google.com/specimen/Roboto" target="_blank" rel="noopener">Roboto font</a> by Google.</li>
         </ul>
         <p class="trademarks">
-            This application is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.<br />
+            This editor is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.<br />
         </p>
     </div>
 

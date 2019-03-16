@@ -11,7 +11,7 @@ export const SETTINGS_UPDATE_URL = {
 };
 
 export let preferences = {
-    midi_channel: "1",
+    midi_channel: 1,
     input_device_id: null,      // web midi port ID
     output_device_id: null,     // web midi port ID
     theme: "",                  // empty means default theme,

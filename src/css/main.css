@@ -41,11 +41,13 @@ body {
     cursor: pointer;
 }
 
-/*
+.bold {
+    font-weight: bold;
+}
+
 .on {
     color: var(--value)!important;
 }
-*/
 
 .error {
     color: red;
@@ -216,6 +218,7 @@ div.exp_wrapper {
 #exp-close {
     grid-row: 1;
     grid-column: 3;
+    justify-self: left;
 }
 #exp-b1 {
     grid-row: 2;
@@ -225,6 +228,7 @@ div.exp_wrapper {
     grid-row: 3;
     grid-column: 3;
     align-self: end;
+    color: var(--bt-color);
 }
 #exp-c1 {
     grid-row: 3;
@@ -237,6 +241,13 @@ div.exp_wrapper {
 #exp-c3 {
     grid-row: 3;
     grid-column: 3;
+}
+#exp-copy {           /* slider "click to copy" */
+    grid-row: 2;
+    grid-column: 3;
+    display: none;
+    justify-self: left;
+    align-self: start;
 }
 #cc-4-value {
     grid-row: 2;
@@ -294,12 +305,6 @@ div.controls-slider {
 
 .slider-value {
     text-align: center;
-    color: var(--knob-value);
-}
-
-div.bt,     /* "radio button"-like switches */
-div.btc {   /* "checkbox"-like switches: */
-    text-align: center;
 }
 
 .preset {
@@ -309,11 +314,20 @@ div.btc {   /* "checkbox"-like switches: */
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+
+div.bt,     /* "radio button"-like switches */
+div.btc,    /* "checkbox"-like switches: */
+div.btx {   /* EXP close button */
+    text-align: center;
 }
 
 .preset,
 .bt,
-.btc {
+.btc,
+.btx {
     cursor: pointer;
     color: var(--bt-color);
     border: 1px solid var(--bt-border);
@@ -321,14 +335,15 @@ div.btc {   /* "checkbox"-like switches: */
 
 .preset:hover,
 .bt:hover,
-.btc:hover {
+.btc:hover,
+.btx:hover {
     color: var(--bt-hover-color);
     border: 1px solid var(--bt-hover-color);
     background-color: var(--bt-hover-bg-color);
 }
 
-.preset.on,
 .bt.on,
+.btx.on,
 .btc.on {
     background-color: var(--bt-on-bg-color);
     color: var(--bt-on-color)!important;
@@ -337,13 +352,32 @@ div.btc {   /* "checkbox"-like switches: */
     border: 1px solid var(--bt-on-border);
 }
 
-.preset.dirty,
-.preset.on.dirty {
-    background: transparent;
-    /*color: var(--bt-on-bg-color)!important;*/
+.preset.sel {
+    background: #ff00001A;
+    color: var(--bt-on-color)!important;
     text-shadow: none;
     box-shadow: inset 0 0 6px var(--inset-shadow-color);
     border: 1px solid var(--bt-border);
+}
+
+.preset.sel.on {
+    background-color: var(--bt-on-bg-color);
+    color: var(--bt-on-color)!important;
+    text-shadow: none;
+    box-shadow: inset 0 0 6px var(--inset-shadow-color);
+    border: 1px solid var(--bt-on-border);
+}
+
+.preset > span {
+    position: absolute;
+    right: 2px;
+    top: -8px;
+    font-size: 120%;
+    display: none;
+}
+
+.preset.dirty > span {
+    display: block;
 }
 
 .on {

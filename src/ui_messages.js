@@ -25,7 +25,7 @@ const MAX_MESSAGE_DISPLAYED = 200;
 
 let last_message = "";  // used to ignore duplicates
 
-export function appendMessage(msg) {
+export function appendMessage(msg, bold = false) {
 
     if (!msg) return;
 
@@ -38,7 +38,7 @@ export function appendMessage(msg) {
         $("#messages-list div:first-child").remove();
     }
 
-    $("#messages-list").append(`<div>${msg}</div>`);
+    $("#messages-list").append(bold ? `<div class="bold">${msg}</div>` : `<div>${msg}</div>`);
     const e = document.getElementById("messages-list");
     e.scrollTop = e.scrollHeight;
     messages++;

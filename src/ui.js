@@ -1,5 +1,5 @@
 import MODEL from "./model";
-import {showPreset, setPresetDirty, setupPresetSelectors, setPresetClean} from "./ui_presets";
+import {showPreset, setPresetDirty, setupPresetSelectors} from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
     setupMomentarySwitches,
@@ -25,8 +25,8 @@ import {setupAppPreferences, openAppPreferencesPanel} from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
 import {downloadLastSysEx} from "./download";
 import {openHelpPanel, setupHelpPanel} from "./ui_help";
-import {setupSliders, updateExpSlider} from "./ui_sliders";
-import {inExpMode, setupExp} from "./exp";
+import {setupExp, updateExpSlider} from "./ui_exp";
+import {inExpMode} from "./ui_exp";
 
 /**
  * Handles a change made by the user in the UI.
@@ -114,7 +114,9 @@ export function updateControl(control_type, control_number, value, mappedValue) 
  * Set value of the controls (input and select) from the MODEL values
  */
 export function updateControls(onlyTwoValuesControls = false) {
+
     if (TRACE) console.groupCollapsed(`updateControls(${onlyTwoValuesControls})`);
+
     for (let i=0; i < MODEL.control.length; i++) {
         if (typeof MODEL.control[i] === "undefined") continue;
         const c = MODEL.control[i];
@@ -135,7 +137,6 @@ export function updateControls(onlyTwoValuesControls = false) {
  */
 function updateMeta() {
     if (MODEL.meta.preset_id.value) {
-        // setPresetClean();
         showPreset();
     }
 }
@@ -183,6 +184,8 @@ export function updateModelAndUI(control_type, control_number, value) {
             updateControls(true);
         }
 
+        setPresetDirty();
+
     } else {
         log(`the MODEL does not support this control: ${num}`)
     }
@@ -206,7 +209,7 @@ function setupMenu() {
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
     // $("#menu-read").click(() => requestPreset());       //TODO: create function
-    $("#menu-send").click(() => {fullUpdateDevice(false); return false});
+    $("#menu-send").click(() => {fullUpdateDevice(); return false});
     $("#menu-save").click(savePreset);
     $("#menu-get-url").click(reloadWithSysexParam);
     $("#menu-print-preset").click(printPreset);
@@ -237,14 +240,14 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setMidiInStatus(false);
     setupPresetSelectors(handleUserAction);
     setupKnobs(handleUserAction);
-    setupSliders(handleUserAction);
     setupSwitches(handleUserAction);
     setupMomentarySwitches(tapDown, tapRelease);
+    setupExp(handleUserAction);
     setupGlobalSettings();
     setupAppPreferences();
     setupHelpPanel();
     setupMenu();
-    setupExp();
+    // setupExp();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();
 

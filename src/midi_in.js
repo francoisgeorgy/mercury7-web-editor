@@ -14,7 +14,7 @@ import {
 import {toHexString} from "./utils";
 import {SYSEX_GLOBALS, SYSEX_PRESET} from "./model/sysex";
 import {updateGlobalSettings} from "./ui_global_settings";
-import {resetExp} from "./ui_sliders";
+import {resetExp} from "./ui_exp";
 
 let midi_input = null;
 

@@ -1,0 +1,3 @@
+- Randomize:
+    - randomize SWELL
+    

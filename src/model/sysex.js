@@ -42,6 +42,9 @@ export function validate(data) {
         }
     }
 
+/*
+    FIXME: device id should match midi channel
+
     if ((data[meta.device_id.sysex.offset] > 0) && (data[meta.device_id.sysex.offset] !== meta.device_id.value)) {
         log(`validate: invalid device_id: ${data[meta.device_id.sysex.offset]}`);
         return {
@@ -50,6 +53,7 @@ export function validate(data) {
             message: "Invalid device ID"
         };
     }
+*/
 
     if (data[meta.group_id.sysex.offset] !== meta.group_id.value) {
         log(`validate: invalid group_id: ${data[meta.group_id.sysex.offset]}`);
@@ -248,38 +252,35 @@ export function getPreset(complete = true) {
 
     data[i++] = meta.preset_id.value;                               // 8
 
-    data[i++] = control[control_id.pitch].raw_value;                // 9
-    data[i++] = control[control_id.modulate].raw_value;
+    data[i++] = control[control_id.space_decay].raw_value;          // 9
+    data[i++] = control[control_id.modulate].raw_value;             // 10
     data[i++] = control[control_id.mix].raw_value;
     data[i++] = control[control_id.lo_freq].raw_value;
-    data[i++] = control[control_id.pitch_vector_mix].raw_value;
+    data[i++] = control[control_id.pitch_vector].raw_value;
     data[i++] = control[control_id.hi_freq].raw_value;
     data[i++] = control[control_id.predelay].raw_value;
-    data[i++] = control[control_id.mod_speed].raw_value;
+    data[i++] = control[control_id.mod_speed].raw_value;            // 16
     data[i++] = control[control_id.pitch_vector_mix].raw_value;
     data[i++] = control[control_id.density].raw_value;
     data[i++] = control[control_id.attack_time].raw_value;
-    data[i++] = control[control_id.vibrato_depth].raw_value;
+    data[i++] = control[control_id.vibrato_depth].raw_value;        // 20
     data[i++] = control[control_id.bypass].raw_value;
     data[i++] = control[control_id.swell].raw_value;
-    data[i++] = control[control_id.algorithm].raw_value;
+    data[i++] = control[control_id.algorithm].raw_value;            // 23
 
     // values 2 (EXP)
-    data[i++] = control[control_id.pitch].raw_value;                // 24
+    data[i++] = control[control_id.space_decay].raw_value;          // 24
     data[i++] = control[control_id.modulate].raw_value;
     data[i++] = control[control_id.mix].raw_value;
     data[i++] = control[control_id.lo_freq].raw_value;
-    data[i++] = control[control_id.pitch_vector_mix].raw_value;
+    data[i++] = control[control_id.pitch_vector].raw_value;
     data[i++] = control[control_id.hi_freq].raw_value;
     data[i++] = control[control_id.predelay].raw_value;
     data[i++] = control[control_id.mod_speed].raw_value;
-    data[i++] = control[control_id.pitch_vector_mix].raw_value;
+    data[i++] = control[control_id.pitch_vector_mix].raw_value;     // 32
     data[i++] = control[control_id.density].raw_value;
     data[i++] = control[control_id.attack_time].raw_value;
     data[i++] = control[control_id.vibrato_depth].raw_value;        // 35
-    // data[i++] = control[control_id.bypass].raw_value;
-    // data[i++] = control[control_id.swell].raw_value;
-    // data[i++] = control[control_id.algorithm].raw_value;
 
     if (complete) data[i] = SYSEX_END_BYTE;                         // 36
 

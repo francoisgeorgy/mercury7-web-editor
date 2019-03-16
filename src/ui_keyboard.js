@@ -12,7 +12,7 @@ import {closeAppPreferencesPanel} from "./ui_app_prefs";
 import {closeGlobalSettingsPanel} from "./ui_global_settings";
 import {switchKnobsDisplay} from "./ui_knobs";
 import {closeHelpPanel} from "./ui_help";
-import {showExpValues, toggleExpEditMode} from "./exp";
+import {showExpValues, toggleExpEditMode} from "./ui_exp";
 
 function toggleSwell() {
     const c = MODEL.control[MODEL.control_id.swell];
@@ -57,9 +57,9 @@ export function setupKeyboard() {
 
     keyPresses.subscribe(function(e) {
         if (e.type === "keydown") {
-            keyDown(e.keyCode, e.altKey, e.shiftKey, e.metaKey);
+            keyDown(e.keyCode, e.altKey, e.shiftKey, e.metaKey, e.ctrlKey);
         } else if (e.type === "keyup") {
-            keyUp(e.keyCode, e.altKey, e.shiftKey, e.metaKey);
+            keyUp(e.keyCode, e.altKey, e.shiftKey, e.metaKey, e.ctrlKey);
         }
     });
 
@@ -81,7 +81,7 @@ function animateTo(cc, to) {
     // });
 }
 
-function keyDown(code, alt, shift, meta) {
+function keyDown(code, alt, shift, meta, ctrl) {
 
     log("keyDown", code, alt, shift, meta);
 
@@ -97,6 +97,7 @@ function keyDown(code, alt, shift, meta) {
 
     switch (code) {
         case 9:                 // TAB
+            log("TAB");
             toggleExpEditMode();
             break;
         case 16:                // Shift
@@ -113,67 +114,67 @@ function keyDown(code, alt, shift, meta) {
     if (!alt && !shift && !meta) {
         switch (code) {
             case 67:                // C
-                // animateTo(MODEL.control_id.pitch, shift ? 63 : 0);
-                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), shift ? 63 : 0, animate_callback);
+                // animateTo(MODEL.control_id.pitch, ctrl ? 63 : 0);
+                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), ctrl ? 63 : 0, animate_callback);
                 break;
             case 86:                // V
-                // animateTo(MODEL.control_id.pitch, shift ? 63 : 127);
-                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), shift ? 63 : 127);
+                // animateTo(MODEL.control_id.pitch, ctrl ? 63 : 127);
+                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), ctrl ? 63 : 127);
                 break;
             case 70:                // F
-                // animateTo(MODEL.control_id.filter, shift ? 63 : 0);
+                // animateTo(MODEL.control_id.filter, ctrl ? 63 : 0);
                 break;
             case 71:                // G
-                // animateTo(MODEL.control_id.filter, shift ? 63 : 127);
+                // animateTo(MODEL.control_id.filter, ctrl ? 63 : 127);
                 break;
             case 72:                // H
-                // animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 0);
+                // animateTo(MODEL.control_id.filter_bandwidth, ctrl ? 63 : 0);
                 break;
             case 74:                // J
-                // animateTo(MODEL.control_id.filter_bandwidth, shift ? 63 : 127);
+                // animateTo(MODEL.control_id.filter_bandwidth, ctrl ? 63 : 127);
                 break;
             case 75:                // K    delay level
-                // animateTo(MODEL.control_id.delay_level, shift ? 63 : 0);
+                // animateTo(MODEL.control_id.delay_level, ctrl ? 63 : 0);
                 break;
             case 76:                // L    delay level
-                // animateTo(MODEL.control_id.delay_level, shift ? 63 : 127);
+                // animateTo(MODEL.control_id.delay_level, ctrl ? 63 : 127);
                 break;
             case 89:                // Y    min mix
-                animateTo(MODEL.control_id.mix, shift ? 63 : 0);
+                animateTo(MODEL.control_id.mix, ctrl ? 63 : 0);
                 break;
             case 88:                // X    max mix
-                animateTo(MODEL.control_id.mix, shift ? 63 : 127);
+                animateTo(MODEL.control_id.mix, ctrl ? 63 : 127);
                 break;
             case 8:                 // DEL  min sustain
                 // animateTo(MODEL.control_id.sustain, 0);
                 break;
             case 66:                // B    min sustain
-                // animateTo(MODEL.control_id.sustain, shift ? 63 : 0);
+                // animateTo(MODEL.control_id.sustain, ctrl ? 63 : 0);
                 break;
             case 78:                // N    max sustain
-                // animateTo(MODEL.control_id.sustain, shift ? 63 : 127);
+                // animateTo(MODEL.control_id.sustain, ctrl ? 63 : 127);
                 break;
             case 83:                // S    swell
                 toggleSwell();
                 break;
             case 90:                // Z
-                // animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 0);
+                // animateTo(MODEL.control_id.ring_modulation, ctrl ? 63 : 0);
                 break;
             case 85:                // U
-                // animateTo(MODEL.control_id.ring_modulation, shift ? 63 : 127);
+                // animateTo(MODEL.control_id.ring_modulation, ctrl ? 63 : 127);
                 break;
             case 32:                // SPACE
                 toggleBypass();
                 break;
             case 109:               // num keypad "-"
-                // animateTo(MODEL.control_id.modulation, shift ? 63 : 0);
+                // animateTo(MODEL.control_id.modulation, ctrl ? 63 : 0);
                 break;
             case 107:               // num keypad "+"
-                // animateTo(MODEL.control_id.modulation, shift ? 63 : 127);
+                // animateTo(MODEL.control_id.modulation, ctrl ? 63 : 127);
                 break;
             case 79:                   // O
                 // const v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.portamento));
-                // animateFromTo(MODEL.control_id.portamento, v, shift ? 63 : (v < 63 ? 127 : 0));
+                // animateFromTo(MODEL.control_id.portamento, v, ctrl ? 63 : (v < 63 ? 127 : 0));
                 break;
             case 82:                // R Randomize
                 randomize();
@@ -206,13 +207,13 @@ function keyDown(code, alt, shift, meta) {
                 setExpMin();
                 break;
             case 38:                // Up arrow
-                animateTo(MODEL.control_id.exp_pedal, shift ? 63 : 127);
+                animateTo(MODEL.control_id.exp_pedal, ctrl ? 63 : 127);
                 break;
             case 39:                // Right arrow
                 presetInc();
                 break;
             case 40:                // Down arrow
-                animateTo(MODEL.control_id.exp_pedal, shift ? 63 : 0);
+                animateTo(MODEL.control_id.exp_pedal, ctrl ? 63 : 0);
                 break;
             case 37:                // Left arrow
                 presetDec();

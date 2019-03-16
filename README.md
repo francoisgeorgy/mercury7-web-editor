@@ -1,4 +1,4 @@
-Mercury7 web editor
+Mercury7 editor
 ===============
 
 Control your Meris Mercury7 pedal with your web browser. View all the pedal's settings at once.
@@ -74,8 +74,6 @@ Once you have your Mercury7 connected to the MIDI I/O interface, you must config
 1. Select the input device 
 2. Select the output device
 3. Select the MIDI channel
-    * You can leave the channel set to "all" but this is not recommended as this will send every messages to all channels 
-    every time and this can perturb other MIDI devices which are connected to your computer. 
     
 The editor's preferences (settings) are saved in your browser's _Local Storage_.
 
@@ -293,9 +291,9 @@ The first time you access a web page that uses the WebMIDI API, the browser will
 
 ![Chrome asks for MIDI permission](/images/screenshots/chrome-midi-ask.jpg "Chrome asks for MIDI permission")
 
-You need to click "Allow" to authorize the application to use the Web MIDI API.
+You need to click "Allow" to authorize the editor to use the Web MIDI API.
 
-If you refuse access, the application will display the following message:
+If you refuse access, the editor will display the following message:
 
 ![MIDI access refused](/images/screenshots/message-midi-blocked.jpg "MIDI access refused")
 

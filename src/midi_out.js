@@ -9,8 +9,8 @@ import {toHexString} from "./utils";
 import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
 import {control_id} from "./model/cc";
 import {updateControls} from "./ui";
-import {updateExpSlider} from "./ui_sliders";
-import {inExpMode} from "./exp";
+import {updateExpSlider} from "./ui_exp";
+import {inExpMode} from "./ui_exp";
 import {getMidiInputPort, suppressSysexEcho} from "./midi_in";
 
 let midi_output = null;
@@ -122,9 +122,9 @@ export function updateDevice(control_type, control_number, value_float, in_exp_m
  * Send all values to the connected device
  * Wait 40ms between each CC
  */
-export function fullUpdateDevice(onlyChanged = false /*, silent = false*/) {
+export function fullUpdateDevice() {
 
-    log(`fullUpdateDevice(${onlyChanged})`);
+    log(`fullUpdateDevice()`);
 /*
     if (fullUpdateRunning) return;
 
@@ -159,10 +159,8 @@ export function fullUpdateDevice(onlyChanged = false /*, silent = false*/) {
     sendSysex(MODEL.getPreset(false));
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
-        appendMessage("--- PLEASE CONNECT THE ENZO ---");
+        appendMessage("--- PLEASE CONNECT THE MERCURY7 ---");
         setPresetDirty();
-    } else {
-        setPresetClean();
     }
 
 }
@@ -186,18 +184,22 @@ export function sendPC(pc) {
         appendMessage(`Preset ${pc} selected.`);
 
         if (!getMidiInputPort()) {
-            appendMessage("Unable to receive the preset from Enzo.");
+            appendMessage("Unable to receive the preset from Mercury7.");
         }
 
     } else {
-        appendMessage(`Unable to send the PC command to Enzo.`);
+        appendMessage(`Unable to send the PC command to Mercury7.`);
         log(`(send program change ${pc})`);
     }
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
-        appendMessage("--- PLEASE CONNECT THE ENZO ---");
-        setPresetDirty();
+        appendMessage("--- PLEASE CONNECT THE MERCURY7 ---");
+        // setPresetDirty();
     }
+
+    // for debug
+    // setPresetClean();
+    // setPresetInSync();
 
     logOutgoingMidiMessage("PC", [pc]);
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
@@ -214,7 +216,7 @@ export function sendSysex(data) {
     } else {
         log(`%c(sendSysex: ${data.length} bytes: ${toHexString(data, ' ')})`, "color:red;font-weight:bold");
 
-        appendMessage("--- PLEASE CONNECT THE ENZO ---");
+        appendMessage("--- PLEASE CONNECT THE MERCURY7 ---");
         // setPresetDirty();
     }
     logOutgoingMidiMessage("SysEx", data);
@@ -222,7 +224,7 @@ export function sendSysex(data) {
 
 function sendSysexCommand(command) {
     log(`sendSysexCommand(${toHexString(command, ' ')})`);
-    sendSysex([0x00, GROUP_ID.pedal, MODEL_ID.enzo, command]);
+    sendSysex([MODEL.meta.device_id.value, GROUP_ID.pedal, MODEL_ID.mercury7, command]);
 }
 
 export function requestPreset() {
