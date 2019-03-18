@@ -1,6 +1,7 @@
 tmp/
 sandbox/
 mercury7-web-editor.iml
+dist/
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
