@@ -12,7 +12,7 @@ import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
 import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
-import {hashSysexPresent, initFromBookmark, setupBookmarkSupport, startBookmarkAutomation} from "./url";
+import {hashSysexPresent, initFromURL, setupBookmarkSupport, startBookmarkAutomation} from "./url";
 import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
 import "./css/main.css";
@@ -255,7 +255,7 @@ function deviceConnected(info) {
     if (input_connected && output_connected && getMidiInputPort() && getMidiOutputPort()) {
         log("deviceConnected: we can sync; check if hash present");
         if (hashSysexPresent() && preferences.init_from_bookmark === 1) {
-            initFromBookmark();
+            initFromURL();
         }
     }
 
@@ -356,7 +356,7 @@ $(function () {
             appendMessage("-- PLEASE ENABLE MIDI IN YOUR BROWSER --");
 
             // Even we don't have MIDI available, we update at least the UI:
-            initFromBookmark(false);
+            initFromURL(false);
 
         } else {
 
@@ -375,14 +375,6 @@ $(function () {
             WebMidi.addListener("connected", e => deviceConnected(e));
             // noinspection JSUnresolvedFunction
             WebMidi.addListener("disconnected", e => deviceDisconnected(e));
-
-            // autoConnect();
-/*
-            if (!initFromBookmark()) {  //TODO: ask the user if he wants to initialize from the hash or if he wants to get the pedal's current preset
-                // requestPreset();
-            }
-*/
-
         }
 
     }, true);   // pass true to enable sysex support

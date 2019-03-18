@@ -160,7 +160,7 @@ export function fullUpdateDevice() {
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
         appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
-        setPresetDirty();
+        // setPresetDirty();    //FIXME: why call setPresetDirty here?
     }
 
 }

@@ -2,6 +2,7 @@ tmp/
 sandbox/
 mercury7-web-editor.iml
 dist/
+/sysex/MerisPedalFactoryPresets/
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template

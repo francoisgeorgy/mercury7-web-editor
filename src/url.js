@@ -47,20 +47,20 @@ export function hashSysexPresent() {
  * @param updateConnectedDevice
  * @returns {boolean} true if we found a valid hash to initialize from
  */
-export function initFromBookmark(updateConnectedDevice = true) {
-    log(`initFromBookmark(${updateConnectedDevice})`);
+export function initFromURL(updateConnectedDevice = true) {
+    log(`initFromURL(${updateConnectedDevice})`);
     if (hashSysexPresent()) {
         const s = window.location.hash.substring(1);
         const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s));
         if (valid.type === SYSEX_PRESET) {
-            log("initFromBookmark: sysex loaded in device");
+            log("initFromURL: sysex loaded in device");
             resetExp();
             updateUI();
-            appendMessage("Initialization from the bookmark.");
+            appendMessage("Initialization from the URL.");
             if (updateConnectedDevice) fullUpdateDevice();
             return true;
         } else {
-            log("initFromBookmark: hash value is not a preset sysex");
+            log("initFromURL: hash value is not a preset sysex");
             appendMessage(valid.message);
         }
     }
@@ -124,7 +124,7 @@ export function locationHashChanged(e) {
     if (!hashUpdatedByAutomation) {
         // the hash has been modified by the user using the browser history; stop the automation.
         stopBookmarkAutomation();
-        initFromBookmark();
+        initFromURL();
     }
     hashUpdatedByAutomation = false;
 }

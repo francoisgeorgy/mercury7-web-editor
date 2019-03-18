@@ -201,7 +201,7 @@ export function decodeSysex(data) {
     const valid = validate(data);
     switch (valid.type) {
         case SYSEX_PRESET:
-            log("setDump: sysex is preset data");
+            log("decodeSysex: sysex is preset data");
             decodeMeta(data);
             decodeControls(data, control);
             return {
@@ -210,7 +210,7 @@ export function decodeSysex(data) {
                 message: ""
             };
         case SYSEX_GLOBALS:
-            log("setDump: sysex is globals data");
+            log("decodeSysex: sysex is globals data");
             decodeGlobals(data, global_conf);
             return {
                 type: SYSEX_GLOBALS,
@@ -218,7 +218,7 @@ export function decodeSysex(data) {
                 message: ""
             };
         default:
-            log("setDump: sysex is not preset nor globals; probably an echo; ignored");
+            log("decodeSysex: sysex is not preset nor globals; probably an echo; ignored");
             return valid;
     }
 }
