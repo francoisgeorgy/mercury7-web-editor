@@ -6,7 +6,7 @@ import {logOutgoingMidiMessage} from "./ui_midi_window";
 import {setPresetClean, setPresetDirty} from "./ui_presets";
 import {appendMessage, monitorMessage} from "./ui_messages";
 import {toHexString} from "./utils";
-import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./model/constants";
+import {SYSEX_CMD} from "./model/constants";
 import {control_id} from "./model/cc";
 import {updateControls} from "./ui";
 import {updateExpSlider} from "./ui_exp";
@@ -143,7 +143,7 @@ export function fullUpdateDevice() {
             log(`fullUpdateDevice done`);
             fullUpdateRunning = false;
             if (!silent && midi_output) {
-                appendMessage("Current settings sent to Mercury7.")
+                appendMessage("Current settings sent to the pedal.")
             }
         } else {
             // log(`fullUpdateDevice: send CC ${i}`);
@@ -159,7 +159,7 @@ export function fullUpdateDevice() {
     sendSysex(MODEL.getPreset(false));
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
-        appendMessage("--- PLEASE CONNECT THE MERCURY7 ---");
+        appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
         setPresetDirty();
     }
 
@@ -184,22 +184,17 @@ export function sendPC(pc) {
         appendMessage(`Preset ${pc} selected.`);
 
         if (!getMidiInputPort()) {
-            appendMessage("Unable to receive the preset from Mercury7.");
+            appendMessage("Unable to receive the preset from the pedal.");
         }
 
     } else {
-        appendMessage(`Unable to send the PC command to Mercury7.`);
+        appendMessage(`Unable to send the PC command to the pedal.`);
         log(`(send program change ${pc})`);
     }
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
-        appendMessage("--- PLEASE CONNECT THE MERCURY7 ---");
-        // setPresetDirty();
+        appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
     }
-
-    // for debug
-    // setPresetClean();
-    // setPresetInSync();
 
     logOutgoingMidiMessage("PC", [pc]);
     setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
@@ -215,16 +210,14 @@ export function sendSysex(data) {
         // setPresetClean();
     } else {
         log(`%c(sendSysex: ${data.length} bytes: ${toHexString(data, ' ')})`, "color:red;font-weight:bold");
-
-        appendMessage("--- PLEASE CONNECT THE MERCURY7 ---");
-        // setPresetDirty();
+        appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
     }
     logOutgoingMidiMessage("SysEx", data);
 }
 
 function sendSysexCommand(command) {
     log(`sendSysexCommand(${toHexString(command, ' ')})`);
-    sendSysex([MODEL.meta.device_id.value, GROUP_ID.pedal, MODEL_ID.mercury7, command]);
+    sendSysex([MODEL.meta.device_id.value, MODEL.meta.group_id.value, MODEL.meta.model_id.value, command]);
 }
 
 export function requestPreset() {

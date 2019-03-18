@@ -17,7 +17,7 @@ export function downloadLastSysEx() {
 
     let shadowlink = document.createElement('a');
     shadowlink.style.display = 'none';
-    shadowlink.download = `mercury7-preset${preset_num ? '-' : ''}${preset_num ? preset_num : ''}.${timestamp}.syx`;
+    shadowlink.download = `${MODEL.name.toLowerCase()}-preset${preset_num ? '-' : ''}${preset_num ? preset_num : ''}.${timestamp}.syx`;
 
     const blob = new Blob([data], {type: "application/octet-stream"});
     const url = window.URL.createObjectURL(blob);

@@ -7,9 +7,9 @@ export function showMidiInActivity() {
         $("#midi-in-led").addClass("on");
         let timeoutID = window.setTimeout(
             function () {
+                timeoutID = null;
                 $("#midi-in-led").removeClass("on");
                 activity_in = false;
-                timeoutID = null;
             },
             500);
     }
@@ -23,9 +23,9 @@ export function showMidiOutActivity() {
         $("#midi-out-led").addClass("on");
         let timeoutID = window.setTimeout(
             function () {
+                timeoutID = null;
                 $("#midi-out-led").removeClass("on");
                 activity_out = false;
-                timeoutID = null;
             },
             500);
     }

@@ -6,7 +6,6 @@ import * as lity from "lity";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_END_BYTE, SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
-import {setPresetClean} from "./ui_presets";
 
 //==================================================================================================================
 // Preset file handling
@@ -52,7 +51,7 @@ export function readFile() {
                 resetExp();
                 updateUI();
                 fullUpdateDevice();
-                setPresetClean();
+                // setPresetClean();
 
             } else {
                 log("unable to set value from file; file is not a preset sysex", valid);

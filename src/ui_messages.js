@@ -1,23 +1,17 @@
 import {warn} from "./debug";
 import MODEL from "./model";
 
-// export const MSG_SEND_SYSEX = "&#x27A4; To view the current pedal's preset, send a sysex from the Mercury7 by pressing the Bypass LED switch while holding the Alt button.";
-
 /**
- * Makes the app name glows, or not.
+ * Makes the app name glows when we have both a input device and an output device selected.
+ * TODO: check that the devices are of the right type.
  * @param status
  */
-export function setMidiInStatus(status) {
+export function setCommunicationStatus(status) {
     if (status) {
         $(".neon").addClass("glow");
     } else {
         $(".neon").removeClass("glow");
     }
-}
-
-export function setStatus(msg, msg2) {  // TODO: change signature, use destructuring and accept any number of messages
-    appendMessage(msg);
-    if (msg2) appendMessage(msg2);
 }
 
 let messages = 0;
@@ -28,7 +22,6 @@ let last_message = "";  // used to ignore duplicates
 export function appendMessage(msg, bold = false) {
 
     if (!msg) return;
-
     if (msg === last_message) return;
 
     last_message = msg;
@@ -42,26 +35,6 @@ export function appendMessage(msg, bold = false) {
     const e = document.getElementById("messages-list");
     e.scrollTop = e.scrollHeight;
     messages++;
-}
-
-export function appendErrorMessage(msg) {
-    // $("#messages-list").append(`<div>&#x26A0; ${msg}</div>`);
-    // const e = document.getElementById("messages-list");
-    // e.scrollTop = e.scrollHeight;
-    // appendMessage('&#x26A0;&nbsp;' + msg);
-    appendMessage(msg);
-}
-
-export function clearStatus() {
-    // $("#info-message").text("");
-}
-
-export function setStatusError(msg) {
-    appendErrorMessage(msg);
-}
-
-export function clearError() {
-    // $("#error-message").text("");
 }
 
 export function monitorMessage(control_number, raw_value) {

@@ -3,27 +3,23 @@ import * as WebMidi from "webmidi";
 import MODEL from "./model";
 import {detect} from "detect-browser";
 import {URL_PARAM_SIZE, VERSION} from "./constants";
-import {loadSettings, saveSettings, preferences} from "./preferences";
+import {loadPreferences, savePreferences, preferences} from "./preferences";
 import {
     appendMessage,
-    clearError,
-    clearStatus,
-    setMidiInStatus,
-    setStatus,
-    setStatusError
+    setCommunicationStatus
 } from "./ui_messages";
 import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
 import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
 import {hashSysexPresent, initFromBookmark, setupBookmarkSupport, startBookmarkAutomation} from "./url";
-import "./css/lity.min.css";    // order important
+import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
 import "./css/main.css";
 import "./css/zoom.css";
 import "./css/grid-default.css";
 import "./css/grid-global-settings.css";
-import {setPresetDirty, showPreset} from "./ui_presets";
+import {setPresetDirty, updatePresetSelector} from "./ui_presets";
 import * as Utils from "./utils";
 import {initZoom} from "./ui_zoom";
 
@@ -34,7 +30,6 @@ if (browser) {
     // log(browser.version);
     switch (browser && browser.name) {
         case "chrome":
-            // log("supported browser");
             break;
         case "firefox":
         case "edge":
@@ -58,8 +53,8 @@ function setupModel() {
 
 function setMidiChannel(midi_channel) {
 
-    // Note: output does not use any event listener, so there's nothing to update on the output device when we only
-    //       change the MIDI channel.
+    // Note: output does not use any event listener, so there's nothing to update on the output device
+    //       when we only change the MIDI channel.
 
     log(`setMidiChannel(${midi_channel}): disconnect input`);
     disconnectInputPort();
@@ -69,7 +64,7 @@ function setMidiChannel(midi_channel) {
 
     const chan = parseInt(midi_channel, 10);
 
-    saveSettings({midi_channel: chan});
+    savePreferences({midi_channel: chan});
 
     MODEL.setDeviceId(preferences.midi_channel - 1);    // device ID is midi channel - 1
 
@@ -100,16 +95,9 @@ function connectInputPort(input) {
         });
 
     log(`%cconnectInputPort: ${input.name} is now listening on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
-    setMidiInStatus(true);
-    clearError();
-    // setStatus(`${input.name} connected on MIDI channel ${settings.midi_channel}.`, MSG_SEND_SYSEX);
-    setStatus(`Input ${input.name} connected on MIDI channel ${preferences.midi_channel}.`);
-
-    if (MODEL.getPresetNumber() !== 0) {
-        // setPresetDirty();
-        showPreset();
-    }
-
+    setCommunicationStatus(true);
+    updatePresetSelector();
+    appendMessage(`Input ${input.name} connected on MIDI channel ${preferences.midi_channel}.`);
 }
 
 function disconnectInputPort() {
@@ -118,14 +106,10 @@ function disconnectInputPort() {
         log("disconnectInputPort()");
         p.removeListener();    // remove all listeners for all channels
         setMidiInputPort(null);
-        log("disconnectInputPort: midi_input does not listen anymore");
-        setStatus(`Input disconnected.`);
-        if (MODEL.getPresetNumber() !== 0) {
-            // setPresetDirty();
-            showPreset();
-        }
+        setCommunicationStatus(false);
+        updatePresetSelector();
+        appendMessage(`Input disconnected.`);
     }
-    setMidiInStatus(false);
 }
 
 function connectInputDevice(id) {
@@ -135,25 +119,22 @@ function connectInputDevice(id) {
     const p = getMidiInputPort();
     if (!id && p) {
         log(`connectInputDevice(): disconnect currently connected port`);
-        // save in settings for autoloading at next restart:
-        saveSettings({input_device_id: id});
-        // the user select no device, disconnect.
+        // Update preferences for autoloading at next restart:
+        savePreferences({input_device_id: null});
+        // The user selected no device, disconnect.
         disconnectInputPort();
-        clearStatus();
-        setMidiInStatus(false);
+        setCommunicationStatus(false);
         return false;
     }
 
-    // do nothing if already connected to the selected device:
+    // Do nothing if already connected to the selected device:
     if (p && (p.id === id)) {
         log(`connectInputDevice(${id}): port is already connected`);
         return false;
     }
 
-    // log(`connectInputDevice(${id}): will connect port ${id}`);
-
-    // save in settings for autoloading at next restart:
-    saveSettings({input_device_id: id});
+    // Update preferences for autoloading at next restart:
+    savePreferences({input_device_id: id});
 
     // We only handle one connection, so we disconnected any connected port before connecting the new one.
     disconnectInputPort();
@@ -162,26 +143,11 @@ function connectInputDevice(id) {
     const port = WebMidi.getInputById(id);
     if (port) {
         connectInputPort(port);
-
-/*
-        if ((MODEL.getPresetNumber() === 0) && getMidiInputPort() && getMidiOutputPort()) {
-        // if (getMidiInputPort() && getMidiOutputPort()) {    //TODO: ask user (or set in pref) if we always request the current preset when connecting to the pedal
-            //TODO: init from URL if sysex present ?
-            setStatus("Request current preset");
-            requestPreset();
-        } else {
-            setPresetDirty();
-            appendMessage("Select a preset to sync the editor or use the Send command to sync the Enzo.", true);
-        }
-*/
         syncIfNoPreset();
-
         return true;
-
     } else {
-        clearStatus();
-        setStatusError(`Connect the Mercury7 or check the MIDI channel.`);
-        setMidiInStatus(false);
+        appendMessage(`Connect the ${MODEL.name} or check the MIDI channel.`);
+        setCommunicationStatus(false);
     }
 
     return false;
@@ -194,11 +160,8 @@ function connectOutputPort(output) {
     log("connectOutputPort");
     setMidiOutputPort(output);
     log(`%cconnectOutputPort: ${output.name} can now be used to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
-    setStatus(`Output ${output.name} connected on MIDI channel ${preferences.midi_channel}.`);
-    if (MODEL.getPresetNumber() !== 0) {
-        // setPresetDirty();
-        showPreset();
-    }
+    updatePresetSelector();
+    appendMessage(`Output ${output.name} connected on MIDI channel ${preferences.midi_channel}.`);
 }
 
 function disconnectOutputPort() {
@@ -207,11 +170,8 @@ function disconnectOutputPort() {
         log("disconnectOutputPort()");
         setMidiOutputPort(null);
         log("disconnectOutputPort: connectOutputPort: midi_output can not be used anymore");
-        setStatus(`Output disconnected.`);
-        if (MODEL.getPresetNumber() !== 0) {
-            // setPresetDirty();
-            showPreset();
-        }
+        updatePresetSelector();
+        appendMessage(`Output disconnected.`);
     }
 }
 
@@ -228,13 +188,11 @@ function connectOutputDevice(id) {
 
     if (!id && p) {
         log(`connectOutputDevice(): disconnect currently connected port`);
-        // save in settings for autoloading at next restart:
-        preferences.output_device_id = id;
-        saveSettings();
-        // the user select no device, disconnect.
+        // Update preferences for autoloading at next restart:
+        savePreferences({output_device_id: null});
+        // The user selected no device, disconnect.
         disconnectOutputPort();
-        clearStatus();
-        // setStatusError(`Please connect your device or check the MIDI channel.`);
+        setCommunicationStatus(false);
         return false;
     }
 
@@ -244,10 +202,8 @@ function connectOutputDevice(id) {
         return false;
     }
 
-    // log(`%cconnectOutputDevice${id}): will use [${port.type} ${port.id} ${port.name}] as output`, "color: green; font-weight: bold");
-
-    // save in settings for autoloading at next restart:
-    saveSettings({output_device_id: id});
+    // Update preferences for autoloading at next restart:
+    savePreferences({output_device_id: id});
 
     // We only handle one connection, so we disconnected any connected port before connecting the new one.
     disconnectOutputPort();
@@ -256,25 +212,8 @@ function connectOutputDevice(id) {
     const port = WebMidi.getOutputById(id);
     if (port) {
         connectOutputPort(port);
-
-/*
-        if ((MODEL.getPresetNumber() === 0) && getMidiInputPort() && getMidiOutputPort()) {
-        // if (getMidiInputPort() && getMidiOutputPort()) {     //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
-            //TODO: init from URL if sysex present ?
-            appendMessage("Request current preset");
-            requestPreset();
-        } else {
-            setPresetDirty();
-            appendMessage("Select a preset to sync the editor or use the Send command to sync the Enzo.", true);
-        }
-*/
         syncIfNoPreset();
-
         return true;
-
-    } else {
-        clearStatus();
-        // setStatusError(`Please connect your device or check the MIDI channel.`);
     }
 
     return false;
@@ -290,14 +229,7 @@ function connectOutputDevice(id) {
  */
 function deviceConnected(info) {
 
-    // log("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
     if (TRACE) console.group("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
-
-    // Auto-connect if not already connected.
-
-    //FIXME: use autoConnect() method
-
-    // let new_connection = false;
 
     let input_connected = false;
     let output_connected = false;
@@ -305,7 +237,6 @@ function deviceConnected(info) {
     if (info.port.type === 'input') {
         if ((getMidiInputPort() === null) && (info.port.id === preferences.input_device_id)) {
             input_connected = connectInputDevice(preferences.input_device_id);
-            // new_connection = true;
         } else {
             log("deviceConnected: input device ignored");
         }
@@ -314,7 +245,6 @@ function deviceConnected(info) {
     if (info.port.type === 'output') {
         if ((getMidiOutputPort() === null) && (info.port.id === preferences.output_device_id)) {
             output_connected = connectOutputDevice(preferences.output_device_id);
-            // new_connection = true;
         } else {
             log("deviceConnected: output device ignored");
         }
@@ -322,47 +252,11 @@ function deviceConnected(info) {
 
     updateSelectDeviceList();
 
-    // if (MODEL.getPresetNumber() === 0) new_connection = true;
-
     if (input_connected && output_connected && getMidiInputPort() && getMidiOutputPort()) {
-        log("deviceConnected: we can sync", preferences.init_from_bookmark);
-
-        // let initFromDevice = false;
-
-        // if we have a hash sysex we ask the user if he want to initialize from the the hash or from the pedal
+        log("deviceConnected: we can sync; check if hash present");
         if (hashSysexPresent() && preferences.init_from_bookmark === 1) {
-            // if (window.confirm("Initialize from the bookmark sysex values?")) {
-            // if (settings.init_from_bookmark) {
-            //     initFromDevice = false;
-                initFromBookmark();
-            // } else {
-            //     initFromDevice = true;
-            // }
-        } else {
-            // initFromDevice = true;
-
-            // setStatus("Init from device, request current preset");
-            // requestPreset();
-
-/*
-            if (MODEL.getPresetNumber() === 0) {
-                // if (getMidiInputPort() && getMidiOutputPort()) {    //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
-                //TODO: init from URL if sysex present ?
-                setStatus("Request current preset");
-                requestPreset();
-            } else {
-                setPresetDirty();
-                appendMessage("Select a preset to sync the editor or use the Send command to sync the Enzo.", true);
-            }
-*/
-
+            initFromBookmark();
         }
-
-        // if (initFromDevice) {
-        //     setStatus("Request current preset");
-        //     requestPreset();
-        // }
-
     }
 
     if (TRACE) console.groupEnd();
@@ -389,20 +283,22 @@ function deviceDisconnected(info) {
 //==================================================================================================================
 
 /**
- * If no preset select (preset is 0) then read the preset from Mercury7, otherwise display a message to the user.
+ * If no preset select (preset is 0) then read the preset from the pedal, otherwise display a message to the user.
  * Do not call this method from
  */
 function syncIfNoPreset() {
 
     if (getMidiInputPort() && getMidiOutputPort()) {
         if (MODEL.getPresetNumber() === 0) {
+            //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
+            //TODO: init from URL if sysex present ?
             // we wait 100ms before sending a read preset request because we, sometimes, receive 2 connect events. TODO: review connection events management
-            setStatus("Request current preset in 200ms");
+            appendMessage("Request current preset in 200ms");
             log("syncIfNoPreset: will request preset in 200ms");
             window.setTimeout(requestPreset, 200);
         } else {
             setPresetDirty();
-            appendMessage("Select a preset to sync the editor or use the Send command to sync the Mercury7.", true);
+            appendMessage(`Select a preset to sync the editor or use the Send command to sync the ${MODEL.name}.`, true);
         }
     }
 
@@ -413,13 +309,9 @@ function syncIfNoPreset() {
 
 $(function () {
 
-    log(`Mercury7 editor ${VERSION}`);
+    log(`${MODEL.name} editor ${VERSION}`);
 
-    loadSettings();
-
-    // The documentElement is the "<html>" element for HTML documents.
-    // if (settings.theme) document.documentElement.setAttribute('data-theme', settings.theme);
-    // document.documentElement.setAttribute('data-theme', "gold");
+    loadPreferences();
 
     setupModel();
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice);
@@ -451,7 +343,7 @@ $(function () {
     setupBookmarkSupport();
     startBookmarkAutomation();
 
-    setStatus("Waiting for MIDI interface access...");
+    appendMessage("Waiting for MIDI interface access...");
 
     // noinspection JSUnresolvedFunction
     WebMidi.enable(function (err) {
@@ -470,7 +362,7 @@ $(function () {
 
             log("webmidi ok");
 
-            setStatus("WebMidi enabled.");
+            appendMessage("WebMidi enabled.");
 
             if (TRACE) {
                 // noinspection JSUnresolvedVariable

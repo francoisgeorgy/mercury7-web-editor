@@ -5,7 +5,7 @@ import {updateUI} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {toHexString} from "./utils";
 import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
-import {appendErrorMessage, appendMessage} from "./ui_messages";
+import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
 
@@ -22,7 +22,7 @@ export function setTitle(title = null) {
             ("0" + now.getUTCMinutes()).slice(-2) + "m" +
             ("0" + now.getUTCSeconds()).slice(-2) + "s";
     }
-    document.title = `Mercury7 Editor (${t})`;
+    document.title = `${MODEL.name} Editor (${t})`;
 }
 
 /**
@@ -61,7 +61,7 @@ export function initFromBookmark(updateConnectedDevice = true) {
             return true;
         } else {
             log("initFromBookmark: hash value is not a preset sysex");
-            appendErrorMessage(valid.message);
+            appendMessage(valid.message);
         }
     }
     return false;

@@ -12,6 +12,18 @@ import {getMidiInputPort} from "./midi_in";
     The .dirty flag is cleared when we receive a preset (via sysex) or when we load a preset file.
 */
 
+/**
+ * Remove all flags and highlight color from the preset selectors.
+ */
+export function resetPresetSelectors() {
+    log("resetPresetSelectors()");
+    $(".preset-id").removeClass("dirty on sel");
+    dirty_cache = false;
+}
+
+/**
+ * Remove any dirty indicator from the preset selectors
+ */
 export function setPresetClean() {
     log("setPresetClean()");
     $(".preset-id").removeClass("dirty");
@@ -20,6 +32,9 @@ export function setPresetClean() {
 
 let dirty_cache = true;    // setPresetDirty is called each time a control is modified. This variable is used to minimize the DOM changes.
 
+/**
+ * Show the dirty indicator on the current preset selector
+ */
 export function setPresetDirty() {
     if (!dirty_cache) {
         log("setPresetDirty()");
@@ -29,35 +44,22 @@ export function setPresetDirty() {
     }
 }
 
-/*
-export function setPresetOutOfSync() {
-    log("setPresetOutOfSync()");
-    $(".preset-id").removeClass("sync");
-}
+/**
+ * Update the preset selector to show the current pedal's preset.
+ * Highlight the preset selector if the communication is up with the pedal.
+ */
+export function updatePresetSelector() {
+    log("updatePresetSelector()");
 
-export function setPresetInSync() {
-    log("setPresetInSync()");
-    $(".preset-id").removeClass("sync");
-    $(`#pc-${MODEL.getPresetNumber()}`).addClass("sync");
-}
-*/
-
-export function showPreset() {
-    log("showPreset()");
-    // $(".preset-id").removeClass("on dirty");
-    // $(`#pc-${MODEL.getPresetNumber()}`).addClass("on");
+    resetPresetSelectors();
 
     const n = MODEL.getPresetNumber();
-
-    $(".preset-id").removeClass("on sel dirty");
-    dirty_cache = false;    // because we removed .dirty
-
-    $(`#pc-${n}`).addClass("sel");
-
-    if (getMidiInputPort() && getMidiOutputPort()) {
-        $(`#pc-${n}`).addClass("on");
-    } else {
-        $(".preset-id").removeClass("on");
+    if (n) {
+        const e = $(`#pc-${n}`);
+        e.addClass("sel");
+        if (getMidiInputPort() && getMidiOutputPort()) {
+            e.addClass("on");
+        }
     }
 }
 
@@ -67,15 +69,9 @@ export function showPreset() {
  */
 export function presetSet(n) {
     log(`presetSet(${n})`);
-
     MODEL.setPresetNumber(n);
-
-    showPreset();
-    // setPresetDirty();
-
+    updatePresetSelector();
     sendPC(n);
-    // setPresetOutOfSync();   // by default, dirty and out of sync
-    // showPreset();
 }
 
 export function presetInc() {

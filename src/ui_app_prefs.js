@@ -1,7 +1,7 @@
 import {log} from "./debug";
 import {closeGlobalSettingsPanel} from "./ui_global_settings";
 import {hideDefaultPanel, showDefaultPanel} from "./ui";
-import {saveSettings, preferences, SETTINGS_UPDATE_URL} from "./preferences";
+import {savePreferences, preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
 import {startBookmarkAutomation, stopBookmarkAutomation} from "./url";
@@ -46,32 +46,32 @@ export function setupAppPreferences() {
     });
 
     $("#settings_clear_midi_channel").click(() => {
-        saveSettings({midi_channel: 1});
+        savePreferences({midi_channel: 1});
         $("#midi-channel").val(preferences.midi_channel);
         displayCurrentPreferences();
     });
 
     $("#settings_clear_input_device").click(() => {
-        saveSettings({input_device_id: null});
+        savePreferences({input_device_id: null});
         updateSelectDeviceList();
         displayCurrentPreferences();
     });
 
     $("#settings_clear_output_device").click(() => {
-        saveSettings({output_device_id: null});
+        savePreferences({output_device_id: null});
         updateSelectDeviceList();
         displayCurrentPreferences();
     });
 
     $("#init_from_bookmark").on("change", function() {
         // noinspection JSUnresolvedVariable
-        saveSettings({init_from_bookmark: parseInt(event.target.value, 10)});
+        savePreferences({init_from_bookmark: parseInt(event.target.value, 10)});
     });
 
     $("#update_URL").on("change", function() {
         // noinspection JSUnresolvedVariable
         const v = parseInt(event.target.value, 10);
-        saveSettings({update_URL: v});
+        savePreferences({update_URL: v});
         if (v === SETTINGS_UPDATE_URL.every_second) {
             startBookmarkAutomation();
         } else {
@@ -82,7 +82,7 @@ export function setupAppPreferences() {
     $("#settings_zoom_level").on("change", function() {
         // noinspection JSUnresolvedVariable
         const v = parseInt(event.target.value, 10);
-        saveSettings({zoom_level: v});
+        savePreferences({zoom_level: v});
     });
 
     return true;

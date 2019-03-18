@@ -1,15 +1,13 @@
 import {showMidiInActivity} from "./ui_midi_activity";
-import {showPreset, setPresetClean} from "./ui_presets";
+import {updatePresetSelector} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
 import {getLastSendTime} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
 import {
-    appendErrorMessage,
-    clearError,
-    monitorMessage,
-    setStatus
+    appendMessage,
+    monitorMessage
 } from "./ui_messages";
 import {toHexString} from "./utils";
 import {SYSEX_GLOBALS, SYSEX_PRESET} from "./model/sysex";
@@ -57,8 +55,7 @@ export function handlePC(msg) {
     showMidiInActivity();
     logIncomingMidiMessage("PC", [msg.value]);
     MODEL.setPresetNumber(msg.value);
-    setPresetClean();
-    showPreset();
+    updatePresetSelector();
 }
 
 /**
@@ -120,17 +117,15 @@ export function handleSysex(data) {
         case SYSEX_PRESET:
             resetExp();
             updateUI();
-            setPresetClean();
-            clearError();
-            setStatus(`Preset ${MODEL.meta.preset_id.value} sysex received.`);
+            // setPresetClean();
+            appendMessage(`Preset ${MODEL.meta.preset_id.value} sysex received.`);
             break;
         case SYSEX_GLOBALS:
             updateGlobalSettings();
-            clearError();
-            setStatus(`Global config settings received.`);
+            appendMessage(`Global config settings received.`);
             break;
         default:
-            appendErrorMessage(valid.message);
+            appendMessage(valid.message);
     }
 
 }

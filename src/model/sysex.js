@@ -126,7 +126,6 @@ export function validate(data) {
  * @param data
  */
 function decodeMeta(data) {
-    // console.log("decodeMeta", data, meta);
     meta.preset_id.value = data[meta.preset_id.sysex.offset]
 }
 
@@ -136,8 +135,6 @@ function decodeMeta(data) {
  * @param controls
  */
 function decodeControls(data, controls) {
-
-    // console.groupCollapsed("decodeSysExControls");
 
     for (let i = 0; i < controls.length; i++) {
 
