@@ -516,14 +516,14 @@
                     <div></div>
                     <div class="grid-3x3 grid-default-gap">
                         <div>channel: </div>
-                        <div id="settings_midi_channel"></div>
-                        <div><button id="settings_clear_midi_channel">clear</button></div>
+                        <div id="prefs_midi_channel"></div>
+                        <div><button id="prefs_clear_midi_channel">clear</button></div>
                         <div>input device: </div>
-                        <div id="settings_input_device"></div>
-                        <div><button id="settings_clear_input_device">clear</button></div>
+                        <div id="prefs_input_device"></div>
+                        <div><button id="prefs_clear_input_device">clear</button></div>
                         <div>output device: </div>
-                        <div id="settings_output_device"></div>
-                        <div><button id="settings_clear_output_device">clear</button></div>
+                        <div id="prefs_output_device"></div>
+                        <div><button id="prefs_clear_output_device">clear</button></div>
                     </div>
                     <div>
                     </div>
@@ -531,13 +531,13 @@
 
                 <div class="settings-rows">
                     <div class="g0">
-                        INITIALIZE FROM BOOKMARK
+                        INITIALIZE FROM URL
                     </div>
                     <div></div>
                     <div>
-                        <select id="init_from_bookmark">
-                            <option value="0">NO (init from the device and ignore bookmark)</option>
-                            <option value="1">YES (and set values to the device)</option>
+                        <select id="init_from_URL">
+                            <option value="0">NO (init from the device and ignore URL)</option>
+                            <option value="1">YES (and send values to the pedal)</option>
                         </select>
                     </div>
                     <div>
@@ -554,7 +554,7 @@
                             <option value="0">manually (with the URL menu entry)</option>
                             <option value="1">automatically after each randomization</option>
                             <option value="2">automatically after each init</option>
-                            <option value="4">automatically after each randomization or init</option>
+                            <option value="4">automatically after each randomization, init or preset load</option>
                             <option value="8">automatically every 500ms</option>
                         </select>
                     </div>
@@ -568,7 +568,7 @@
                     </div>
                     <div></div>
                     <div>
-                        <select id="settings_zoom_level">
+                        <select id="prefs_zoom_level">
                             <option value="0">small</option>
                             <option value="1">default</option>
                             <option value="2">large</option>

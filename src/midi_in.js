@@ -107,7 +107,7 @@ export function isSysexEcho(data) {
 export function handleSysex(data) {
 
     if (isSysexEcho(data)) {
-        log("handleSysex: ignore sysex echo");
+        log("%chandleSysex: ignore sysex echo", "color:red;font-weight:bold");
         suppress_sysex_echo = null;
         return;
     }
