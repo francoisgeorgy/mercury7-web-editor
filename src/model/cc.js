@@ -127,7 +127,7 @@ function defineControls() {
     control[control_id.lo_freq] = { // 19,
         name: "Lo Freq",
         human: _percent,
-        init_value: 127,
+        init_value: 102,
         sysex: {
             offset: 12,
             mask: [0x7F]
@@ -154,7 +154,7 @@ function defineControls() {
     control[control_id.hi_freq] = { // 21,
         name: "Hi Freq",
         human: _percent,
-        init_value: 127,
+        init_value: 102,
         sysex: {
             offset: 14,
             mask: [0x7F]
