@@ -136,6 +136,8 @@ function decodeMeta(data) {
  */
 function decodeControls(data, controls) {
 
+    // log("decodeControls", toHexString(data, ' '));
+
     for (let i = 0; i < controls.length; i++) {
 
         if (typeof controls[i] === "undefined") continue;
@@ -149,6 +151,8 @@ function decodeControls(data, controls) {
         // let final_value = 0;
         let final_value = controls[i].human(raw_value);
 
+        // log(`cc ${i} value:  ${raw_value.toString(16)}`);
+
         controls[i]["raw_value"] = raw_value;
         controls[i]["value"] = final_value;
 
@@ -160,20 +164,20 @@ function decodeControls(data, controls) {
 
             if (sysex.offset >= data.length) {
                 // if second values not present in sysex, than we simply use the first values
+                log("value2 not present");
             } else {
                 raw_value = data[sysex.offset] & sysex.mask[0];
                 final_value = controls[i].human(raw_value);
             }
 
+            // log(`cc ${i} value2: ${raw_value.toString(16)}`);
+
             controls[i]["raw_value2"] = raw_value;
             controls[i]["value2"] = final_value;
         }
-
-        // console.log(`decodeSysExControls: cc=${i} 0x${i.toString(16)}, offset=0x${sysex.offset.toString(16)}, v=${raw_value} 0x${raw_value.toString(16)} ${control[i].name}`);
-
+        //console.log(`decodeSysExControls: cc=${i} 0x${i.toString(16)}, offset=0x${sysex.offset.toString(16)}, v=${raw_value} 0x${raw_value.toString(16)} ${control[i].name}`);
     }
 
-    // console.groupEnd();
 }
 
 function decodeGlobals(data, globals) {
@@ -230,7 +234,7 @@ export function decodeSysex(data) {
  */
 export function getPreset(complete = true) {
 
-    const data = new Uint8Array(complete ? 37 : 32);
+    const data = new Uint8Array(complete ? 39 : 34);
 
     let i = 0;
 
@@ -265,23 +269,24 @@ export function getPreset(complete = true) {
     data[i++] = control[control_id.swell].raw_value;
     data[i++] = control[control_id.algorithm].raw_value;            // 23
 
+    data[i++] = 0;                                                  // 24 (always 0)
+    data[i++] = 0;                                                  // 25 (always 0)
+
     // values 2 (EXP)
-    data[i++] = control[control_id.space_decay].raw_value;          // 24
-    data[i++] = control[control_id.modulate].raw_value;
-    data[i++] = control[control_id.mix].raw_value;
-    data[i++] = control[control_id.lo_freq].raw_value;
-    data[i++] = control[control_id.pitch_vector].raw_value;
-    data[i++] = control[control_id.hi_freq].raw_value;
-    data[i++] = control[control_id.predelay].raw_value;
-    data[i++] = control[control_id.mod_speed].raw_value;
-    data[i++] = control[control_id.pitch_vector_mix].raw_value;     // 32
-    data[i++] = control[control_id.density].raw_value;
-    data[i++] = control[control_id.attack_time].raw_value;
-    data[i++] = control[control_id.vibrato_depth].raw_value;        // 35
+    data[i++] = control[control_id.space_decay].raw_value2;         // 26
+    data[i++] = control[control_id.modulate].raw_value2;
+    data[i++] = control[control_id.mix].raw_value2;
+    data[i++] = control[control_id.lo_freq].raw_value2;
+    data[i++] = control[control_id.pitch_vector].raw_value2;
+    data[i++] = control[control_id.hi_freq].raw_value2;
+    data[i++] = control[control_id.predelay].raw_value2;            // 32
+    data[i++] = control[control_id.mod_speed].raw_value2;
+    data[i++] = control[control_id.pitch_vector_mix].raw_value2;    // 34
+    data[i++] = control[control_id.density].raw_value2;
+    data[i++] = control[control_id.attack_time].raw_value2;
+    data[i++] = control[control_id.vibrato_depth].raw_value2;       // 37
 
-    if (complete) data[i] = SYSEX_END_BYTE;                         // 36
-
-    // log(data, meta.preset_id.value);
+    if (complete) data[i] = SYSEX_END_BYTE;                         // 38
 
     return data;
 }

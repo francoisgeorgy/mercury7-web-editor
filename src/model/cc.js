@@ -87,27 +87,27 @@ function defineControls() {
     };
     control[control_id.space_decay] = { // 16,
         name: "Space Decay",
-        init_value: 80,
+        init_value: 63,
         human: _percent,
         sysex: {
             offset: 9,
             mask: [0x7F]
         },
         sysex2: {
-            offset: 24,
+            offset: 26,
             mask: [0x7F]
         }
     };
     control[control_id.modulate] = { // 17,
         name: "Modulate",
-        init_value: 13,
+        init_value: 0,
         human: _percent,
         sysex: {
             offset: 10,
             mask: [0x7F]
         },
         sysex2: {
-            offset: 25,
+            offset: 27,
             mask: [0x7F]
         }
     };
@@ -120,7 +120,7 @@ function defineControls() {
             mask: [0x7F]
         },
         sysex2: {
-            offset: 26,
+            offset: 28,
             mask: [0x7F]
         }
     };
@@ -133,7 +133,7 @@ function defineControls() {
             mask: [0x7F]
         },
         sysex2: {
-            offset: 27,
+            offset: 29,
             mask: [0x7F]
         }
     };
@@ -147,7 +147,7 @@ function defineControls() {
             mask: [0x7F]
         },
         sysex2: {
-            offset: 28,
+            offset: 30,
             mask: [0x7F]
         }
     };
@@ -160,7 +160,7 @@ function defineControls() {
             mask: [0x7F]
         },
         sysex2: {
-            offset: 29,
+            offset: 31,
             mask: [0x7F]
         }
     };
@@ -171,41 +171,15 @@ function defineControls() {
             mask: [0x7F]
         },
         sysex2: {
-            offset: 30,
+            offset: 32,
             mask: [0x7F]
         }
     };
     control[control_id.mod_speed] = { // 23,
         name: "Mod Speed",
-        init_value: 21,
+        init_value: 0,
         sysex: {
             offset: 16,
-            mask: [0x7F]
-        },
-        sysex2: {
-            offset: 31,
-            mask: [0x7F]
-        }
-    };
-    control[control_id.pitch_vector_mix] = { // 24,
-        name: "Pitch Vector Mix",
-        init_value: 89,
-        human: _percent,
-        sysex: {
-            offset: 17,
-            mask: [0x7F]
-        },
-        sysex2: {
-            offset: 32,
-            mask: [0x7F]
-        }
-    };
-    control[control_id.density] = { //  25,
-        name: "Density",
-        human: _percent,
-        init_value: 127,
-        sysex: {
-            offset: 18,
             mask: [0x7F]
         },
         sysex2: {
@@ -213,15 +187,41 @@ function defineControls() {
             mask: [0x7F]
         }
     };
+    control[control_id.pitch_vector_mix] = { // 24,
+        name: "Pitch Vector Mix",
+        init_value: 0,
+        human: _percent,
+        sysex: {
+            offset: 17,
+            mask: [0x7F]
+        },
+        sysex2: {
+            offset: 34,
+            mask: [0x7F]
+        }
+    };
+    control[control_id.density] = { //  25,
+        name: "Density",
+        human: _percent,
+        init_value: 0,
+        sysex: {
+            offset: 18,
+            mask: [0x7F]
+        },
+        sysex2: {
+            offset: 35,
+            mask: [0x7F]
+        }
+    };
     control[control_id.attack_time] = { // 26,
         name: "Attack Time",
-        init_value: 63,
+        init_value: 0,
         sysex: {
             offset: 19,
             mask: [0x7F]
         },
         sysex2: {
-            offset: 34,
+            offset: 36,
             mask: [0x7F]
         }
     };
@@ -234,7 +234,7 @@ function defineControls() {
             mask: [0x7F]
         },
         sysex2: {
-            offset: 35,
+            offset: 37,
             mask: [0x7F]
         }
     };
