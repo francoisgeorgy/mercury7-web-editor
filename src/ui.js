@@ -6,7 +6,7 @@ import {
     setupSwitches, tapDown, tapRelease,
     updateBypassSwitch,
     updateMomentaryStompswitch,
-    updateOptionSwitch
+    updateOptionSwitch, updateSwellSwitch
 } from "./ui_switches";
 import {fullUpdateDevice, savePreset, sendPC, updateDevice} from "./midi_out";
 import {VERSION} from "./constants";
@@ -77,6 +77,11 @@ export function updateControl(control_type, control_number, value, mappedValue) 
 
         if (/*control_type === "cc" &&*/ num === 14) {    //TODO: replace this hack with better code
             updateBypassSwitch(value);
+            return;
+        }
+
+        if (/*control_type === "cc" &&*/ num === 28) {    //TODO: replace this hack with better code
+            updateSwellSwitch(value);
             return;
         }
 
@@ -193,6 +198,25 @@ function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSe
     $("#midi-output-device").change((event) => outputSelectionCallback(event.target.value));
 }
 
+function setupControlsHelp() {
+    $(".header.infos").hover(
+        function() {
+            // console.log(this);
+            const cc = parseInt($(this).attr("data-infos"), 10);
+            if (!Number.isInteger(cc)) {
+                log(`setupControlsHelp: invalid CC: ${cc}`);
+                return;
+            }
+            log(cc);
+            $("#control-infos").text(MODEL.control[cc].infos);
+        },
+        function() {
+            console.log(this);
+            $("#control-infos").text("");
+        }
+    );
+}
+
 function setupMenu() {
     log("setupMenu()");
     $("#menu-randomize").click(randomize);
@@ -235,6 +259,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupGlobalSettings();
     setupAppPreferences();
     setupHelpPanel();
+    // setupControlsHelp(); //TODO
     setupMenu();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();

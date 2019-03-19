@@ -255,7 +255,8 @@ function defineControls() {
         sysex: {
             offset: 23,
             mask: [0x7F]
-        }
+        },
+        infos: "Ultraplate: inspiring & lush plate with a fat build"
     };
     control[control_id.swell] = { // 28,
         name: "Swell",

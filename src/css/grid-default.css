@@ -111,6 +111,7 @@ html {
     grid-column: calc(var(--controls-col-start) + 0);
 }
 
+/*
 #C2 {
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 1);
@@ -119,6 +120,11 @@ html {
 #C3 {
     grid-row: calc(var(--controls-row-start) + 2);
     grid-column: calc(var(--controls-col-start) + 2);
+}
+*/
+#C2C3 {
+    grid-row: calc(var(--controls-row-start) + 2);
+    grid-column: calc(var(--controls-col-start) + 1) / span 2;
 }
 
 #C4 {
