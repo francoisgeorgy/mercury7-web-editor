@@ -4,7 +4,7 @@ import {hideDefaultPanel, showDefaultPanel} from "./ui";
 import {savePreferences, preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
-import {startBookmarkAutomation, stopBookmarkAutomation} from "./url";
+import {startUrlAutomation, stopUrlAutomation} from "./url";
 import {closeHelpPanel} from "./ui_help";
 
 const CONTAINER = "#app-preferences";
@@ -14,12 +14,12 @@ function displayCurrentPreferences() {
     const port_in = preferences.input_device_id ? WebMidi.getInputById(preferences.input_device_id) : null;
     // noinspection JSUnresolvedFunction
     const port_out = preferences.output_device_id ? WebMidi.getOutputById(preferences.output_device_id) : null;
-    $("#settings_midi_channel").text(preferences.midi_channel);
-    $("#settings_input_device").text(port_in ? port_in.name : "-");
-    $("#settings_output_device").text(port_out ? port_out.name : "-");
+    $("#prefs_midi_channel").text(preferences.midi_channel);
+    $("#prefs_input_device").text(port_in ? port_in.name : "-");
+    $("#prefs_output_device").text(port_out ? port_out.name : "-");
     $("#update_URL").val(preferences.update_URL);
-    $("#init_from_bookmark").val(preferences.init_from_bookmark);
-    $("#settings_zoom_level").val(preferences.zoom_level);
+    $("#init_from_URL").val(preferences.init_from_URL);
+    $("#prefs_zoom_level").val(preferences.zoom_level);
 }
 
 export function openAppPreferencesPanel() {
@@ -45,43 +45,43 @@ export function setupAppPreferences() {
         displayCurrentPreferences();
     });
 
-    $("#settings_clear_midi_channel").click(() => {
+    $("#prefs_clear_midi_channel").click(() => {
         savePreferences({midi_channel: 1});
         $("#midi-channel").val(preferences.midi_channel);
         displayCurrentPreferences();
     });
 
-    $("#settings_clear_input_device").click(() => {
+    $("#prefs_clear_input_device").click(() => {
         savePreferences({input_device_id: null});
         updateSelectDeviceList();
         displayCurrentPreferences();
     });
 
-    $("#settings_clear_output_device").click(() => {
+    $("#prefs_clear_output_device").click(() => {
         savePreferences({output_device_id: null});
         updateSelectDeviceList();
         displayCurrentPreferences();
     });
 
-    $("#init_from_bookmark").on("change", function() {
+    $("#init_from_URL").on("change", function() {
         // noinspection JSUnresolvedVariable
-        savePreferences({init_from_bookmark: parseInt(event.target.value, 10)});
+        savePreferences({init_from_URL: parseInt(event.target.value, 10)}); //TODO: check validity of value
     });
 
     $("#update_URL").on("change", function() {
         // noinspection JSUnresolvedVariable
-        const v = parseInt(event.target.value, 10);
+        const v = parseInt(event.target.value, 10);     //TODO: check validity of value
         savePreferences({update_URL: v});
         if (v === SETTINGS_UPDATE_URL.every_second) {
-            startBookmarkAutomation();
+            startUrlAutomation();
         } else {
-            stopBookmarkAutomation();
+            stopUrlAutomation();
         }
     });
 
-    $("#settings_zoom_level").on("change", function() {
+    $("#prefs_zoom_level").on("change", function() {
         // noinspection JSUnresolvedVariable
-        const v = parseInt(event.target.value, 10);
+        const v = parseInt(event.target.value, 10);     //TODO: check validity of value
         savePreferences({zoom_level: v});
     });
 

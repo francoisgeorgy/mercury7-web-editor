@@ -13,6 +13,8 @@ import {toHexString} from "./utils";
 import {SYSEX_GLOBALS, SYSEX_PRESET} from "./model/sysex";
 import {updateGlobalSettings} from "./ui_global_settings";
 import {resetExp} from "./ui_exp";
+import {updateUrl} from "./url";
+import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 
 let midi_input = null;
 
@@ -117,6 +119,9 @@ export function handleSysex(data) {
         case SYSEX_PRESET:
             resetExp();
             updateUI();
+            if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
+                updateUrl();
+            }
             // setPresetClean();
             appendMessage(`Preset ${MODEL.meta.preset_id.value} sysex received.`);
             break;

@@ -12,6 +12,12 @@ import {getMidiInputPort} from "./midi_in";
     The .dirty flag is cleared when we receive a preset (via sysex) or when we load a preset file.
 */
 
+let dirty_cache = true;    // setPresetDirty is called each time a control is modified. This variable is used to minimize the DOM changes.
+
+export function isPresetClean() {
+    return !dirty_cache;
+}
+
 /**
  * Remove all flags and highlight color from the preset selectors.
  */
@@ -29,8 +35,6 @@ export function setPresetClean() {
     $(".preset-id").removeClass("dirty");
     dirty_cache = false;
 }
-
-let dirty_cache = true;    // setPresetDirty is called each time a control is modified. This variable is used to minimize the DOM changes.
 
 /**
  * Show the dirty indicator on the current preset selector

@@ -12,7 +12,7 @@ import {setupUI} from "./ui";
 import {updateSelectDeviceList} from "./ui_selects";
 import {getMidiInputPort, handleCC, handlePC, handleSysex, setMidiInputPort} from "./midi_in";
 import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
-import {hashSysexPresent, initFromURL, setupBookmarkSupport, startBookmarkAutomation} from "./url";
+import {hashSysexPresent, initFromUrl, setupUrlSupport, startUrlAutomation} from "./url";
 import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
 import "./css/main.css";
@@ -46,6 +46,36 @@ if (browser) {
 function setupModel() {
     MODEL.init();
     MODEL.setDeviceId(preferences.midi_channel - 1);   // the device_id is the midi channel - 1
+}
+
+//==================================================================================================================
+
+/**
+ * If no preset select (preset is 0) then read the preset from the pedal, otherwise display a message to the user.
+ */
+function sync() {
+
+    if (getMidiInputPort() && getMidiOutputPort()) {
+
+        if (hashSysexPresent() && preferences.init_from_URL === 1) {
+            log("sync: init from URL");
+
+            initFromUrl();
+
+        } else {
+            if (MODEL.getPresetNumber() === 0) {
+                log("sync: no preset yet, will request preset in 200ms");
+                // we wait 100ms before sending a read preset request because we, sometimes, receive 2 connect events. TODO: review connection events management
+                appendMessage("Request current preset.");
+                window.setTimeout(requestPreset, 200);
+            } else {
+                log("sync: preset is > 0, set preset dirty");
+                setPresetDirty();
+                appendMessage(`Select a preset to sync the editor or use the Send command to sync the ${MODEL.name}.`, true);
+            }
+        }
+    }
+
 }
 
 //==================================================================================================================
@@ -112,6 +142,11 @@ function disconnectInputPort() {
     }
 }
 
+/**
+ *
+ * @param id
+ * @returns {boolean} true if a different device has been connected, false otherwise
+ */
 function connectInputDevice(id) {
 
     log(`connectInputDevice(${id})`);
@@ -143,7 +178,7 @@ function connectInputDevice(id) {
     const port = WebMidi.getInputById(id);
     if (port) {
         connectInputPort(port);
-        syncIfNoPreset();
+        sync();
         return true;
     } else {
         appendMessage(`Connect the ${MODEL.name} or check the MIDI channel.`);
@@ -178,7 +213,7 @@ function disconnectOutputPort() {
 /**
  *
  * @param id
- * @returns {boolean} true if new connection has been setup, otherwise false
+ * @returns {boolean} true if a different device has been connected, false otherwise
  */
 function connectOutputDevice(id) {
 
@@ -212,7 +247,7 @@ function connectOutputDevice(id) {
     const port = WebMidi.getOutputById(id);
     if (port) {
         connectOutputPort(port);
-        syncIfNoPreset();
+        sync();
         return true;
     }
 
@@ -231,12 +266,12 @@ function deviceConnected(info) {
 
     if (TRACE) console.group("%cdeviceConnected event", "color: yellow; font-weight: bold", info.port.id, info.port.type, info.port.name);
 
-    let input_connected = false;
-    let output_connected = false;
+    // let input_connected = false;
+    // let output_connected = false;
 
     if (info.port.type === 'input') {
         if ((getMidiInputPort() === null) && (info.port.id === preferences.input_device_id)) {
-            input_connected = connectInputDevice(preferences.input_device_id);
+            /*input_connected =*/ connectInputDevice(preferences.input_device_id);
         } else {
             log("deviceConnected: input device ignored");
         }
@@ -244,7 +279,7 @@ function deviceConnected(info) {
 
     if (info.port.type === 'output') {
         if ((getMidiOutputPort() === null) && (info.port.id === preferences.output_device_id)) {
-            output_connected = connectOutputDevice(preferences.output_device_id);
+            /*output_connected =*/ connectOutputDevice(preferences.output_device_id);
         } else {
             log("deviceConnected: output device ignored");
         }
@@ -252,12 +287,14 @@ function deviceConnected(info) {
 
     updateSelectDeviceList();
 
+/*
     if (input_connected && output_connected && getMidiInputPort() && getMidiOutputPort()) {
         log("deviceConnected: we can sync; check if hash present");
-        if (hashSysexPresent() && preferences.init_from_bookmark === 1) {
-            initFromURL();
+        if (hashSysexPresent() && preferences.init_from_URL === 1) {
+            initFromUrl();
         }
     }
+*/
 
     if (TRACE) console.groupEnd();
 }
@@ -278,30 +315,6 @@ function deviceDisconnected(info) {
         disconnectOutputPort();
     }
     updateSelectDeviceList();
-}
-
-//==================================================================================================================
-
-/**
- * If no preset select (preset is 0) then read the preset from the pedal, otherwise display a message to the user.
- * Do not call this method from
- */
-function syncIfNoPreset() {
-
-    if (getMidiInputPort() && getMidiOutputPort()) {
-        if (MODEL.getPresetNumber() === 0) {
-            //TODO: ask user (or set in pref) if we always request the current preset when connecting to Enzo
-            //TODO: init from URL if sysex present ?
-            // we wait 100ms before sending a read preset request because we, sometimes, receive 2 connect events. TODO: review connection events management
-            appendMessage("Request current preset in 200ms");
-            log("syncIfNoPreset: will request preset in 200ms");
-            window.setTimeout(requestPreset, 200);
-        } else {
-            setPresetDirty();
-            appendMessage(`Select a preset to sync the editor or use the Send command to sync the ${MODEL.name}.`, true);
-        }
-    }
-
 }
 
 //==================================================================================================================
@@ -340,8 +353,8 @@ $(function () {
         }
     }
 
-    setupBookmarkSupport();
-    startBookmarkAutomation();
+    setupUrlSupport();
+    startUrlAutomation();
 
     appendMessage("Waiting for MIDI interface access...");
 
@@ -356,7 +369,7 @@ $(function () {
             appendMessage("-- PLEASE ENABLE MIDI IN YOUR BROWSER --");
 
             // Even we don't have MIDI available, we update at least the UI:
-            initFromURL(false);
+            initFromUrl(false);
 
         } else {
 

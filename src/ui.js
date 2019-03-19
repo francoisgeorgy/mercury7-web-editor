@@ -18,7 +18,7 @@ import {openCreditsDialog, printPreset} from "./ui_dialogs";
 import {openMidiWindow} from "./ui_midi_window";
 import {initZoom, zoomIn, zoomOut} from "./ui_zoom";
 import {preferences} from "./preferences";
-import {toggleBookmarkAutomation, updateBookmark} from "./url";
+import {toggleUrlAutomation, updateUrl} from "./url";
 import {setupGlobalSettings, openGlobalSettingsPanel} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
 import {setupAppPreferences, openAppPreferencesPanel} from "./ui_app_prefs";
@@ -181,7 +181,7 @@ export function updateModelAndUI(control_type, control_number, value) {
 }
 
 function reloadWithSysexParam() {
-    updateBookmark();
+    updateUrl();
     return false;   // disable the normal href behavior when called from an onclick event
 }
 
@@ -211,7 +211,7 @@ function setupMenu() {
     $("#menu-about").click(openCreditsDialog);
     $("#menu-zoom-in").click(zoomIn);
     $("#menu-zoom-out").click(zoomOut);
-    $("#url-auto-toggle").click(toggleBookmarkAutomation);
+    $("#url-auto-toggle").click(toggleUrlAutomation);
     $("#preset-file").change(readFile);     // in load-preset-dialog
 }
 

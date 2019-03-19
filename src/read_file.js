@@ -6,6 +6,8 @@ import * as lity from "lity";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_END_BYTE, SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
+import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
+import {updateUrl} from "./url";
 
 //==================================================================================================================
 // Preset file handling
@@ -52,6 +54,9 @@ export function readFile() {
                 updateUI();
                 fullUpdateDevice();
                 // setPresetClean();
+                if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
+                    updateUrl();
+                }
 
             } else {
                 log("unable to set value from file; file is not a preset sysex", valid);

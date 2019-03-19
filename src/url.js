@@ -8,7 +8,13 @@ import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
+// import {isPresetClean} from "./ui_presets";
 
+/**
+ * Update the window title to get a nice bookmark
+ *
+ * @param title
+ */
 export function setTitle(title = null) {
     let t;
     if (title) {
@@ -17,12 +23,15 @@ export function setTitle(title = null) {
         const now = new Date();
         t = now.getUTCFullYear() + "-" +
             ("0" + (now.getUTCMonth() + 1)).slice(-2) + "-" +
-            ("0" + now.getUTCDate()).slice(-2) + "-" +
+            ("0" + now.getUTCDate()).slice(-2) + " " +
             ("0" + now.getUTCHours()).slice(-2) + "h" +
             ("0" + now.getUTCMinutes()).slice(-2) + "m" +
             ("0" + now.getUTCSeconds()).slice(-2) + "s";
+        // if (isPresetClean()) {
+        // t = 'preset ' + MODEL.getPresetNumber() + ' - ' + t;
+        // }
     }
-    document.title = `${MODEL.name} Editor (${t})`;
+    document.title = `${MODEL.name} - preset ${MODEL.getPresetNumber()} - ${t}`;
 }
 
 /**
@@ -47,7 +56,7 @@ export function hashSysexPresent() {
  * @param updateConnectedDevice
  * @returns {boolean} true if we found a valid hash to initialize from
  */
-export function initFromURL(updateConnectedDevice = true) {
+export function initFromUrl(updateConnectedDevice = true) {
     log(`initFromURL(${updateConnectedDevice})`);
     if (hashSysexPresent()) {
         const s = window.location.hash.substring(1);
@@ -56,7 +65,7 @@ export function initFromURL(updateConnectedDevice = true) {
             log("initFromURL: sysex loaded in device");
             resetExp();
             updateUI();
-            appendMessage("Initialization from the URL.");
+            appendMessage("Initialization from the URL.", false, false);
             if (updateConnectedDevice) fullUpdateDevice();
             return true;
         } else {
@@ -69,14 +78,14 @@ export function initFromURL(updateConnectedDevice = true) {
 
 let hashUpdatedByAutomation = false;
 
-export function updateBookmark(window_title = null) {
-    // log("updateBookmark()");
+export function updateUrl(window_title = null) {
+    // log("updateURL()");
     // window.location.href.split("?")[0] is the current URL without the query-string if any
     // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx());
     // window.location.hash = "" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx())
     const h = toHexString(MODEL.getPreset());
     if (h !== window.location.hash.substring(1)) {      // update hash only when it changes
-        log(`updateBookmark: set hash to ${h}`);
+        log(`updateUrl: set hash to ${h}`);
         hashUpdatedByAutomation = true;
         window.location.hash = h;   // this will trigger a window.onhashchange event
         setTitle(window_title);
@@ -85,33 +94,33 @@ export function updateBookmark(window_title = null) {
 
 let automationHandler = null;
 
-export function startBookmarkAutomation(force = false) {
+export function startUrlAutomation(force = false) {
     if (force || (preferences.update_URL === SETTINGS_UPDATE_URL.every_second)) {
-        log("startBookmarkAutomation");
+        log("startUrlAutomation");
         if (automationHandler) {
             // clear existing before re-starting
             clearInterval(automationHandler);
         }
-        automationHandler = setInterval(updateBookmark, 500);
+        automationHandler = setInterval(updateUrl, 500);
         $("#url-auto-toggle").addClass("running");
     }
 }
 
-export function stopBookmarkAutomation() {
+export function stopUrlAutomation() {
     if (automationHandler) {
-        log("stopBookmarkAutomation");
+        log("stopUrlAutomation");
         clearInterval(automationHandler);
         automationHandler = null;
     }
     $("#url-auto-toggle").removeClass("running");
 }
 
-export function toggleBookmarkAutomation() {
-    log("toggleBookmarkAutomation");
+export function toggleUrlAutomation() {
+    log("toggleUrlAutomation");
     if (automationHandler) {
-        stopBookmarkAutomation();
+        stopUrlAutomation();
     } else {
-        startBookmarkAutomation(true);
+        startUrlAutomation(true);
     }
 }
 
@@ -123,13 +132,13 @@ export function locationHashChanged(e) {
     }
     if (!hashUpdatedByAutomation) {
         // the hash has been modified by the user using the browser history; stop the automation.
-        stopBookmarkAutomation();
-        initFromURL();
+        stopUrlAutomation();
+        initFromUrl();
     }
     hashUpdatedByAutomation = false;
 }
 
-export function setupBookmarkSupport() {
+export function setupUrlSupport() {
     window.onhashchange = locationHashChanged;
 /*
     window.onpopstate = function(event) {

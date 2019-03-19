@@ -19,15 +19,14 @@ const MAX_MESSAGE_DISPLAYED = 200;
 
 let last_message = "";  // used to ignore duplicates
 
-export function appendMessage(msg, bold = false) {
+export function appendMessage(msg, bold = false, ignore_duplicates = true) {
 
     if (!msg) return;
-    if (msg === last_message) return;
+    if (ignore_duplicates && (msg === last_message)) return;
 
     last_message = msg;
 
     if (messages >= MAX_MESSAGE_DISPLAYED) {
-        console.log("remove first");
         $("#messages-list div:first-child").remove();
     }
 
