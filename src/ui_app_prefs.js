@@ -85,5 +85,12 @@ export function setupAppPreferences() {
         savePreferences({zoom_level: v});
     });
 
+    $(`#display_description-${preferences.display_infos}`).prop('checked', true);
+
+    $("input[name='display_description']").on("change", function(){
+        const v = $("input[name='display_description']:checked").val();
+        savePreferences({display_infos: parseInt(v)})
+    });
+
     return true;
 }

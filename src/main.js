@@ -120,7 +120,7 @@ function connectInputPort(input) {
         .on("controlchange", preferences.midi_channel, function(e) {
             handleCC(e.data);
         })
-        .on("sysex", preferences.midi_channel, function(e) {
+        .on("sysex", preferences.midi_channel, function(e) {    //FIXME: use undefined for the channel
             handleSysex(e.data);
         });
 

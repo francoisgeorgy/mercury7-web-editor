@@ -496,73 +496,87 @@
                     EDITOR PREFERENCES
                 </div>
 
-                <div class="settings-rows">
-                    <div class="g0">
-                        MIDI
-                    </div>
-                    <div></div>
-                    <div class="grid-3x3 grid-default-gap">
-                        <div>channel: </div>
-                        <div id="prefs_midi_channel"></div>
-                        <div><button id="prefs_clear_midi_channel">clear</button></div>
-                        <div>input device: </div>
-                        <div id="prefs_input_device"></div>
-                        <div><button id="prefs_clear_input_device">clear</button></div>
-                        <div>output device: </div>
-                        <div id="prefs_output_device"></div>
-                        <div><button id="prefs_clear_output_device">clear</button></div>
-                    </div>
-                    <div>
-                    </div>
-                </div>
+                <div class="settings-columns">
 
-                <div class="settings-rows">
-                    <div class="g0">
-                        INITIALIZE FROM URL
-                    </div>
-                    <div></div>
-                    <div>
-                        <select id="init_from_URL">
-                            <option value="0">NO (init from the device and ignore URL)</option>
-                            <option value="1">YES (and send values to the pedal)</option>
-                        </select>
-                    </div>
-                    <div>
-                    </div>
-                </div>
+                    <div class="settings-rows">
 
-                <div class="settings-rows">
-                    <div class="g0">
-                        UPDATE URL
-                    </div>
-                    <div></div>
-                    <div>
-                        <select id="update_URL">
-                            <option value="0">manually (with the URL menu entry)</option>
-                            <option value="1">automatically after each randomization</option>
-                            <option value="2">automatically after each init</option>
-                            <option value="4">automatically after each randomization, init or preset load</option>
-                            <option value="8">automatically every 500ms</option>
-                        </select>
-                    </div>
-                    <div>
-                    </div>
-                </div>
+                        <div class="g0">
+                            MIDI
+                        </div>
+                        <div></div>
+                        <div class="grid-3x3 grid-default-gap">
+                            <div>channel: </div>
+                            <div id="prefs_midi_channel"></div>
+                            <div><button id="prefs_clear_midi_channel">clear</button></div>
+                            <div>input device: </div>
+                            <div id="prefs_input_device"></div>
+                            <div><button id="prefs_clear_input_device">clear</button></div>
+                            <div>output device: </div>
+                            <div id="prefs_output_device"></div>
+                            <div><button id="prefs_clear_output_device">clear</button></div>
+                        </div>
+                        <div>
+                        </div>
 
-                <div class="settings-rows">
-                    <div class="g0">
-                        EDITOR SIZE
+                        <div class="g0">
+                            INITIALIZE FROM URL
+                        </div>
+                        <div></div>
+                        <div>
+                            <select id="init_from_URL">
+                                <option value="0">NO (init from the device and ignore URL)</option>
+                                <option value="1">YES (and send values to the pedal)</option>
+                            </select>
+                        </div>
+                        <div>
+                        </div>
+
+                        <div class="g0">
+                            UPDATE URL
+                        </div>
+                        <div></div>
+                        <div>
+                            <select id="update_URL">
+                                <option value="0">manually (with the URL menu entry)</option>
+                                <option value="1">automatically after each randomization</option>
+                                <option value="2">automatically after each init</option>
+                                <option value="4">automatically after each randomization, init or preset load</option>
+                                <option value="8">automatically every 500ms</option>
+                            </select>
+                        </div>
+                        <div>
+                        </div>
+
+                </div>
+                <div class="settings-columns">
+
+                    <div class="settings-rows">
+                        <div class="g0">
+                            DISPLAY CONTROL DESCRIPTION
+                        </div>
+                        <div></div>
+                        <div>
+                            <input type="radio" name="display_description" id="display_description-1" value="1">Yes</input>
+                            <input type="radio" name="display_description" id="display_description-0" value="0">No</input>
+                        </div>
+                        <div>
+                        </div>
+
+                        <div class="g0">
+                            EDITOR SIZE
+                        </div>
+                        <div></div>
+                        <div>
+                            <select id="prefs_zoom_level">
+                                <option value="0">small</option>
+                                <option value="1">default</option>
+                                <option value="2">large</option>
+                            </select>
+                        </div>
+                        <div>
+                        </div>
                     </div>
-                    <div></div>
-                    <div>
-                        <select id="prefs_zoom_level">
-                            <option value="0">small</option>
-                            <option value="1">default</option>
-                            <option value="2">large</option>
-                        </select>
-                    </div>
-                    <div>
-                    </div>
+
                 </div>
 
             </div>

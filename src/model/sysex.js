@@ -136,8 +136,6 @@ function decodeMeta(data) {
  */
 function decodeControls(data, controls) {
 
-    // log("decodeControls", toHexString(data, ' '));
-
     for (let i = 0; i < controls.length; i++) {
 
         if (typeof controls[i] === "undefined") continue;
@@ -151,8 +149,6 @@ function decodeControls(data, controls) {
         // let final_value = 0;
         let final_value = controls[i].human(raw_value);
 
-        // log(`cc ${i} value:  ${raw_value.toString(16)}`);
-
         controls[i]["raw_value"] = raw_value;
         controls[i]["value"] = final_value;
 
@@ -164,18 +160,17 @@ function decodeControls(data, controls) {
 
             if (sysex.offset >= data.length) {
                 // if second values not present in sysex, than we simply use the first values
-                log("value2 not present");
             } else {
                 raw_value = data[sysex.offset] & sysex.mask[0];
                 final_value = controls[i].human(raw_value);
             }
 
-            // log(`cc ${i} value2: ${raw_value.toString(16)}`);
-
             controls[i]["raw_value2"] = raw_value;
             controls[i]["value2"] = final_value;
         }
-        //console.log(`decodeSysExControls: cc=${i} 0x${i.toString(16)}, offset=0x${sysex.offset.toString(16)}, v=${raw_value} 0x${raw_value.toString(16)} ${control[i].name}`);
+
+        // console.log(`decodeSysExControls: cc=${i} 0x${i.toString(16)}, offset=0x${sysex.offset.toString(16)}, v=${raw_value} 0x${raw_value.toString(16)} ${control[i].name}`);
+
     }
 
 }

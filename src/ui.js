@@ -201,7 +201,7 @@ function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSe
 function setupControlsHelp() {
     $(".header.infos").hover(
         function() {
-            // console.log(this);
+            if (!preferences.display_infos) return;
             const cc = parseInt($(this).attr("data-infos"), 10);
             if (!Number.isInteger(cc)) {
                 log(`setupControlsHelp: invalid CC: ${cc}`);
@@ -212,7 +212,7 @@ function setupControlsHelp() {
             // $("#control-infos").text(MODEL.control[cc].name + " : " + MODEL.control[cc].infos);
         },
         function() {
-            console.log(this);
+            if (!preferences.display_infos) return;
             $("#control-infos").text("");
         }
     );
