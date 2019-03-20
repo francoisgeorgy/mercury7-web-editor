@@ -2,7 +2,7 @@ import {log, TRACE, warn} from "./debug";
 import * as WebMidi from "webmidi";
 import MODEL from "./model";
 import {detect} from "detect-browser";
-import {URL_PARAM_SIZE, VERSION} from "./constants";
+import {URL_PARAM_BG, URL_PARAM_SIZE, VERSION} from "./constants";
 import {loadPreferences, savePreferences, preferences} from "./preferences";
 import {
     appendMessage,
@@ -351,6 +351,12 @@ $(function () {
         if (z !== preferences.zoom_level) {
             initZoom(z);
         }
+    }
+
+    const bg = Utils.getParameterByName(URL_PARAM_BG);
+    if (bg) {
+        //TODO: check bg validity
+        $("body").css("background-color", bg);
     }
 
     setupUrlSupport();
