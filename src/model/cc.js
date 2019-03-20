@@ -82,8 +82,9 @@ const _algorithm = function (v) {
 
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
-        name: "Exp pedal",
-        human: _0_100
+        name: "Expression pedal",
+        human: _0_100,
+        infos: "The expression pedal works by morphing between two complete settings of all of the knob values (even the second layer knob values)."
     };
     control[control_id.space_decay] = { // 16,
         name: "Space Decay",
@@ -96,7 +97,8 @@ function defineControls() {
         sysex2: {
             offset: 26,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets decay energy of the reverberation space."
     };
     control[control_id.modulate] = { // 17,
         name: "Modulate",
@@ -109,7 +111,8 @@ function defineControls() {
         sysex2: {
             offset: 27,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets overall modulation depth of the reverb algorithm."
     };
     control[control_id.mix] = { // 18,
         name: "Mix",
@@ -122,10 +125,11 @@ function defineControls() {
         sysex2: {
             offset: 28,
             mask: [0x7F]
-        }
+        },
+        infos: "Adjusts Mix of Dry and Wet signals in analog domain."
     };
     control[control_id.lo_freq] = { // 19,
-        name: "Lo Freq",
+        name: "Lo Frequency",
         human: _percent,
         init_value: 102,
         sysex: {
@@ -135,7 +139,8 @@ function defineControls() {
         sysex2: {
             offset: 29,
             mask: [0x7F]
-        }
+        },
+        infos: "Changes how low frequencies react in the reverb algorithm. When set closer to max, low frequency decay times are extended giving the impression of a larger room."
     };
     control[control_id.pitch_vector] = { // 20,
         name: "Pitch Vector",
@@ -149,7 +154,8 @@ function defineControls() {
         sysex2: {
             offset: 30,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets intra tank pitch interval to: Octave down, slight pitch up, slight pitch down, 5th up, or octave up. Decay, Pitch Vector Mix & Hi/Lo Freq controls all interact to sculpt the intra-tank pitch regeneration."
     };
     control[control_id.hi_freq] = { // 21,
         name: "Hi Freq",
@@ -162,7 +168,8 @@ function defineControls() {
         sysex2: {
             offset: 31,
             mask: [0x7F]
-        }
+        },
+        infos: "Changes how high frequencies react in the reverb algorithm and alters the high frequency absorption of the reverb space. Set lower to reduce the amount of time high frequencies live in the algorithm for a more natural room reverb."
     };
     control[control_id.predelay] = { // 22,
         name: "Predelay",
@@ -173,7 +180,8 @@ function defineControls() {
         sysex2: {
             offset: 32,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets amount of time that elapses before the onset of reverberation."
     };
     control[control_id.mod_speed] = { // 23,
         name: "Mod Speed",
@@ -185,7 +193,8 @@ function defineControls() {
         sysex2: {
             offset: 33,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets dominant modulation speed of the reverb algorithm."
     };
     control[control_id.pitch_vector_mix] = { // 24,
         name: "Pitch Vector Mix",
@@ -198,7 +207,8 @@ function defineControls() {
         sysex2: {
             offset: 34,
             mask: [0x7F]
-        }
+        },
+        infos: "Adjusts mix between intra-tank pitch shifted reflections and normal reflections inside the reverb tank."
     };
     control[control_id.density] = { //  25,
         name: "Density",
@@ -211,7 +221,8 @@ function defineControls() {
         sysex2: {
             offset: 35,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets amount of initial build up of echoes before the reverb tank."
     };
     control[control_id.attack_time] = { // 26,
         name: "Attack Time",
@@ -223,7 +234,8 @@ function defineControls() {
         sysex2: {
             offset: 36,
             mask: [0x7F]
-        }
+        },
+        infos: "Sets the attack time for the swell envelope."
     };
     control[control_id.vibrato_depth] = { // 27,
         name: "Vibrato Depth",
@@ -236,7 +248,8 @@ function defineControls() {
         sysex2: {
             offset: 37,
             mask: [0x7F]
-        }
+        },
+        infos: "Adds vibrato to the reverb input for lush, haunting trails."
     };
     control[control_id.bypass] = { // 14,
         name: "Bypass",
@@ -246,7 +259,8 @@ function defineControls() {
         sysex: {
             offset: 21,
             mask: [0x7F]
-        }
+        },
+        infos: "Processes signal when LED is ON, passes dry signal entirely in analog (buffered or relay) when OFF."
     };
     control[control_id.algorithm] = { // 29,
         name: "Algorithm",
@@ -256,7 +270,7 @@ function defineControls() {
             offset: 23,
             mask: [0x7F]
         },
-        infos: "Ultraplate: inspiring & lush plate with a fat build"
+        infos: "ULTRAPLATE: Inspiring &amp; lush plate with a fast build.\nCATHEDRA: Massive & ethereal with a slow build."
     };
     control[control_id.swell] = { // 28,
         name: "Swell",
@@ -265,7 +279,8 @@ function defineControls() {
         sysex: {
             offset: 22,
             mask: [0x7F]
-        }
+        },
+        infos: "Press to engage the auto swell function. Hold to maximize Space Decay sustain."
     };
 
     // add the missing default properties

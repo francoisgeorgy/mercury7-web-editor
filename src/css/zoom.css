@@ -52,6 +52,11 @@
 .zoom-1 #messages-list { padding: 4px 6px; height: 100px; border-radius: 4px; font-size: 0.9rem; }
 .zoom-2 #messages-list { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }
 
+.zoom-0 #C2C3 { padding: 5px 0 0 0; }
+.zoom-0 #control-infos { padding: 0px 0px 0 0px; }
+.zoom-1 #control-infos { padding: 5px 20px 0 20px; }
+.zoom-2 #control-infos { padding: 5px 20px 0 20px; }
+
 .zoom-0 .header {font-size: 0.9rem;}
 .zoom-1 .header {font-size: 1.25rem;}
 .zoom-2 .header {font-size: 1.5rem;}

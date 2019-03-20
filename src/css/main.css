@@ -36,6 +36,10 @@ body {
     color: var(--header-shortcut-text);
 }
 
+#control-infos {
+    color: var(--bt-color);
+}
+
 .close-panel-action {
     font-size: 1rem;
     cursor: pointer;

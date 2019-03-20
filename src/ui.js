@@ -208,7 +208,8 @@ function setupControlsHelp() {
                 return;
             }
             log(cc);
-            $("#control-infos").text(MODEL.control[cc].infos);
+            $("#control-infos").html("<b>" + MODEL.control[cc].name + "</b> : " + MODEL.control[cc].infos.replace("\n", "<br />"));
+            // $("#control-infos").text(MODEL.control[cc].name + " : " + MODEL.control[cc].infos);
         },
         function() {
             console.log(this);
@@ -259,7 +260,7 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupGlobalSettings();
     setupAppPreferences();
     setupHelpPanel();
-    // setupControlsHelp(); //TODO
+    setupControlsHelp();
     setupMenu();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
     setupKeyboard();
