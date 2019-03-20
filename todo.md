@@ -6,6 +6,7 @@
     
 - keyboard
     - remap keyboard by key-position, not key-value
+        - use KeyboardEvent.code (see https://www.w3.org/TR/uievents-code/, https://keyshorts.com/blogs/blog/37615873-how-to-identify-macbook-keyboard-localization)
     - bug: shift is used for two functions
 
 - connection/disconnection
@@ -15,6 +16,10 @@
     - ignore PC echo
     - scan ports and channel until an Mercury7 is found
     - check that the connected device (chosen by the user) is an Mercury7
+
+- preferences
+    - use checkboxes to set URL update preferences
+        - choices: manually, on init, on randomize, on preset change, on preset received (sysex), on file load, auto
 
 - preset
     - auto-save current preset before switching to another preset
@@ -37,7 +42,7 @@
 
 - presets management
     - file selection panel
-    - re-open
+    - re-open (last opened...)
     - favorites
 
 - menu
@@ -66,5 +71,7 @@
     - doc about keyboard shortcuts
     - state diagram for the ports connections/disconnections.
     - state diagram for the preset selection/save/dirty/...
+    - explain that sysex works even when the channel is invalid, because sysex messages are not channel-bounded.
+        - that's why we have MODEL and ID in the sysex message
     
 
