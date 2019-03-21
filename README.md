@@ -3,11 +3,11 @@ Mercury7 editor
 
 Control your Meris Mercury7 pedal with your web browser. View all the pedal's settings at once.
 
-![Mercury7 Editor screenshot](/images/screenshots/mercury7-editor-0.80.2-480px.jpg "Mercury7 Editor screenshot")
+![Mercury7 Editor screenshot](/images/screenshots/editor_480px.jpg "Mercury7 Editor screenshot")
 
 [Open the editor](https://sysex.io/mercury7/editor/)
 
-Note: some screenshots are from the Enzo editor. The Mercury7 and Enzo editor share the same features.
+Note: some screenshots are from the Enzo editor. The Mercury7 and Enzo editors share the same features.
 
 
 Requirements
