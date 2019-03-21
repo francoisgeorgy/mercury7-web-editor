@@ -184,7 +184,7 @@ This editor lets you define the values for the two positions of the expression p
 
 By default, the first set of values is always used. To edit the second sets of values you have to click on EXP **down** button:
 
-![todo](/images/screenshots/exp_edit_mode.jpg)
+![todo](/images/screenshots/exp_edit_mode1.jpg)
 
 The **down** text will be highlighted and also all the knobs names will change to lowercase. This shows you that you are now editing the second set of values.
 
