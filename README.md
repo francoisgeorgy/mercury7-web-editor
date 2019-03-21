@@ -7,6 +7,8 @@ Control your Meris Mercury7 pedal with your web browser. View all the pedal's se
 
 [Open the editor](https://sysex.io/mercury7/editor/)
 
+Note: some screenshots are from the Enzo editor. The Mercury7 and Enzo editor share the same features.
+
 
 Requirements
 ============
@@ -274,7 +276,7 @@ The editor can receive SysEx from the Mercury7. You can use this possibility to 
 You have two possibilities to synchronize the editor with the Mercury7:
 
 1. Select a preset from the editor.
-2. Or, from the Mercury7, send the preset as Sysex Data (see _Mercury7 User Manual_ page 9). 
+2. Or, from the Mercury7, send the preset as Sysex Data (see _Mercury7 User Manual_ 6). 
 To do that, press the Bypass LED switch while holding the ALT button. The editor will tell you when it has received a 
 preset as SysEx.
 
