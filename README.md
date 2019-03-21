@@ -32,6 +32,8 @@ Setup
 10. Play some sound through the Mercury7 and move a knob in the editor. The sound should change as if you have moved the same control on the Mercury7. 
 11. Enjoy your Mercury7!
 
+Note: if you can switch presets from the editor but nothing happens when you move a control, that means the input and output devices are correct but that the MIDI channel is incorrect.
+
 MIDI on the Mercury7
 ----------------
 
@@ -76,49 +78,6 @@ Once you have your Mercury7 connected to the MIDI I/O interface, you must config
     
 The editor's preferences (settings) are saved in your browser's _Local Storage_.
 
-   
-Synchronizing Mercury7 and the editor
-=================================
-
-**IMPORTANT:** please keep in mind that the editor only has the possibility to read the saved preset from Mercury7. It can not read the _current_ values ​​of the controls. 
-These values may be different from the one saved in memory (saved as a preset).
-
-Also, do not forget that each time you access a "Alt/2nd layer" value, the preset is saved (see Mercury7 User Manual Section 7, page 9). 
-
-It is therefore recommended to always select a preset from the editor as first action after having opened it. After that, 
-unless the MIDI connection is interrupted, the Mercury7 and the editor should always remain in sync.
-    
-Synchronizing with Sysex
-------------------------
-
-The editor can receive SysEx from the Mercury7. You can use this possibility to update the editor with the current preset of the Mercury7.
-You have two possibilities to synchronize the editor with the Mercury7:
-
-1. From the Mercury7, send the preset as Sysex Data (see _Mercury7 User Manual_ page 9). 
-To do that, press the Bypass LED switch while holding the ALT button. The editor will tell you when it has received a 
-preset as SysEx.
-
-![SysEx received](/images/screenshots/sysex-received.jpg "SysEx received")
-
-Note: while you hold the ALT switch, the Mercury7 will save the preset before sending it. 
- 
-Out of sync
------------
-
-The editor can become out-of-sync with the Mercury7 in that situation:
-
-1. The editor is not yet connected to Mercury7.
-2. On the Mercury7 a preset has been loaded.
-3. On the Mercury7, some values have been modified.
-4. The editor is started.
-    a. The editor will read the current preset (from the Mercury7 _memory_)
-    b. Mercury7 will send the value saved in memory for the current preset. It will not send the _current_ values of the knobs and buttons. 
-    
-To avoid this problem:
-
-- Option 1: select a preset in the editor. This will select the preset in the Mercury7. Unsaved settings will be lost. 
-- Option 2: save the current preset (with the WRITE command in the editor or the ALT switch in Mercury7) then select this preset from
-the editor. No settings will be lost and the editor will be in sync.   
 
 Presets
 =======
@@ -225,9 +184,11 @@ By default, the first set of values is always used. To edit the second sets of v
 
 ![todo](/images/screenshots/exp_edit_mode.jpg)
 
-The **down** text will be highlighted and also all the knobs names will change to lowercase. This shows you that you are now editing the second sets of values.
+The **down** text will be highlighted and also all the knobs names will change to lowercase. This shows you that you are now editing the second set of values.
 
 Note: you can also use your keyboard TAB key to toggle between the two sets of values.
+
+When you are editing the second set of of values, you can use the **copy** button to copy the first set of value to the second set.  
 
 To switch back to the default set of value, simply click **down** again. The **down** text must change back to black and the knobs names must change back to uppercase.
 
@@ -244,7 +205,7 @@ The editor can update its URL to include a representation of the current setting
 
 ![SysEx as URL hash](/images/screenshots/url_hash.jpg "SysEx as URL hash")
 
-When you access an URL containing such a parameter, then the editor will use it to set the value of the knobs and switches. It will also
+When you access an URL containing such a parameter, the editor will use it to set the value of the knobs and switches. It will also
 send these values to the Mercury7.
 
 So you can use URLs as _preset bookmarks_!
@@ -293,6 +254,51 @@ Menu commands
 |   | Prefs  | editor only | Display and edit the editor's preferences. |
 |   | Help  | editor only | Display a summary of the editor usage. |
 |   | About  | editor only | Display version and credits about the editor. |
+
+   
+Synchronizing Mercury7 and the editor
+=================================
+
+**IMPORTANT:** please keep in mind that the editor only has the possibility to read the _saved_ preset from Mercury7. It can not read the _current_ values ​​of the controls. 
+These values may be different from the one saved in memory (saved as a preset).
+
+Also, do not forget that each time you access a "Alt/2nd layer" value, the preset is saved (see Mercury7 User Manual Section 7, page 9). 
+
+It is therefore recommended to always select a preset from the editor as first action after having opened it. After that, 
+unless the MIDI connection is interrupted, the Mercury7 and the editor should always remain in sync.
+    
+Synchronizing with Sysex
+------------------------
+
+The editor can receive SysEx from the Mercury7. You can use this possibility to update the editor with the current preset of the Mercury7.
+You have two possibilities to synchronize the editor with the Mercury7:
+
+1. Select a preset from the editor.
+2. Or, from the Mercury7, send the preset as Sysex Data (see _Mercury7 User Manual_ page 9). 
+To do that, press the Bypass LED switch while holding the ALT button. The editor will tell you when it has received a 
+preset as SysEx.
+
+![SysEx received](/images/screenshots/sysex-received.jpg "SysEx received")
+
+Note: while you hold the ALT switch, the Mercury7 will save the preset before sending it. 
+ 
+Out of sync
+-----------
+
+The editor can become out-of-sync with the Mercury7 in that situation:
+
+1. The editor is not yet connected to Mercury7.
+2. On the Mercury7 a preset has been loaded.
+3. On the Mercury7, some values have been modified.
+4. The editor is started.
+    a. The editor will read the current preset (from the Mercury7 _memory_)
+    b. Mercury7 will send the value saved in memory for the current preset. It will not send the _current_ values of the knobs and buttons. 
+    
+To avoid this problem:
+
+- Option 1: select a preset in the editor. This will select the preset in the Mercury7. Unsaved settings will be lost. 
+- Option 2: save the current preset (with the WRITE command in the editor or the ALT switch in Mercury7) then select this preset from
+the editor. No settings will be lost and the editor will be in sync.   
 
 
 MIDI in the browser
