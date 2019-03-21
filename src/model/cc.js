@@ -74,9 +74,9 @@ const _pitch_vector_values = function (v) {
 
 const _algorithm = function (v) {
     if (v < 64) {
-        return "ULTRAPLATE";
+        return "ultraplate";
     } else {
-        return "CATHEDRA";
+        return "cathedra";
     }
 };
 
@@ -129,7 +129,7 @@ function defineControls() {
         infos: "Adjusts Mix of Dry and Wet signals in analog domain."
     };
     control[control_id.lo_freq] = { // 19,
-        name: "Lo Frequency",
+        name: "Low Frequency",
         human: _percent,
         init_value: 102,
         sysex: {
@@ -158,7 +158,7 @@ function defineControls() {
         infos: "Sets intra tank pitch interval to: Octave down, slight pitch up, slight pitch down, 5th up, or octave up. Decay, Pitch Vector Mix & Hi/Lo Freq controls all interact to sculpt the intra-tank pitch regeneration."
     };
     control[control_id.hi_freq] = { // 21,
-        name: "Hi Freq",
+        name: "High Frequency",
         human: _percent,
         init_value: 102,
         sysex: {

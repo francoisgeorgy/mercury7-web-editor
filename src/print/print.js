@@ -11,11 +11,24 @@ function renderControlName(control_number) {
     return MODEL.control[control_number].name;
 }
 
-function renderControlValue(control_number) {
+function renderControlValue(control_number, index = 0) {
     const c = MODEL.control[control_number];
-    let s = c.human(c.raw_value);
-    if (c.two_values) {
-        s = s + ` (${c.human(c.raw_value2)})`;
+    let s = "";
+    switch (index) {
+        case 0:
+            s = c.human(c.raw_value);
+            if (c.two_values) {
+                s = s + ` (${c.human(c.raw_value2)})`;
+            }
+            break;
+        case 1:
+            s = c.human(c.raw_value);
+            break;
+        case 2:
+            if (c.two_values) {
+                s = c.human(c.raw_value2);
+            }
+            break;
     }
     return s;
 }
@@ -26,39 +39,21 @@ function renderPreset(template, filename) {
         "f": () => () => filename ? `(${filename})` : "",
         "id": () => () => MODEL.meta.preset_id.value ? `#${MODEL.meta.preset_id.value}` : '(unsaved)',
         "n": () => text => renderControlName(text.trim().toLowerCase()),
-        "v": () => text => renderControlValue(text.trim().toLowerCase())
+        "v": () => text => renderControlValue(text.trim().toLowerCase()),
+        "v1": () => text => renderControlValue(text.trim().toLowerCase(), 1),
+        "v2": () => text => renderControlValue(text.trim().toLowerCase(), 2)
     };
     $("body").append(Mustache.render(t, p));
 }
 
 function loadTemplate(data, filename) {
     $.get("templates/preset-template.html", function(template) {
-        // let d = null;
-/*
-        if (data) {
-            for (let i=0; i<data.length; i++) {
-                if (data[i] === 240) {
-                    if (d) {
-                        if (MODEL.setValuesFromSysEx(d)) {
-                            renderPreset(template);
-                        } else {
-                            console.warn("unable to update device from sysex");
-                        }
-                    }
-                    d = [];
-                }
-                d.push(data[i]);
-            }
-        }
-*/
         let ok = true;
         if (data) {
             const valid = MODEL.setValuesFromSysEx(data);
             if (valid.type !== SYSEX_PRESET) {                  //FIXME: check logic
                 ok = false;
             }
-        // } else {
-        //     ok = true;
         }
         if (ok) {
             renderPreset(template, filename);

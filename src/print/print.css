@@ -64,8 +64,19 @@ table {
     border-collapse: collapse;
 }
 
-table tr td {
-    padding: 2mm 2mm 2mm 0;
+table tr th {
+    text-align: left;
+    border-bottom: 1px solid #aaa;
+}
+
+th, td {
+    padding: 2mm 2mm 2mm 2mm;
+}
+
+th.value,
+td.value {
+    text-align: right;
+    border-left: 1px solid #aaa;
 }
 
 .dropzone {
