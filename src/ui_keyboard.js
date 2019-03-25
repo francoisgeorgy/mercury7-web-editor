@@ -223,7 +223,7 @@ function keyDown(code, alt, shift, meta, ctrl) {
 }
 
 // noinspection JSUnusedLocalSymbols
-function keyUp(code, alt, shift, meta) {
+function keyUp(code, alt, shift, meta, ctrl) {
     switch (code) {
         case 16:                // Shift
             showExpValues(false);

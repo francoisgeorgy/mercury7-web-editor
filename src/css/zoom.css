@@ -65,6 +65,10 @@
 .zoom-1 .options-panel .header {font-size: 2rem;}
 .zoom-2 .options-panel .header {font-size: 2.5rem;}
 
+.zoom-0 .close-panel-action { bottom: 0; }
+.zoom-1 .close-panel-action { bottom: 4px; }
+.zoom-2 .close-panel-action { bottom: 4px; }
+
 .zoom-0 .controls-options-grid { margin-top: 5px; grid-gap: 3px 3px; }
 .zoom-1 .controls-options-grid { margin-top: 10px; grid-gap: 5px 5px; }
 .zoom-2 .controls-options-grid { margin-top: 15px; grid-gap: 5px 5px; }

@@ -8,7 +8,7 @@ export const SETTINGS_UPDATE_URL = {
     on_randomize: 1,
     on_init: 2,
     on_randomize_init_load: 4,
-    every_second: 8             // TODO: change to a open value
+    every_second: 8            // TODO: change to a open value
 };
 
 export let preferences = {
