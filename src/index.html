@@ -74,34 +74,34 @@
 
             <div id="options">
                 <div id="options-col-1">
-                    <div>
-                        <div>MIDI</div>
-                    </div>
-                    <div style="width:100%;text-align:left">
-                        <i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i>
-                    </div>
-                    <div>
+                    <div id="midi-in1-led">
                         input:
                     </div>
                     <div>
                         <select id="midi-input-device">
                             <option>- select -</option>
                         </select>
+                        <!--<i id="midi-in-led" class="fas fa-arrow-circle-down"></i>-->
                     </div>
-                    <div>
+                    <div id="midi-out-led">
                         output:
                     </div>
                     <div>
                         <select id="midi-output-device">
                             <option>- select -</option>
                         </select>
+                        <!--<i id="midi-out-led" class="fas fa-arrow-circle-up"></i>-->
                     </div>
                     <div>
-                        channel:
+                        <div>channel:</div>
                     </div>
+                    <!--
+                                        <div style="width:100%;text-align:left">
+                                            <i id="midi-in-led" class="fas fa-arrow-circle-down"></i> <i id="midi-out-led" class="fas fa-arrow-circle-up"></i>
+                                        </div>
+                    -->
                     <div>
                         <select id="midi-channel">
-                            <!--<option value="all">all</option>-->
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -120,9 +120,66 @@
                             <option value="16">16</option>
                         </select>
                     </div>
+
+                    <div>
+                        <div id="midi-in2-led">
+                            input 2:
+                        </div>
+                    </div>
+                    <div>
+                        <div id="midi-in2">
+                            <select id="midi-input2-device">
+                                <option>- select -</option>
+                            </select>
+                            ch:
+                            <select id="midi-input2-channel">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                            </select>
+                        </div>
+                    </div>
+<!--
+                    <div>
+                        channel:
+                    </div>
+                    <div>
+                        <select id="midi-channel">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                        </select>
+                    </div>
+-->
                 </div>
                 <div id="options-col-2">
-                    <div id="url-auto-toggle" class="paused" title="When ON, update the URL every 500ms.">REC <i class="fas fa-circle"></i></div>
+                    <div id="url-auto-toggle" class="paused" title="When ON, update the URL every 500ms."><span id="REC-text">REC </span><i class="fas fa-circle"></i></div>
                 </div>
             </div>
 
@@ -367,7 +424,7 @@
             <div id="global-settings" class="options-panel closed">
 
                 <div class="header">
-                    <span style="float:right" class="close-settings-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
+                    <span class="close-settings-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
                     GLOBAL SETTINGS
                 </div>
 
@@ -519,6 +576,39 @@
                         </div>
 
                         <div class="g0">
+                            ENABLE MIDI INPUT 2
+                        </div>
+                        <div></div>
+                        <div>
+                            <input type="radio" name="enable-midi-in2" id="enable-midi-in2-1" value="1">Yes</input>
+                            <input type="radio" name="enable-midi-in2" id="enable-midi-in2-0" value="0">No</input>
+                        </div>
+                        <div>
+                        </div>
+
+<!--
+                        <div class="g0">
+                            MIDI INPUT 2
+                        </div>
+                        <div></div>
+                        <div class="grid-3x3 grid-default-gap">
+                            <div>input 2 channel: </div>
+                            <div id="prefs_input2_channel"></div>
+                            <div><button id="prefs_clear_input2_channel">clear</button></div>
+                            <div>input 2 device: </div>
+                            <div id="prefs_input2_device"></div>
+                            <div><button id="prefs_clear_input2_device">clear</button></div>
+                        </div>
+                        <div>
+                        </div>
+-->
+
+                </div>
+                <div class="settings-columns">
+
+                    <div class="settings-rows">
+
+                        <div class="g0">
                             INITIALIZE FROM URL
                         </div>
                         <div></div>
@@ -547,10 +637,6 @@
                         <div>
                         </div>
 
-                </div>
-                <div class="settings-columns">
-
-                    <div class="settings-rows">
                         <div class="g0">
                             DISPLAY CONTROL DESCRIPTION
                         </div>

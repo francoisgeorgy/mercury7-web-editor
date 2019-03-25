@@ -15,6 +15,9 @@ export let preferences = {
     midi_channel: 1,
     input_device_id: null,      // web midi port ID
     output_device_id: null,     // web midi port ID
+    input2_channel: 1,
+    input2_device_id: null,      // web midi port ID
+    enable_midi_in2: 0,
     theme: "",                  // empty means default theme,
     zoom_level: 1,
     update_URL: SETTINGS_UPDATE_URL.on_randomize_init_load,

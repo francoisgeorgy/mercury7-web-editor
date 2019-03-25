@@ -21,7 +21,13 @@ import {preferences} from "./preferences";
 import {toggleUrlAutomation, updateUrl} from "./url";
 import {setupGlobalSettings, openGlobalSettingsPanel, toggleGlobalSettingsPanel} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
-import {setupAppPreferences, openAppPreferencesPanel, toggleAppPreferencesPanel} from "./ui_app_prefs";
+import {
+    setupAppPreferences,
+    openAppPreferencesPanel,
+    toggleAppPreferencesPanel,
+    hideMidiInput2,
+    showMidiInput2
+} from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
 import {downloadLastSysEx} from "./download";
 import {openHelpPanel, setupHelpPanel} from "./ui_help";
@@ -190,12 +196,44 @@ function reloadWithSysexParam() {
     return false;   // disable the normal href behavior when called from an onclick event
 }
 
-function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback) {
-    const c = $("#midi-channel");
-    c.change((event) => channelSelectionCallback(event.target.value));
-    c.val(preferences.midi_channel);
-    $("#midi-input-device").change((event) => inputSelectionCallback(event.target.value));
-    $("#midi-output-device").change((event) => outputSelectionCallback(event.target.value));
+function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback) {
+
+    //
+    // input 1:
+    //
+    // const c = $("#midi-channel");
+    $("#midi-channel")
+        .change((event) => channelSelectionCallback(event.target.value))
+        .val(preferences.midi_channel);
+
+    $("#midi-input-device")
+        .change((event) => inputSelectionCallback(event.target.value));
+
+    //
+    // output 1:
+    //
+    $("#midi-output-device")
+        .change((event) => outputSelectionCallback(event.target.value));
+
+    //
+    // input 2:
+    //
+    // const exp_c = $("#midi-input2-channel");
+    $("#midi-input2-channel")
+        .change((event) => input2ChannelSelectionCallback(event.target.value))
+        .val(preferences.input2_channel);
+
+    $("#midi-input2-device")
+        .change((event) => input2SelectionCallback(event.target.value));
+
+}
+
+function setupMidiInput2() {
+    if (preferences.enable_midi_in2) {
+        showMidiInput2();
+    } else {
+        hideMidiInput2();
+    }
 }
 
 function setupControlsHelp() {
@@ -244,13 +282,14 @@ function setupMenu() {
  * Initial setup of the UI.
  * Does a MODEL.init() too, but only the virtual MODEL; does not send any CC to the connected device.
  */
-export function setupUI(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback) {
+export function setupUI(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback) {
     if (TRACE) console.groupCollapsed("setupUI");
 
     $("span.version").text(VERSION);
 
     initZoom(preferences.zoom_level);
 
+    setupMidiInput2();
     setCommunicationStatus(false);
     setupPresetSelectors(handleUserAction);
     setupKnobs(handleUserAction);
@@ -258,11 +297,11 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupMomentarySwitches(tapDown, tapRelease);
     setupExp(handleUserAction);
     setupGlobalSettings();
-    setupAppPreferences();
+    setupAppPreferences(input2SelectionCallback);
     setupHelpPanel();
     setupControlsHelp();
     setupMenu();
-    setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback);
+    setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback);
     setupKeyboard();
 
     if (TRACE) console.groupEnd();

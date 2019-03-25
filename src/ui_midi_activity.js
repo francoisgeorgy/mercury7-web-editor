@@ -1,14 +1,15 @@
 
 let activity_in = false;
 
-export function showMidiInActivity() {
+export function showMidiInActivity(input_num = 1) {
     if (!activity_in) {
         activity_in = true;
-        $("#midi-in-led").addClass("on");
+        const led = $(`#midi-in${input_num}-led`);
+        led.addClass("on");
         let timeoutID = window.setTimeout(
             function () {
                 timeoutID = null;
-                $("#midi-in-led").removeClass("on");
+                led.removeClass("on");
                 activity_in = false;
             },
             500);

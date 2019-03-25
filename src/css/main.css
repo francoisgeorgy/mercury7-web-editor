@@ -57,14 +57,24 @@ body {
     color: red;
 }
 
-#midi-in-led,
+#midi-in-led-1,     /* TODO: change to class */
+#midi-in2-led,
 #midi-out-led {
     color: #999;
 }
 
-#midi-in-led.on,
+#midi-in2-led {
+    display: none;
+}
+
+#midi-in-led-1.on,
+#midi-in2-led.on,
 #midi-out-led.on {
     color: var(--midi-on)!important;
+}
+
+#midi-in2 {
+    display: none;
 }
 
 #url-auto-toggle {
@@ -137,7 +147,7 @@ body {
     background-color: var(--select-bg);
     border-color: var(--select-border);
     border-radius: 3px;
-    margin-top: -1px;
+    /*margin-top: -1px;*/
     padding: 1px;
     font-size: 0.9em;
 }
@@ -296,10 +306,11 @@ div.controls-slider {
 #options-col-1 {
     display: grid;
     grid-template-columns: auto auto;
+    align-content: start;
     justify-items: start;
     justify-content: start;
     grid-column-gap: 5px;
-    grid-row-gap: 2px;
+    grid-row-gap: 5px;
     color: var(--header-text);
 }
 
