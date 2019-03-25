@@ -54,6 +54,7 @@ export function readFile() {
                 updateUI();
                 fullUpdateDevice();
                 // setPresetClean();
+                // noinspection JSBitwiseOperatorUsage
                 if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
                     updateUrl();
                 }

@@ -19,7 +19,7 @@ import {
     setMidiInput2Port,
     setMidiInputPort
 } from "./midi_in";
-import {getMidiOutputPort, requestPreset, sendSysex, setMidiOutputPort} from "./midi_out";
+import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
 import {hashSysexPresent, initFromUrl, setupUrlSupport, startUrlAutomation} from "./url";
 import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
@@ -30,8 +30,6 @@ import "./css/grid-global-settings.css";
 import {setPresetDirty, updatePresetSelector} from "./ui_presets";
 import * as Utils from "./utils";
 import {initZoom} from "./ui_zoom";
-import {SYSEX_CMD} from "./model/constants";
-import {SYSEX_PRESET, validate} from "./model/sysex";
 
 const browser = detect();
 

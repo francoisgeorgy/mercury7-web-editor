@@ -6,8 +6,6 @@ import * as WebMidi from "webmidi";
 import {updateSelectDeviceList} from "./ui_selects";
 import {startUrlAutomation, stopUrlAutomation} from "./url";
 import {closeHelpPanel} from "./ui_help";
-import {getMidiInput2Port, setMidiInput2Port} from "./midi_in";
-import {appendMessage} from "./ui_messages";
 
 const CONTAINER = "#app-preferences";
 

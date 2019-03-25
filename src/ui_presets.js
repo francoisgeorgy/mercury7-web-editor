@@ -14,9 +14,11 @@ import {getMidiInputPort} from "./midi_in";
 
 let dirty_cache = true;    // setPresetDirty is called each time a control is modified. This variable is used to minimize the DOM changes.
 
+/*
 export function isPresetClean() {
     return !dirty_cache;
 }
+*/
 
 /**
  * Remove all flags and highlight color from the preset selectors.

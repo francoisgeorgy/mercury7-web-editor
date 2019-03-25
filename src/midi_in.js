@@ -1,7 +1,7 @@
 import {showMidiInActivity} from "./ui_midi_activity";
 import {updatePresetSelector} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
-import {getLastSendTime, sendCC, updateDevice} from "./midi_out";
+import {getLastSendTime, updateDevice} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
@@ -61,6 +61,7 @@ function monitorCC(control_number) {
 /**
  * Handle Program Change messages
  * @param msg
+ * @param input_num
  */
 export function handlePC(msg, input_num = 1) {
 
@@ -78,6 +79,7 @@ export function handlePC(msg, input_num = 1) {
 /**
  * Handle all control change messages received
  * @param msg
+ * @param input_num
  */
 export function handleCC(msg, input_num = 1) {
 
@@ -140,6 +142,7 @@ export function handleSysex(data) {
         case SYSEX_PRESET:
             resetExp();
             updateUI();
+            // noinspection JSBitwiseOperatorUsage
             if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
                 updateUrl();
             }

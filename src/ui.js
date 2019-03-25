@@ -19,11 +19,10 @@ import {openMidiWindow} from "./ui_midi_window";
 import {initZoom, zoomIn, zoomOut} from "./ui_zoom";
 import {preferences} from "./preferences";
 import {toggleUrlAutomation, updateUrl} from "./url";
-import {setupGlobalSettings, openGlobalSettingsPanel, toggleGlobalSettingsPanel} from "./ui_global_settings";
+import {setupGlobalSettings, toggleGlobalSettingsPanel} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
 import {
     setupAppPreferences,
-    openAppPreferencesPanel,
     toggleAppPreferencesPanel,
     hideMidiInput2,
     showMidiInput2
