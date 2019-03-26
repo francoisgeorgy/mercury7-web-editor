@@ -81,11 +81,13 @@ body {
     cursor: pointer;
 }
 
-.paused {
-    color: var(--paused);
+.paused,
+#url-auto-toggle i {
+    color: var(--paused)!important;
 }
-.running {
-    color: var(--running);
+.running,
+#url-auto-toggle.running i {
+    color: var(--running)!important;
 }
 
 .grid-2x1 {

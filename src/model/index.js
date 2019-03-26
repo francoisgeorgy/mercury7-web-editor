@@ -33,6 +33,10 @@ const getMappedControlValueExp = function (ctrl) {
     return ctrl.hasOwnProperty("map_raw") ? ctrl.map_raw(v) : v;
 };
 
+const supportsCC = function (control_number) {
+    return control[control_number] !== undefined;   // we could simple use !! but it's ugly.
+};
+
 /**
  * setControlValue(control_object, value)
  * setControlValue(control_type, control_number, value, boolean value2)
@@ -204,6 +208,7 @@ export default {
     getControlValueExp,                     // second value (when EXP pedal fully closed)
     getControlValueInter,                   // interpolated value (when using EXP)
     getMappedControlValueExp,
+    supportsCC,
     interpolateExpValues,                   // interpolate inter-value for controls that have two values
     copyFirstToSecondValues,
     validate: sysex.validate,               // validate a SysEx

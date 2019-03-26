@@ -83,11 +83,13 @@ export function handlePC(msg, input_num = 1) {
  */
 export function handleCC(msg, input_num = 1) {
 
-    // suppress echo:
-    const t = performance.now();
-    if (t < (getLastSendTime() + 100)) {
-        log("handleCC: ignore CC echo");
-        return;
+    // suppress echo for the input connected to the pedal):
+    if (input_num === 1) {
+        const t = performance.now();
+        if (t < (getLastSendTime() + 100)) {
+            log("handleCC: ignore CC echo");
+            return;
+        }
     }
 
     const cc = msg[1];
@@ -102,7 +104,10 @@ export function handleCC(msg, input_num = 1) {
     updateModelAndUI("cc", cc, v);
 
     if (input_num === 2) {
-        updateDevice("cc", cc, v);
+        // If we received a message on input 2, we forward it to the pedal if the pedal supports the message's CC.
+        if (MODEL.supportsCC(cc)) {
+            updateDevice("cc", cc, v);
+        }
     }
 
 }
