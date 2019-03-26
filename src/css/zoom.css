@@ -1,12 +1,11 @@
 
 #wrapper.zoom-0 {width: 700px; margin: 10px auto 0 auto; padding: 0 10px 13px 10px; border-radius: 3px; }
 #wrapper.zoom-1 {width: 1040px; margin: 20px auto 0 auto; padding: 0 10px 10px 10px; border-radius: 3px; }
-#wrapper.zoom-2 {width: calc(100vw - 20px); height: calc(100vh - (0 * 5px)); margin: 0; padding: 0 10px 0 10px; }
+/*#wrapper.zoom-2 {width: calc(100vw - 20px); height: calc(100vh - (0 * 5px)); margin: 0; padding: 0 10px 0 10px; }*/
+#wrapper.zoom-2 {width: calc(100vw - 20px); height: 100vh; margin: 0; padding: 0 10px 0 10px; }
 
-.zoom-2 #main.main-default { grid-template-rows: 40px 16vh repeat(3, calc((100vh - 40px - 20vh) / 3 )); }
-
-.zoom-2 #title { padding: 4px 4px 0 4px; }
-.zoom-2 #title .neon { font-size: 1.25rem; }
+/*.zoom-2 #main.main-default { grid-template-rows: 40px 16vh repeat(3, calc((100vh - 40px - 20vh) / 3 )); }*/
+.zoom-2 #main.main-default { grid-template-rows: 5vh 16vh repeat(3, calc((100vh - 5vh - 16vh - 10px) / 3 )); }  /* 10px is #main padding */
 
 .zoom-0 #main {font-size: 0.85rem; margin-top: 1vh; padding: 2px;}
 .zoom-1 #main {font-size: 1rem; padding: 3px;}
@@ -18,9 +17,16 @@
 
 .zoom-2 #main > div.grid-default { padding-top: 10px; }
 
+.zoom-2 #title { padding: 4px 4px 0 4px; }
+/*.zoom-2 #title .neon { font-size: 1.25rem; }*/
+/*.zoom-2 #title .neon {font-size: 2.5vh;}*/
+.zoom-2 #title .neon {font-size: 2.4vmin;}
+
 .zoom-0 .menu {font-size: 0.85rem;}
 .zoom-1 .menu {font-size: 1rem;}
-.zoom-2 .menu {font-size: 1.25rem;}
+/*.zoom-2 .menu {font-size: 1.25rem;}*/
+/*.zoom-2 .menu {font-size: 2.5vh;}*/
+.zoom-2 .menu {font-size: 2.4vmin;}
 
 .zoom-0 .menu span.menu-entry {margin-left: 10px;}
 .zoom-1 .menu span.menu-entry {margin-left: 5px;}
@@ -30,19 +36,23 @@
 
 .zoom-0 #options {font-size: 0.85rem;}
 .zoom-1 #options {font-size: 1rem;}
-.zoom-2 #options {font-size: 1.5rem;}
+/*.zoom-2 #options {font-size: 1.5rem;}*/
+.zoom-2 #options {font-size: 2.5vmin;}
 
 .zoom-0 #main select {font-size: 0.66rem; padding:0; border: none}
 .zoom-1 #main select {font-size: 0.9rem;}
-.zoom-2 #main select {font-size: 1rem;}
+/*.zoom-2 #main select {font-size: 1rem;}*/
+.zoom-2 #main select {font-size: 2vmin;}
 
 .zoom-0 #midi-input2-device {margin-right: 5px;}
 .zoom-1 #midi-input2-device {margin-right: 10px;}
-.zoom-2 #midi-input2-device {margin-right: 15px;}
+/*.zoom-2 #midi-input2-device {margin-right: 15px;}*/
+.zoom-2 #midi-input2-device {margin-right: 1vw;}
 
 .zoom-0 .preset {padding: 5px 0; font-size: 1rem;}
 .zoom-1 .preset {padding: 8px 0; font-size: 1.5rem;}
-.zoom-2 .preset {padding: 8px 0; font-size: 2rem;}
+/*.zoom-2 .preset {padding: 8px 0; font-size: 2rem;}*/
+.zoom-2 .preset {font-size: 3.5vmin;}
 
 .zoom-0 .preset > span {right: 2px; top: -4px; font-size: 120%;}
 .zoom-1 .preset > span {right: 2px; top: -8px; font-size: 120%;}
@@ -54,33 +64,44 @@
 
 .zoom-0 #messages-list { padding: 4px; height: 80px; border-radius: 3px; font-size: 0.75rem; }
 .zoom-1 #messages-list { padding: 4px 6px; height: 100px; border-radius: 4px; font-size: 0.9rem; }
-.zoom-2 #messages-list { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }
+/*.zoom-2 #messages-list { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }*/
+.zoom-2 #messages-list { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 2.4vmin; }
 
-.zoom-0 #C2C3 { padding: 5px 0 0 0; }
-/*.zoom-0 #control-infos { padding: 0px 0px 0 0px; }*/
-/*.zoom-1 #control-infos { padding: 5px 20px 0 20px; }*/
-/*.zoom-2 #control-infos { padding: 5px 20px 0 20px; }*/
 .zoom-0 #control-infos { padding: 4px; height: 80px; border-radius: 3px; font-size: 0.75rem; }
 .zoom-1 #control-infos { padding: 4px 6px; height: 100px; border-radius: 4px; font-size: 0.9rem; }
-.zoom-2 #control-infos { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }
+/*.zoom-2 #control-infos { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 1.15rem; }*/
+.zoom-2 #control-infos { padding: 6px; height: calc(16vh - 12px - 10px); border-radius: 6px; font-size: 2.4vmin; }
 
 .zoom-0 .header {font-size: 0.9rem;}
 .zoom-1 .header {font-size: 1.25rem;}
-.zoom-2 .header {font-size: 1.5rem;}
+/*.zoom-2 .header {font-size: 1.5rem;}*/
+.zoom-2 .header {font-size: 3.5vmin;}
+
+.zoom-2 .options-panel {font-size: 3vmin;}
+
+.zoom-2 .close-panel-action {font-size: 3vmin;}
+
+.zoom-2 .options-panel button {font-size: 3vmin;}
 
 .zoom-0 .options-panel .header {font-size: 1.25rem;}
 .zoom-1 .options-panel .header {font-size: 2rem;}
-.zoom-2 .options-panel .header {font-size: 2.5rem;}
+/*.zoom-2 .options-panel .header {font-size: 2.5rem;}*/
+.zoom-2 .options-panel .header {font-size: 4vmin;}
 
 .zoom-0 .close-panel-action { bottom: 0; }
 .zoom-1 .close-panel-action { bottom: 4px; }
 .zoom-2 .close-panel-action { bottom: 4px; }
 
+.zoom-2 .settings-rows {margin-bottom: 0;}
+
+.zoom-2 .g0 {margin: 2vh 0;}
+
 .zoom-0 #REC-text {display: none;}
 
 .zoom-0 .controls-options-grid { margin-top: 5px; grid-gap: 3px 3px; }
 .zoom-1 .controls-options-grid { margin-top: 10px; grid-gap: 5px 5px; }
-.zoom-2 .controls-options-grid { margin-top: 15px; grid-gap: 8px 8px; }
+/*.zoom-2 .controls-options-grid { margin-top: 15px; grid-gap: 8px 8px; }*/
+.zoom-2 .controls-options-grid { margin-top: 1vh; grid-gap: 0.5vh 0.5vh; }
 
 .zoom-0 .options { margin-top: 5px;  }
 .zoom-1 .options { margin-top: 10px; }
@@ -88,34 +109,67 @@
 
 .zoom-0 .bt {margin: 0; padding: 1px 0; font-size: 0.85rem;}
 .zoom-1 .bt {margin: 0; padding: 3px 0 2px 0; font-size: 1.25rem; }
-.zoom-2 .bt {margin: 0; padding: 3px 0 2px 0; font-size: 1.5rem;}
+/*.zoom-2 .bt {margin: 0; padding: 3px 0 2px 0; font-size: 1.5rem;}*/
+.zoom-2 .bt {margin: 0; padding: 3px 0 2px 0; font-size: 3vmin;}
 
 .zoom-0 .btx {margin: 0; padding: 1px 2px; font-size: inherit;}
 .zoom-1 .btx {margin: 0; padding: 2px 4px 1px 4px; font-size: inherit;}
-.zoom-2 .btx {margin: 0; padding: 2px 4px 1px 4px; font-size: 1.25rem;}
+/*.zoom-2 .btx {margin: 0; padding: 2px 4px 1px 4px; font-size: 1.25rem;}*/
+.zoom-2 .btx {margin: 0; padding: 2px 4px 1px 4px; font-size: 2.7vmin;}
+
+.zoom-0 .slider {height: 65px;}
+.zoom-1 .slider {height: 100px;}
+/*.zoom-2 .slider {height: 16vh;}*/
+.zoom-2 .slider {height: 16vmin;}
+
+.zoom-1 #cc-4-value {font-size: 20px;}
 
 .zoom-0 #exp-open {font-size: inherit;}
 .zoom-1 #exp-open {font-size: inherit;}
-.zoom-2 #exp-open {font-size: 1.25rem;}
+/*.zoom-2 #exp-open {font-size: 1.25rem;}*/
+.zoom-2 #exp-open {font-size: 2.7vmin;}
+
+.zoom-0 div.exp_wrapper {margin-top: 0px;}
+.zoom-1 div.exp_wrapper {margin-top: 5px;}
+/*.zoom-2 div.exp_wrapper {margin-top: 10px;}*/
+.zoom-2 div.exp_wrapper {margin-top: 1vh;}
 
 .zoom-0 .stompswitch {font-size: 3rem; margin-top: 20px;}
 .zoom-1 .stompswitch {font-size: 4rem; margin-top: 30px;}
-.zoom-2 .stompswitch {font-size: 5rem; margin-top: 40px;}
+/*.zoom-2 .stompswitch {font-size: 5rem; margin-top: 40px;}*/
+.zoom-2 .stompswitch {font-size: 10vmin; margin-top: 4vh;}
 
 .zoom-0 .knob {height: 80px; margin: 0;}
 .zoom-1 .knob {width: 125px; margin: 0;}
 .zoom-2 .knob {height: 16vh; margin: 0;}
+/*.zoom-2 .knob {height: 16vmin; margin: 0;}*/
 
 .zoom-0 .knob-value {font-size: 135%;}
 .zoom-1 .knob-value {font-size: 125%;}
 .zoom-2 .knob-value {font-size: 125%;}
 
-.zoom-0 div.exp_wrapper {margin-top: 0px;}
-.zoom-1 div.exp_wrapper {margin-top: 5px;}
-.zoom-2 div.exp_wrapper {margin-top: 10px;}
+@media screen and (max-height: 700px) {
+    .zoom-2 #options-col-1 {
+        grid-column-gap: 2px;
+        grid-row-gap: 1px;
+    }
+    .zoom-2 #main select {
+        padding: 0;
+    }
+}
 
-.zoom-0 .slider {height: 65px;}
-.zoom-1 .slider {height: 100px;}
-.zoom-2 .slider {height: 16vh;}
+@media screen and (max-width: 800px) {
+    .zoom-2 .menu span.menu-text {display: none;}
+}
 
-.zoom-1 #cc-4-value {font-size: 20px;}
+@media screen and (max-height: 500px) {
+    .zoom-2 #main.main-default {
+        grid-template-rows: 5vh 70px repeat(3, calc((100vh - 5vh - 70px - 10px) / 3));
+    }
+    .zoom-2 #messages-list {
+        height: calc(70px - 12px - 10px);
+    }
+    .zoom-2 #main > div.grid-default {
+        padding-top: 0;
+    }
+}
