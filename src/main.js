@@ -89,25 +89,39 @@ function sync() {
 //==================================================================================================================
 // MIDI CHANNEL:
 
-function setMidiChannel(midi_channel) {
+function setMidiChannel(channel) {
 
     // Note: output does not use any event listener, so there's nothing to update on the output device
     //       when we only change the MIDI channel.
 
-    log(`setMidiChannel(${midi_channel}): disconnect input`);
+    log(`setMidiChannel(${channel}): disconnect input`);
     disconnectInputPort();
 
     // Set new channel:
-    log(`setMidiChannel(${midi_channel}): set new channel`);
+    log(`setMidiChannel(${channel}): set new channel`);
 
-    const chan = parseInt(midi_channel, 10);
-
+    const chan = parseInt(channel, 10);
     savePreferences({midi_channel: chan});
 
     MODEL.setDeviceId(preferences.midi_channel - 1);    // device ID is midi channel - 1
 
-    log(`setMidiChannel(${midi_channel}): reconnect input ${preferences.input_device_id}`);
+    log(`setMidiChannel(${channel}): reconnect input ${preferences.input_device_id}`);
     connectInputDevice(preferences.input_device_id);
+}
+
+function setMidiInput2Channel(channel) {
+
+    log(`setMidiInput2Channel(${channel}): disconnect input 2`);
+    disconnectInput2Port();
+
+    // Set new channel:
+    log(`setMidiInput2Channel(${channel}): set new channel for input 2`);
+
+    const chan = parseInt(channel, 10);
+    savePreferences({input2_channel: chan});
+
+    log(`setMidiInput2Channel(${channel}): reconnect input 2 ${preferences.input2_device_id}`);
+    connectInput2Device(preferences.input2_device_id);
 }
 
 //==================================================================================================================
@@ -423,7 +437,7 @@ $(function () {
     loadPreferences();
 
     setupModel();
-    setupUI(setMidiChannel, connectInputDevice, connectOutputDevice, setMidiInput2Port, connectInput2Device);
+    setupUI(setMidiChannel, connectInputDevice, connectOutputDevice, setMidiInput2Channel, connectInput2Device);
 
     const s = Utils.getParameterByName(URL_PARAM_SIZE);
     if (s) {
