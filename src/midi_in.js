@@ -67,13 +67,25 @@ export function handlePC(msg, input_num = 1) {
 
     //TODO: almost always an echo that could be ignored
 
-    log("handlePC", msg);
-    if (msg.type !== "programchange") return;
-    // appendMessage(`Preset ${pc} selected`);  //TODO: filter if we are the one sending the PC; otherwise display the message.
+    // suppress echo for the input connected to the pedal):
+    if (input_num === 1) {
+        const t = performance.now();
+        if (t < (getLastSendTime() + 100)) {
+            log("handlePC: ignore PC echo");
+            return;
+        }
+    }
+
+    log("handlePC", msg, input_num);
+
     showMidiInActivity(input_num);
-    logIncomingMidiMessage("PC", [msg.value]);
-    MODEL.setPresetNumber(msg.value);
-    updatePresetSelector();
+
+    const pc = msg[1];
+
+    logIncomingMidiMessage("PC", [pc]);
+
+    presetSet(pc)
+
 }
 
 /**

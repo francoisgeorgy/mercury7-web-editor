@@ -176,9 +176,14 @@ export function sendPC(pc) {
     // appendMessage(`Preset ${pc} selected.`);
 
     MODEL.meta.preset_id.value = pc;
+
     if (midi_output) {
         log(`send program change ${pc}`);
+
         showMidiOutActivity();
+
+        last_send_time = performance.now(); // for echo suppression
+
         midi_output.sendProgramChange(pc, preferences.midi_channel);
 
         appendMessage(`Preset ${pc} selected.`);
