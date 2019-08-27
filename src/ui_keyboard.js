@@ -59,7 +59,7 @@ export function setupKeyboard() {
         if (e.type === "keydown") {
             keyDown(e.keyCode, e.altKey, e.shiftKey, e.metaKey, e.ctrlKey);
         } else if (e.type === "keyup") {
-            keyUp(e.keyCode, e.altKey, e.shiftKey, e.metaKey, e.ctrlKey);
+            keyUp(e.keyCode);
         }
     });
 
@@ -75,10 +75,6 @@ function animateFromTo(cc, from, to) {
 
 function animateTo(cc, to) {
     animateFromTo(cc, MODEL.getControlValue(MODEL.getControl(cc)), to);
-    // animateCC(cc, MODEL.getControlValue(MODEL.getControl(cc)), to, function (v) {
-    //     dispatch("cc", cc, v);
-    //     updateDevice("cc", cc, v);
-    // });
 }
 
 function keyDown(code, alt, shift, meta, ctrl) {
@@ -223,7 +219,7 @@ function keyDown(code, alt, shift, meta, ctrl) {
 }
 
 // noinspection JSUnusedLocalSymbols
-function keyUp(code, alt, shift, meta, ctrl) {
+function keyUp(code) {
     switch (code) {
         case 16:                // Shift
             showExpValues(false);

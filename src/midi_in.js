@@ -1,5 +1,5 @@
 import {showMidiInActivity} from "./ui_midi_activity";
-import {updatePresetSelector} from "./ui_presets";
+import {presetSet} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
 import {getLastSendTime, updateDevice} from "./midi_out";
 import {updateModelAndUI, updateUI} from "./ui";

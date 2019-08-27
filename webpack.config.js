@@ -1,7 +1,9 @@
 const webpack = require("webpack");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const WebpackAutoInject = require('webpack-auto-inject-version');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackAutoInject = require("webpack-auto-inject-version");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ZipPlugin = require('zip-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -9,23 +11,28 @@ module.exports = {
         print_bundle: "./src/print/print.js"
     },
     module: {
-        rules: [{
-            test: /\.woff$/,
-            use: {
-                loader: "url-loader",
-                options: {
-                    limit: 50000,
-                },
+        rules: [
+            {
+                test: /\.woff$/,
+                use: {
+                    loader: "url-loader",
+                    options: {
+                        limit: 50000
+                    }
+                }
             },
-        },{
-             test: /\.css$/,
-             use: ["style-loader", "css-loader"]
-        }, {
-            test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
-            loader: 'url-loader?limit=100000'
-        }]
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
+            },
+            {
+                test: /\.(jpe?g|png|gif|woff|woff2|eot|ttf|svg)(\?[a-z0-9=.]+)?$/,
+                loader: "url-loader?limit=100000"
+            }
+        ]
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",
@@ -49,16 +56,19 @@ module.exports = {
         new HtmlWebpackPlugin({
             chunks: ["app_bundle"],
             hash: true,
-            inject: 'head',
-            template: './src/index.html',
-            filename: './index.html' //relative to root of the application
+            inject: "head",
+            template: "./src/index.html",
+            filename: "./index.html" //relative to root of the application
         }),
         new HtmlWebpackPlugin({
             chunks: ["print_bundle"],
             hash: true,
-            inject: 'head',
-            template: './src/print/print.html',
-            filename: './print.html' //relative to root of the application
+            inject: "head",
+            template: "./src/print/print.html",
+            filename: "./print.html" //relative to root of the application
+        }),
+        new ZipPlugin({
+            filename: 'mercury7_editor.zip',
         })
     ],
     performance: {

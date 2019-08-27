@@ -140,9 +140,4 @@ export function locationHashChanged(e) {
 
 export function setupUrlSupport() {
     window.onhashchange = locationHashChanged;
-/*
-    window.onpopstate = function(event) {
-        log("popstate: " + document.location, event);
-    };
-*/
 }
