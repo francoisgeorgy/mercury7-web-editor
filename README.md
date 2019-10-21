@@ -5,7 +5,7 @@ Control your Meris Mercury7 pedal with your web browser. View all the pedal's se
 
 ![Mercury7 Editor screenshot](/images/screenshots/editor_480px.jpg "Mercury7 Editor screenshot")
 
-[Open the editor](https://sysex.io/mercury7/editor/)
+[Open the editor](https://studiocode.dev/mercury7/editor/)
 
 Note: some screenshots are from the Enzo editor. The Mercury7 and Enzo editors share the same features.
 
@@ -27,7 +27,7 @@ Setup
 3. Set the Mercury7's MIDI PORT.
 4. Connect the Mercury7 with the MIDI I/O interface. Use a stereo (TRS) jack cable.
 5. Connect the MIDI I/O interface to your computer.
-6. Open https://sysex.io/mercury7/editor 
+6. Open https://studiocode.dev/mercury7/editor 
 7. Allow the browser to access your MIDI devices.
 8. In the top-right of the editor, select the MIDI input and output devices corresponding to the MIDI I/O and the MIDI port corresponding to your Mercury7 MIDI port setting.
 9. Move a knob on your Mercury7, the corresponding control in the editor must react accordingly.
