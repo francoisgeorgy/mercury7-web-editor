@@ -1,0 +1,94 @@
+html {
+
+    /* http://www.0to255.com/0059d7 */
+
+    --mercury7-blue: #a28700;
+
+    --body-bg-color: #111111;
+
+    --messages-bg: #0000003b;
+    --messages-color: #ddd;
+    --messages-border: #999;
+
+    --value: #f9d000;
+    --dialog-link: #f9d000;
+    --panel-link: #f9d000;
+
+    --knob-back-border: #999;
+    --knob-value: #ddd;
+
+    --body-bg-from: #202023;
+    --body-bg-to: #3E3E46;
+
+    --title-text: #fff;
+    --header-text: #fff;
+    --header-shortcut-text: #ccc;
+
+    --menu-icon: #a4caff;
+    --menu-text: #a4caff;
+    --menu-text-hover: #fff;
+
+    --bt-color: #a4caff;
+    --bt-border: #71acff;
+    --bt-hover-color: #ffffff;
+    --bt-hover-bg-color: #4f98ff;
+    --bt-on-color: #ffffff;
+    --bt-on-bg-color: #60a2ff;
+    --bt-on-border: #cec5ff;
+
+    --sw-color: #b3a1f1;
+    --sw-on-color: #fff;
+    --sw-on-shadow-color: #fff;
+
+    --inset-shadow-color: #070707;
+
+    --select-color: #e8f1ff;
+    --select-bg: #004bb5;
+    --select-border: #71acff;
+
+    --on-color: #000;
+    --midi-on: #fff;
+    --paused: #b3a1f1;   /*#706c58;*/
+    --running: red;
+
+    --option-panel-header-color: #e8f1ff;
+    --option-panel-header-border: #ccc;
+
+}
+
+#wrapper {
+    background: url("../img/bg-logo-opacity5.png"), linear-gradient(to right, #60a2ff, #0059d7 1%, #0059d7 99%, #60a2ff);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#main > div {
+    background: transparent;
+}
+
+/*noinspection CssUnusedSymbol*/
+.knob-bg {
+    fill: url("#grad2");
+    stroke: #000;
+}
+
+/*noinspection CssUnusedSymbol*/
+.knob-value {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    stroke: none;
+    fill: var(--knob-value);
+}
+
+/*noinspection CssUnusedSymbol*/
+.knob-cursor {
+    stroke-linecap: butt;
+}
+
+.slider-value {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-size: 125%;
+    color: #fff;
+}

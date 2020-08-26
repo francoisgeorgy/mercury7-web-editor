@@ -19,7 +19,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700|Roboto+Condensed:300,400,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-<script type="text/javascript" src="app_bundle.js?40b31809e565b02e0d0c"></script></head>
+</head>
 <body>
     <div id="wrapper" class="zoom-1">
         <div id="main" class="main-default">
@@ -666,117 +666,9 @@
             <!--
                 HELP
             -->
-            <div id="help-panel" class="options-panel closed">
-
-                <div class="header">
-                    <span style="float:right" class="close-help-panel close-panel-action" title="close and display the default panel">close <i class="far fa-window-close"></i></span>
-                    HELP
-                </div>
-
-                <div id="more-help">More help online at <a href="https://studiocode.dev/applications/mercury7-editor/" target="_blank">studiocode.dev/mercury7</a>.</div>
-
-                <h4>Instructions</h4>
-                <ol style="margin-top: 0;">
-                    <li>Allow the browser to access your MIDI devices.</li>
-                    <li>Connect your Mercury7 to the MIDI adapter.</li>
-                    <li>Select input & output devices and MIDI channel.</li>
-                    <li>Move a knob on your Mercury7, the corresponding on-screen control must move accordingly.</li>
-                    <ul>
-                        <li>To move the knobs, use the mouse.</li>
-                        <li>Click and drag over the knob. You can also use the mousewheel.</li>
-                    </ul>
-                </ol>
-                <h4>Keyboard shortcuts:</h4>
-                <div style="display:flex;flex-direction: row">
-                    <ul style="margin-top: 0;">
-                        <li>ESC: close dialogs and settings</li>
-                        <li>0..9: presets 1..10</li>
-                        <li>Right, +: next preset</li>
-                        <li>Left, -: previous preset</li>
-                        <li>Alt: keep pressed to view raw values</li>
-                        <li>SPACE BAR: BYPASS on/off</li>
-                        <li>S: SWELL</li>
-                    </ul>
-                    <ul style="margin-top: 0;margin-left:30px">
-                        <li>I: Init</li>
-                        <li>R: Randomize</li>
-                        <li>PageUp: EXP max</li>
-                        <li>PageDn: EXP min</li>
-                        <li>TAB: toggle EXP values</li>
-                        <li>Shift: show EXP values</li>
-                    </ul>
-                    <ul style="margin-top: 0;margin-left:30px">
-                    </ul>
-                    <ul style="margin-top: 0;margin-left:30px">
-                        <li>Up, Dn: animate exp</li>
-                    </ul>
-                </div>
-                Use Ctrl to play animations until 50%.
-            </div>
 
         </div>
     </div>
-
-    <div id="load-preset-dialog" class="dialog lity-hide">
-        <h2>Load preset from file</h2>
-        <div id="import-dialog-instructions">
-            Select a file containing a Mercury7 preset (.syx file):
-        </div>
-        <div style="margin:10px 0;">
-            <input type="file" id="preset-file" placeholder="preset file" />
-        </div>
-        <div id="load-preset-error" style="margin:10px 0;color:red">
-        </div>
-    </div>
-
-    <div id="credits-dialog" class="dialog lity-hide">
-        <a href="https://github.com/francoisgeorgy/mercury7-web-editor">
-            <img style="position: absolute; top: 0; right: 0; border: 0;"
-                 src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"
-                 alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
-        <div style="font-size:2rem;font-weight:bold">
-            Mercury7 Editor <span class="version"></span> by <a href="https://studiocode.dev/" target="_blank" rel="noopener">StudioCode.dev</a>
-        </div>
-        <p>
-            <i class="fas fa-exclamation-triangle"></i>
-            Still under active development. Feel free to log bugs/issues.
-        </p>
-        <p>Mercury7 Editor is under <strong>GNU General Public License v3.0</strong>. <a href="https://github.com/francoisgeorgy/mercury7-web-editor/blob/master/LICENSE" target="_blank" >View license</a>.</p>
-        <h1 style="margin-top:20px">Credits</h1>
-        <p>This editor uses the following Open Source components:</p>
-        <ul>
-            <li><a href="https://github.com/cotejp/webmidi" target="_blank" rel="noopener">WebMidi.js</a> helps you tame the <a href="https://www.w3.org/TR/webmidi/" target="_blank">Web MIDI API</a>.</li>
-            <li><a href="https://github.com/francoisgeorgy/svg-knob" target="_blank" rel="noopener">svg-knob</a>: a flexible and customizable knob for your web applications.</li>
-            <li><a href="http://sorgalla.com/lity/" target="_blank" rel="noopener">Lity</a>: a lightweight, accessible and responsive lightbox.</li>
-            <li><a href="https://jquery.com/" target="_blank" rel="noopener">jQuery</a>: a fast, small, and feature-rich JavaScript library.</li>
-            <li><a href="https://yarnpkg.com/en/package/rxjs" target="_blank" rel="noopener">RxJS</a>: reactive Extensions for modern JavaScript .</li>
-            <li><a href="https://yarnpkg.com/en/package/storejs" target="_blank" rel="noopener">storejs</a>: local storage localstorage package provides a simple API.</li>
-            <li><a href="https://github.com/DamonOehlman/detect-browser" target="_blank" rel="noopener">detect-browser</a>: unpack a browser type and version from the useragent string.</li>
-            <li><a href="http://fontawesome.io/" target="_blank" rel="noopener">Font Awesome</a>: the iconic font and CSS toolkit.</li>
-            <li><a href="https://fonts.google.com/specimen/Roboto" target="_blank" rel="noopener">Roboto font</a> by Google.</li>
-        </ul>
-        <p class="trademarks">
-            This editor is not endorsed by, directly affiliated with, maintained, or sponsored by Meris.<br />
-        </p>
-    </div>
-
-    <svg xmlns="http://www.w3.org/2000/svg" width="1" height="0" style="display:block">
-        <defs>
-            <linearGradient id="grad" gradientTransform="rotate(65)">
-                <stop offset="0%" stop-color="#555" />
-                <stop offset="95%" stop-color="#222" />
-            </linearGradient>
-        </defs>
-    </svg>
-
-    <svg xmlns="http://www.w3.org/2000/svg" width="1" height="0" style="display:block">
-        <defs>
-            <linearGradient id="grad2" gradientTransform="rotate(65)">
-                <stop offset="20%" stop-color="#555" />
-                <stop offset="95%" stop-color="#000" />
-            </linearGradient>
-        </defs>
-    </svg>
 
 </body>
 </html>

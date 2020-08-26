@@ -1,0 +1,57 @@
+.config {
+
+}
+
+.config select {
+    /*color: var(--select-color);*/
+    /*background-color: var(--select-bg);*/
+    /*border-color: var(--select-border);*/
+    border-radius: 3px;
+    padding: 1px;
+    font-size: 0.9em;
+}
+
+.config .panel-closed .label {
+    margin-left: 10px;
+}
+.config .panel-closed select {
+    margin-left: 5px;
+    /*background-color: lightgoldenrodyellow;*/
+    background-color: #eeeea1;
+}
+
+.config .panel-closed select.device {
+    width: 150px;
+}
+
+.size-0 .config .panel-closed select.device {
+    width: 80px;
+}
+
+.size-1 .config .panel-closed select.device {
+    width: 176px;
+}
+
+.size-2 .config .panel-closed select.device {
+    width: 15vw;
+}
+
+.config .panel-closed .label.midi-in2 {
+    margin-left: 20px;
+}
+
+.config .midi-sync {
+    display: flex;
+}
+.config .midi-sync {
+    margin-left: 20px;
+}
+.config .midi-sync .menu-entry {
+    margin-right: 10px;
+}
+
+/*
+.size-0 #midi-input2-device {margin-right: 5px;}
+.size-1 #midi-input2-device {margin-right: 10px;}
+.size-2 #midi-input2-device {margin-right: 1vw;}
+*/

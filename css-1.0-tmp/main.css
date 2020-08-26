@@ -4,25 +4,45 @@
 }
 
 html {
+    /* html is the root element for "rem" unit */
+    /* font-size: 1.7vh; */
     user-select: none;
+    height: 100%;
 }
 
 body {
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 0;
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: 400;
     background: var(--body-bg-color);
 }
 
-/*--- utils: ---*/
-
-a {
-    text-decoration: none;
-}
-
 .hidden {
     display: none;
+}
+
+.header {
+    margin: 3px 3px 0 3px;
+    color: var(--header-text);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.header-shortcut {
+    float: right;
+    font-size: 80%;
+    padding-top: 3px;
+    color: var(--header-shortcut-text);
+}
+
+#control-infos {
+    color: var(--bt-color);
+}
+
+.close-panel-action {
+    font-size: 1rem;
+    cursor: pointer;
 }
 
 .bold {
@@ -36,6 +56,40 @@ a {
 .error {
     color: red;
 }
+
+#midi-in1-led,     /* TODO: change to class */
+#midi-in2-led,
+#midi-out-led {
+    color: var(--bt-color);
+}
+
+#midi-in2-led {
+    display: none;
+}
+
+#midi-in1-led.on,
+#midi-in2-led.on,
+#midi-out-led.on {
+    color: var(--midi-on)!important;
+}
+
+#midi-in2 {
+    display: none;
+}
+
+#url-auto-toggle {
+    cursor: pointer;
+}
+
+.paused,
+#url-auto-toggle i {
+    color: var(--paused)!important;
+}
+.running,
+#url-auto-toggle.running i {
+    color: var(--running)!important;
+}
+
 .grid-2x1 {
     display: grid;
     grid-template-rows: auto auto;
@@ -61,48 +115,6 @@ a {
     display: grid;
     grid-template-rows: auto auto auto;
     grid-template-columns: auto auto auto;
-}
-
-.lowercase {
-    text-transform: lowercase;
-}
-
-.pt-5 {
-    padding-top: 5px;
-}
-
-.pb-5 {
-    padding-bottom: 5px;
-}
-
-.pt-10 {
-    padding-top: 10px;
-}
-
-.pb-10 {
-    padding-bottom: 10px;
-}
-
-.py-5 {
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.py-10 {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.mt-10 {
-    margin-top: 10px;
-}
-
-.mr-10 {
-    margin-right: 10px;
-}
-
-.bold-400 {
-    font-weight: 400;
 }
 
 .grid-default-gap {
