@@ -2,17 +2,23 @@ import {fromEvent} from "rxjs";
 import {distinctUntilChanged, groupBy, map, merge, mergeAll} from "rxjs/operators";
 import {log} from "./debug";
 import {animateCC} from "./animate_cc";
-import {showDefaultPanel, updateControl, updateModelAndUI} from "./ui";
-import {updateDevice} from "./midi_out";
+import {updateControl, updateModelAndUI} from "./ui";
+import {setAndSendPC, updateDevice} from "./midi_out";
 import MODEL from "./model";
-import {presetDec, presetInc, presetSet} from "./ui_presets";
+import {presetDec, presetInc, selectPreset} from "./ui_presets";
 import {init, randomize} from "./presets";
 import {updateBypassSwitch, updateSwellSwitch} from "./ui_switches";
-import {closeAppPreferencesPanel} from "./ui_app_prefs";
-import {closeGlobalSettingsPanel} from "./ui_global_settings";
 import {switchKnobsDisplay} from "./ui_knobs";
-import {closeHelpPanel} from "./ui_help";
 import {showExpValues, toggleExpEditMode} from "./ui_exp";
+
+let kb_enabled = true;
+
+export function disableKeyboard() {
+    kb_enabled = false;
+}
+export function enableKeyboard() {
+    kb_enabled = true;
+}
 
 function toggleSwell() {
     const c = MODEL.control[MODEL.control_id.swell];
@@ -79,15 +85,25 @@ function animateTo(cc, to) {
 
 function keyDown(code, alt, shift, meta, ctrl) {
 
+    if (!kb_enabled) return;
+
     log("keyDown", code, alt, shift, meta);
 
     if (code === 48) {   // 0
-        presetSet(10);
+        selectPreset(10);
+        setAndSendPC(10);
         return;
     }
 
     if ((code >= 49) && (code <= 57)) {   // 1..9
-        presetSet(code - 48);
+        let pc;
+        if (shift && code <= 54) {
+            pc = code - 48 + 10;
+        } else {
+            pc = code - 48;
+        }
+        selectPreset(pc);
+        setAndSendPC(pc);
         return;
     }
 
@@ -220,6 +236,9 @@ function keyDown(code, alt, shift, meta, ctrl) {
 
 // noinspection JSUnusedLocalSymbols
 function keyUp(code) {
+
+    if (!kb_enabled) return;
+
     switch (code) {
         case 16:                // Shift
             showExpValues(false);
@@ -229,10 +248,10 @@ function keyUp(code) {
             switchKnobsDisplay(false);
             break;
         case 27:                // close all opened panel with ESC key
-            closeAppPreferencesPanel();
-            closeGlobalSettingsPanel();
-            closeHelpPanel();
-            showDefaultPanel();
+            // closeAppPreferencesPanel();
+            // closeGlobalSettingsPanel();
+            // closeHelpPanel();
+            // showDefaultPanel();
             break;
         // case 84:                // T            tap
         //     tapRelease("cc-28-127");

@@ -17,7 +17,7 @@
 .config .panel-closed select {
     margin-left: 5px;
     /*background-color: lightgoldenrodyellow;*/
-    background-color: #eeeea1;
+    background-color: var(--select-bg);
 }
 
 .config .panel-closed select.device {

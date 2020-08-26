@@ -1,5 +1,7 @@
 html {
 
+    color: #eeeeee;
+
     /* http://www.0to255.com/0059d7 */
 
     --mercury7-blue: #a28700;
@@ -28,7 +30,10 @@ html {
     --menu-text: #a4caff;
     --menu-text-hover: #fff;
 
-    --bt-color: #a4caff;
+    --menu-link: #ffffff;
+
+    /*--bt-color: #a4caff;*/
+    --bt-color: #cec5ff;
     --bt-border: #71acff;
     --bt-hover-color: #ffffff;
     --bt-hover-bg-color: #4f98ff;
@@ -43,7 +48,7 @@ html {
     --inset-shadow-color: #070707;
 
     --select-color: #e8f1ff;
-    --select-bg: #004bb5;
+    --select-bg: #cec5ff;
     --select-border: #71acff;
 
     --on-color: #000;
@@ -56,15 +61,27 @@ html {
 
 }
 
-#wrapper {
+a {
+    color: var(--menu-link);
+}
+
+/* TODO: default default bg-color for #main-grid */
+#main-grid {
     background: url("../img/bg-logo-opacity5.png"), linear-gradient(to right, #60a2ff, #0059d7 1%, #0059d7 99%, #60a2ff);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
 }
 
-#main > div {
+#main-grid > div {
     background: transparent;
+}
+
+.mg-row-border-top {
+    border-top: 1px solid #4b80c8;
+}
+.mg-row-border-bottom {
+    border-bottom: 1px solid #252e64;
 }
 
 /*noinspection CssUnusedSymbol*/

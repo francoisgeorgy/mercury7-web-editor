@@ -1,14 +1,16 @@
 import {log, TRACE} from "./debug";
 import MODEL from "./model";
 import * as Utils from "./utils";
-import {updateUI} from "./ui";
+import {updateControls} from "./ui";
 import {fullUpdateDevice} from "./midi_out";
 import {toHexString} from "./utils";
-import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
 import {appendMessage} from "./ui_messages";
 import {SYSEX_PRESET} from "./model/sysex";
 import {resetExp} from "./ui_exp";
-// import {isPresetClean} from "./ui_presets";
+import {setPresetSelectDirty, updatePresetSelector} from "./ui_presets";
+import {setLibraryPresetDirty} from "./preset_library";
+
+const ENABLE_URL_PRESET = false;
 
 /**
  * Update the window title to get a nice bookmark
@@ -16,6 +18,9 @@ import {resetExp} from "./ui_exp";
  * @param title
  */
 export function setTitle(title = null) {
+
+    if (!ENABLE_URL_PRESET) return;
+
     let t;
     if (title) {
         t = title;
@@ -38,6 +43,9 @@ export function setTitle(title = null) {
  * return true if a hash representing a valid sysex is present
  */
 export function hashSysexPresent() {
+
+    if (!ENABLE_URL_PRESET) return false;
+
     log(`hashSysexPresent: ${window.location.hash}`);
     const s = window.location.hash.substring(1);
     if (s) {
@@ -57,14 +65,21 @@ export function hashSysexPresent() {
  * @returns {boolean} true if we found a valid hash to initialize from
  */
 export function initFromUrl(updateConnectedDevice = true) {
+
+    if (!ENABLE_URL_PRESET) return false;
+
     log(`initFromURL(${updateConnectedDevice})`);
     if (hashSysexPresent()) {
         const s = window.location.hash.substring(1);
-        const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s));
+        const valid = MODEL.setValuesFromSysEx(Utils.fromHexString(s), true);
         if (valid.type === SYSEX_PRESET) {
             log("initFromURL: sysex loaded in device");
+            setPresetSelectDirty(true);   // must be done after updateUI()
+            // setLibraryPresetDirty();
             resetExp();
-            updateUI();
+            // updateUI();
+            updatePresetSelector();
+            updateControls();
             appendMessage("Initialization from the URL.", false, false);
             if (updateConnectedDevice) fullUpdateDevice();
             return true;
@@ -79,6 +94,9 @@ export function initFromUrl(updateConnectedDevice = true) {
 let hashUpdatedByAutomation = false;
 
 export function updateUrl(window_title = null) {
+
+    if (!ENABLE_URL_PRESET) return null;
+
     // log("updateURL()");
     // window.location.href.split("?")[0] is the current URL without the query-string if any
     // return window.location.href.replace("#", "").split("?")[0] + "?" + URL_PARAM_SYSEX + "=" + toHexString(MODEL.getSysEx());
@@ -90,8 +108,10 @@ export function updateUrl(window_title = null) {
         window.location.hash = h;   // this will trigger a window.onhashchange event
         setTitle(window_title);
     }
+    return h;
 }
 
+/*
 let automationHandler = null;
 
 export function startUrlAutomation(force = false) {
@@ -123,21 +143,25 @@ export function toggleUrlAutomation() {
         startUrlAutomation(true);
     }
 }
+*/
 
-export function locationHashChanged(e) {
-    if (TRACE) {
-        const a = e.oldURL.substring(e.oldURL.indexOf('#')+1);
-        const b = e.newURL.substring(e.newURL.indexOf('#')+1);
-        console.log(`locationHashChanged from ${a} to ${b}`);
-    }
+function locationHashChanged(e) {
+    // if (TRACE) {
+    //     const a = e.oldURL.substring(e.oldURL.indexOf('#')+1);
+    //     const b = e.newURL.substring(e.newURL.indexOf('#')+1);
+    //     // console.log(`locationHashChanged from ${a} to ${b}`);
+    // }
     if (!hashUpdatedByAutomation) {
         // the hash has been modified by the user using the browser history; stop the automation.
-        stopUrlAutomation();
+        // stopUrlAutomation();
         initFromUrl();
     }
     hashUpdatedByAutomation = false;
 }
 
 export function setupUrlSupport() {
+
+    if (!ENABLE_URL_PRESET) return;
+
     window.onhashchange = locationHashChanged;
 }

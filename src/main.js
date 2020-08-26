@@ -19,17 +19,27 @@ import {
     setMidiInput2Port,
     setMidiInputPort
 } from "./midi_in";
-import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
-import {hashSysexPresent, initFromUrl, setupUrlSupport, startUrlAutomation} from "./url";
+import {getMidiOutputPort, requestGlobalSettings, requestPreset, setMidiOutputPort} from "./midi_out";
+import {hashSysexPresent, initFromUrl, setupUrlSupport} from "./url";
+
 import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
 import "./css/main.css";
-import "./css/zoom.css";
-import "./css/grid-default.css";
-import "./css/grid-global-settings.css";
-import {setPresetDirty, updatePresetSelector} from "./ui_presets";
+import "./css/header.css";
+import "./css/size.css";
+import "./css/config.css";
+import "./css/info-panel.css";
+import "./css/presets.css";
+import "./css/controls.css";
+import "./css/buttons.css";
+import "./css/dialogs.css";
+import "./css/global-settings.css";
+// import "./css/grid-default.css";
+// import "./css/grid-global-settings.css";
+
+import {setPresetSelectDirty} from "./ui_presets";
 import * as Utils from "./utils";
-import {initZoom} from "./ui_zoom";
+import {initSize} from "./ui_size";
 
 const browser = detect();
 
@@ -65,22 +75,40 @@ function sync() {
 
     if (getMidiInputPort() && getMidiOutputPort()) {
 
+        log('sync()');
+
+        appendMessage("Request global settings.");
+        window.setTimeout(requestGlobalSettings, 200);
+
         if (hashSysexPresent() && preferences.init_from_URL === 1) {
             log("sync: init from URL");
 
             initFromUrl();
 
         } else {
+
+            appendMessage("Request current preset.");
+            window.setTimeout(() => {
+                log("sync: requestPreset(true)");
+                requestPreset(true);
+            }, 300);
+
+
+/*
             if (MODEL.getPresetNumber() === 0) {
                 log("sync: no preset yet, will request preset in 200ms");
                 // we wait 100ms before sending a read preset request because we, sometimes, receive 2 connect events. TODO: review connection events management
                 appendMessage("Request current preset.");
-                window.setTimeout(requestPreset, 200);
+                window.setTimeout(() => {
+                    log("sync: requestPreset(true)");
+                    requestPreset(true);
+                }, 300);
             } else {
                 log("sync: preset is > 0, set preset dirty");
                 setPresetDirty();
                 appendMessage(`Select a preset to sync the editor or use the Send command to sync the ${MODEL.name}.`, true);
             }
+*/
         }
     }
 
@@ -148,7 +176,7 @@ function connectInputPort(input) {
 
     log(`%cconnectInputPort: ${input.name} is now listening on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
     setCommunicationStatus(true);
-    updatePresetSelector();
+    // updatePresetSelector();
     appendMessage(`Input ${input.name} connected on channel ${preferences.midi_channel}.`);
 }
 
@@ -157,6 +185,11 @@ function connectInput2Port(input) {
     log(`connectInput2Port(${input.id})`);
 
     if (!input) return;
+
+    if (!preferences.input2_channel) {
+        log(`connectInput2Port(${input.id}): abort because channel if not defined`);
+        return;
+    }
 
     setMidiInput2Port(input);
 
@@ -181,7 +214,7 @@ function disconnectInputPort() {
         p.removeListener();    // remove all listeners for all channels
         setMidiInputPort(null);
         setCommunicationStatus(false);
-        updatePresetSelector();
+        // updatePresetSelector();
         appendMessage(`Input disconnected.`);
     }
 }
@@ -290,7 +323,7 @@ function connectOutputPort(output) {
     log("connectOutputPort");
     setMidiOutputPort(output);
     log(`%cconnectOutputPort: ${output.name} can now be used to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
-    updatePresetSelector();
+    // updatePresetSelector();
     appendMessage(`Output ${output.name} connected on channel ${preferences.midi_channel}.`);
 }
 
@@ -300,7 +333,7 @@ function disconnectOutputPort() {
         log("disconnectOutputPort()");
         setMidiOutputPort(null);
         log("disconnectOutputPort: connectOutputPort: midi_output can not be used anymore");
-        updatePresetSelector();
+        // updatePresetSelector();
         appendMessage(`Output disconnected.`);
     }
 }
@@ -437,6 +470,7 @@ $(function () {
     loadPreferences();
 
     setupModel();
+
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice, setMidiInput2Channel, connectInput2Device);
 
     const s = Utils.getParameterByName(URL_PARAM_SIZE);
@@ -459,7 +493,7 @@ $(function () {
                 z = 2; break;
         }
         if (z !== preferences.zoom_level) {
-            initZoom(z);
+            initSize(z);
         }
     }
 
@@ -470,7 +504,7 @@ $(function () {
     }
 
     setupUrlSupport();
-    startUrlAutomation();
+    // startUrlAutomation();
 
     appendMessage("Waiting for MIDI interface access...");
 

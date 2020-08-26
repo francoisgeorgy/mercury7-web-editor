@@ -1,8 +1,8 @@
 import {showMidiInActivity} from "./ui_midi_activity";
-import {presetSet} from "./ui_presets";
+import {selectPreset, updatePresetSelector} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
-import {getLastSendTime, updateDevice} from "./midi_out";
-import {updateModelAndUI, updateUI} from "./ui";
+import {autoLockOnImport, confirmPresetReceived, fullReadInProgress, getLastSendTime, updateDevice} from "./midi_out";
+import {updateControls, updateModelAndUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
 import {
@@ -10,11 +10,13 @@ import {
     monitorMessage
 } from "./ui_messages";
 import {toHexString} from "./utils";
-import {SYSEX_GLOBALS, SYSEX_PRESET} from "./model/sysex";
+import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "./model/sysex";
 import {updateGlobalSettings} from "./ui_global_settings";
 import {resetExp} from "./ui_exp";
 import {updateUrl} from "./url";
 import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
+import {addPresetToLibrary} from "./preset_library";
+import {device_name} from "./model/constants";
 
 let midi_input = null;
 
@@ -81,11 +83,11 @@ export function handlePC(msg, input_num = 1) {
     showMidiInActivity(input_num);
 
     const pc = msg[1];
-
     logIncomingMidiMessage("PC", [pc]);
 
-    presetSet(pc)
-
+    if (!fullReadInProgress) {
+        selectPreset(pc)
+    }
 }
 
 /**
@@ -154,11 +156,40 @@ export function handleSysex(data) {
 
     log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold", toHexString(data, ' '));
     showMidiInActivity(1);
+
+    if (fullReadInProgress) {
+
+        log("fullReadInProgress");
+
+        const valid = validate(data);
+        if (valid.type === SYSEX_PRESET) {
+
+            let id = data[8];
+
+            data[4] = 0;
+            data[8] = 0;
+
+            let n = `${device_name} ${id}`;
+            addPresetToLibrary({
+                // id: n.replace('.', '_'), // jQuery does not select if the ID contains a dot
+                id: n,
+                name: n,
+                h: toHexString(data),
+                locked: autoLockOnImport
+            })
+        }
+
+    } else {
+
+        confirmPresetReceived();
+
     const valid = MODEL.setValuesFromSysEx(data);
     switch (valid.type) {
         case SYSEX_PRESET:
             resetExp();
-            updateUI();
+                // updateUI();
+                updatePresetSelector();
+                updateControls();
             // noinspection JSBitwiseOperatorUsage
             if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
                 updateUrl();
@@ -173,5 +204,7 @@ export function handleSysex(data) {
         default:
             appendMessage(valid.message);
     }
+
+}
 
 }

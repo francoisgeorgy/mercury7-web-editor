@@ -3,7 +3,7 @@ import {log} from "./debug";
 import {preferences} from "./preferences";
 import {showMidiOutActivity} from "./ui_midi_activity";
 import {logOutgoingMidiMessage} from "./ui_midi_window";
-import {setPresetClean} from "./ui_presets";
+import {setPresetSelectorClean} from "./ui_presets";
 import {appendMessage, monitorMessage} from "./ui_messages";
 import {toHexString} from "./utils";
 import {SYSEX_CMD} from "./model/constants";
@@ -12,6 +12,10 @@ import {updateControls} from "./ui";
 import {updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
 import {getMidiInputPort, suppressSysexEcho} from "./midi_in";
+import {updateImportPresetsProgress} from "./preset_library";
+import {SYSEX_START_BYTE} from "./model/sysex";
+
+const wait = ms => new Promise(r => setTimeout(r, ms));
 
 let midi_output = null;
 
@@ -125,58 +129,57 @@ export function updateDevice(control_type, control_number, value_float, in_exp_m
 export function fullUpdateDevice() {
 
     log(`fullUpdateDevice()`);
-/*
-    if (fullUpdateRunning) return;
 
-    fullUpdateRunning = true;
+    // if (!getMidiInputPort() || !getMidiOutputPort()) {
+    //     appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
+    //     // setPresetDirty();    //FIXME: why call setPresetDirty here?
+    // }
 
-    const c = MODEL.control;
-
-    let i = -1;
-    function f() {
-        i = i + 1;
-        // skip undefined entries:
-        while (i < c.length && typeof c[i] === "undefined") {
-            i = i + 1;
-        }
-        if (i >= c.length) {
-            log(`fullUpdateDevice done`);
-            fullUpdateRunning = false;
-            if (!silent && midi_output) {
-                appendMessage("Current settings sent to the pedal.")
-            }
-        } else {
-            // log(`fullUpdateDevice: send CC ${i}`);
-            if (!onlyChanged) {
-                sendCC(c[i], false);
-            }
-            setTimeout(f, 40);
-        }
-    }
-
-    f();
-*/
     sendSysex(MODEL.getPreset(false));
 
-    if (!getMidiInputPort() || !getMidiOutputPort()) {
-        appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
-        // setPresetDirty();    //FIXME: why call setPresetDirty here?
+    return false;   // if used in a href onclick
     }
 
+function sendPC(number) {
+
+    if (midi_output) {
+        log(`send program change ${number}`);
+
+        showMidiOutActivity();
+
+        last_send_time = performance.now(); // for echo suppression
+
+        midi_output.sendProgramChange(number, preferences.midi_channel);
+
+        // appendMessage(`Preset ${number} selected.`);
+
+        // if (!getMidiInputPort()) {
+        //     appendMessage("Unable to receive the preset from the pedal.");
+        // }
+
+    } else {
+        appendMessage(`Unable to send the PC command to the pedal.`);
+        log(`(send program change ${number})`);
+    }
 }
 
 /**
  * 1. Send a PC command
  * 2. Wait 50 ms
  * 3. Read the preset (send sysex read preset command)
- * @param pc
+ * @param number
  */
-export function sendPC(pc) {
+export function setAndSendPC(number) {
+
+    log(`setAndSendPC(${number})`);
+
     // setPresetNumber(pc);
     // appendMessage(`Preset ${pc} selected.`);
 
-    MODEL.meta.preset_id.value = pc;
+    MODEL.meta.preset_id.value = number;
 
+    sendPC(number);
+/*
     if (midi_output) {
         log(`send program change ${pc}`);
 
@@ -196,13 +199,15 @@ export function sendPC(pc) {
         appendMessage(`Unable to send the PC command to the pedal.`);
         log(`(send program change ${pc})`);
     }
+*/
+    appendMessage(`Preset ${number} selected.`);
 
     if (!getMidiInputPort() || !getMidiOutputPort()) {
         appendMessage(`--- PLEASE CONNECT THE ${MODEL.name.toUpperCase()} ---`);
     }
 
-    logOutgoingMidiMessage("PC", [pc]);
-    setTimeout(() => requestPreset(), 50);  // we wait 50 ms before requesting the preset
+    logOutgoingMidiMessage("PC", [number]);
+    setTimeout(() => requestPreset(true), 50);  // we wait 50 ms before requesting the preset
 
     //TODO: after having received the preset, set BYPASS to 127 (ON)
 
@@ -211,9 +216,17 @@ export function sendPC(pc) {
 export function sendSysex(data) {
     if (midi_output) {
         log(`%csendSysex: ${data.length} bytes: ${toHexString(data, ' ')}`, "color:red;font-weight:bold");
+
+        let dataArray;
+        if (data[0] === SYSEX_START_BYTE) {
+            dataArray = Array.from(data).slice(1 + MODEL.meta.signature.sysex.value.length, -1);
+        } else {
+            dataArray = Array.from(data);
+        }
+
         showMidiOutActivity();
         suppressSysexEcho(data);
-        midi_output.sendSysex(MODEL.meta.signature.sysex.value, Array.from(data));
+        midi_output.sendSysex(MODEL.meta.signature.sysex.value, dataArray);
 
         // setPresetClean();
     } else {
@@ -228,16 +241,18 @@ function sendSysexCommand(command) {
     sendSysex([MODEL.meta.device_id.value, MODEL.meta.group_id.value, MODEL.meta.model_id.value, command]);
 }
 
-export function requestPreset() {
+export function requestPreset(check = false) {
     log("requestPreset");
+    if (check) checkPresetReceived();
     sendSysexCommand(SYSEX_CMD.preset_request);
+    return false;   // if used in a href onclick
 }
 
 export function savePreset() {
     log("savePreset");
     sendSysexCommand(SYSEX_CMD.preset_write);
     // cleanPreset();
-    setPresetClean();
+    setPresetSelectorClean();
 }
 
 export function requestGlobalSettings() {
@@ -245,5 +260,86 @@ export function requestGlobalSettings() {
     sendSysexCommand(SYSEX_CMD.globals_request);
 }
 
+export async function writePreset(number, data) {
+    log("writePreset");
+    sendPC(number);
+    await wait(50);
+    sendSysex(data);
+    await wait(100);
+    sendSysexCommand(SYSEX_CMD.preset_write);
+    await wait(100);
+}
+
+/*
+    typical timings:
+
+    08:29:12.802	To Scarlett 18i20 USB	Program	2	2
+    08:29:12.805	From Scarlett 18i20 USB	Program	2	2
+    08:29:12.853	To Scarlett 18i20 USB	SysEx		Micon Audio Electronics 9 bytes	F0 00 20 10 01 01 03 25 F7
+    08:29:12.872	From Scarlett 18i20 USB	SysEx		Micon Audio Electronics 26 bytes	F0 00 20 10 01 01 03 26 02 7F 7F 79 2A 00 3F 41 00 00 00 00 00 7F 7F 7F 00 F7
+    08:29:12.880	From Scarlett 18i20 USB	SysEx		Micon Audio Electronics 9 bytes	F0 00 20 10 01 01 03 25 F7
+    08:29:12.953	To Scarlett 18i20 USB	Program	2	3
+    08:29:12.958	From Scarlett 18i20 USB	Program	2	3
+    08:29:13.008	To Scarlett 18i20 USB	SysEx		Micon Audio Electronics 9 bytes	F0 00 20 10 01 01 03 25 F7
+    08:29:13.026	From Scarlett 18i20 USB	SysEx		Micon Audio Electronics 39 bytes	F0 00 20 10 01 01 03 26 03 40 6A 7F 7F 00 1C 00 00 34 00 00 57 7F 00 5F 7F 16 00 7B 7F 7F 3F 00…
+    08:29:13.038	From Scarlett 18i20 USB	SysEx		Micon Audio Electronics 9 bytes	F0 00 20 10 01 01 03 25 F7
+*/
+
+export let fullReadInProgress = false;
+export let autoLockOnImport = false;
+
+export async function requestAllPresets() {
+
+    const FROM = 1;
+    const TO = 16;
+
+    log("requestAllPresets");
+
+    if (!midi_output) {
+        return;
+    }
+
+    fullReadInProgress = true;
+
+    for (let i=FROM; i<=TO; i++) {
+        log(`requestAllPresets: PC ${i}`);
+        updateImportPresetsProgress(FROM, TO, i);
+        midi_output.sendProgramChange(i, preferences.midi_channel);
+        await wait(50);
+        requestPreset()
+        await wait(200);
+    }
+
+    wasPresetReceived();
+
+    log("requestAllPresets done");
+    fullReadInProgress = false;
+}
+
+//=============================================================================
+// This is a kind of communication check. We use the result to set the
+// background color of the preset selector.
+
+let presetReceived = false;
+
+export function confirmPresetReceived() {
+    log('confirmPresetReceived: set presetReceived=true');
+    presetReceived = true;
+}
+
+function wasPresetReceived() {
+    log('wasPresetReceived?', presetReceived);
+    if (presetReceived) {
+        $('.preset').addClass("comm-ok");
+    } else {
+        $('.preset').removeClass("comm-ok");
+    }
+}
+
+function checkPresetReceived() {
+    presetReceived = false;
+    // after 200 ms we check that we have received the preset
+    setTimeout(() => wasPresetReceived(), 200);
+}
 
 

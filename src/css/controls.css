@@ -1,3 +1,40 @@
+/*--- MAIN GRID ---*/
+
+#wrapper {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: center;*/
+    /*min-height: 100vh;*/
+    margin: 0;
+    padding: 0;
+    /*background-color: lightgoldenrodyellow;*/
+}
+
+#main-grid {
+    /*flex-grow: 1;*/
+}
+#main-grid {
+    display: grid;
+    grid-template-columns: 20px repeat(6, 1fr) 20px;
+    align-content: center;
+    /*background-color: lightgoldenrodyellow;*/
+    /*background-image: url("../img/bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: center;*/
+    /*background-size: contain;*/
+}
+
+.controls-row {
+    padding-top: 10px;
+}
+
+.size-0 .controls-row {
+    padding-top: 5px;
+}
+
+.size-2 .controls-row {
+    padding-top: 15px;
+}
 
 div.controls {
     display: flex;
