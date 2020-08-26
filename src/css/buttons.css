@@ -1,7 +1,7 @@
 
 .icon-btn {
     width: 20px;
-    color: blue;
+    color: var(--menu-link);
     cursor: pointer;
 }
 
@@ -20,7 +20,7 @@ div.btx {   /* EXP close button */
     cursor: pointer;
     color: var(--bt-color);
     border: 1px solid var(--bt-border);
-    background-color: rgba(255, 251, 177, 0.25);
+    background-color: rgba(255, 251, 177, 0.10);
 }
 
 .preset:hover,

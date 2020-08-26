@@ -9,7 +9,7 @@ import {
     setupSwitches, tapDown, tapRelease,
     updateBypassSwitch,
     updateMomentaryStompswitch,
-    updateOptionSwitch
+    updateOptionSwitch, updateSwellSwitch
 } from "./ui_switches";
 import {fullUpdateDevice, savePreset, setAndSendPC, updateDevice} from "./midi_out";
 import {VERSION} from "./constants";

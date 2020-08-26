@@ -5,6 +5,6 @@
 }
 
 .global-setting-toggle.enabled {
-    color: blue;
+    color: var(--menu-link);
     cursor: pointer;
 }

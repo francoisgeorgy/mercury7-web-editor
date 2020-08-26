@@ -1,7 +1,7 @@
 
 .dialog {
     overflow:auto;
-    background-color: #fdb53e;
+    background-color: #0059d7;
     border: 2px solid #222;
     box-shadow: 0 0 15px rgba(0, 0, 0, 1);
     border-radius:4px;
@@ -9,7 +9,7 @@
     /*min-width: 45vw;*/
     /*max-width: 80vw;*/
     /*color: #ddd;*/
-    color: black;
+    color: #eeeeee;
     font-weight: 300;
     /*line-height: 140%;*/
 }
