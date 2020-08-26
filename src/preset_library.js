@@ -729,7 +729,8 @@ function displayPresets() {
 
     log("displayPresets");
 
-    const lib = $(`<div/>`, {id: "presets-lib", "class": "presets-lib flex-grow scrollable"});
+    // const lib = $(`<div/>`, {id: "presets-lib", "class": "presets-lib flex-grow scrollable"});
+    const lib = $(`<div/>`, {id: "presets-lib", "class": "presets-lib flex-grow"});
 
     library.forEach((preset, index) => lib.append(createPresetDOM(preset, index)));
 

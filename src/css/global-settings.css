@@ -4,7 +4,12 @@
     justify-items: center;
 }
 
+.global-setting-toggle {
+    color: var(--menu-text);
+}
+
 .global-setting-toggle.enabled {
     color: var(--menu-link);
     cursor: pointer;
+    text-transform: capitalize;
 }

@@ -57,11 +57,13 @@ a {
     margin-bottom: 0;
 }
 
+/*
 .grid-3x3 {
     display: grid;
     grid-template-rows: auto auto auto;
     grid-template-columns: auto auto auto;
 }
+*/
 
 .lowercase {
     text-transform: lowercase;
@@ -166,7 +168,7 @@ a {
 }
 
 .panel-title span {
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .padding-0 {
