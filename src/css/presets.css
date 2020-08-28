@@ -185,6 +185,14 @@ i.preset-delete {
     width: 14vw;
 }
 
+.presets-menu-top {
+    padding-top: 2px;
+}
+
+.presets-menu-bottom {
+    padding-top: 1px;
+}
+
 .preset-name-wrapper {
     margin-left: 5px;
     font-size: 1rem;
@@ -213,7 +221,6 @@ i.preset-delete {
     margin-left: 0;
     /*margin-right: 2px;*/
 }
-
 
 .presets-selectors > div {
     /*background-color: #e4e474;*/
