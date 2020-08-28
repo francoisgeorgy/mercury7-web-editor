@@ -75,17 +75,22 @@
     margin: 0;
 }
 
-@media (min-width: 1024px) {
+@media screen and (min-width: 1024px) {
     .size-2 .menu.middle {
         margin: 0 10px;
     }
 }
 
-@media (min-width: 1600px) {
+@media screen and (min-width: 1600px) {
     .size-2 .menu.middle {
         margin: 0 20px;
     }
 }
+
+@media screen and (max-width: 800px) {
+    .size-2 .menu span.menu-text {display: none;}
+}
+
 
 .menu.right {
     display: flex;

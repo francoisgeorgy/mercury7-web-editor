@@ -36,6 +36,13 @@
     padding-top: 15px;
 }
 
+@media screen and (max-width: 800px) {
+    .size-2 .controls-row {
+        padding-top: 5px;
+    }
+}
+
+
 div.controls {
     display: flex;
     justify-content: center;
