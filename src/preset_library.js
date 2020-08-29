@@ -11,7 +11,7 @@ import {appendMessage} from "./ui_messages";
 import {fullReadInProgress, autoLockOnImport, fullUpdateDevice, getMidiOutputPort, requestAllPresets, writePreset} from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
 import {toHexString} from "./utils";
-import {setPresetSelectDirty} from "./ui_presets";
+import {setPresetSelectorDirty} from "./ui_presets";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 import {preferences, savePreferences} from "./preferences";
@@ -753,7 +753,7 @@ function usePreset(index) {
     if (valid.type === SYSEX_PRESET) {
 
         log("usePreset: sysex loaded in device");
-        setPresetSelectDirty(true);   // must be done after updateUI()
+        setPresetSelectorDirty(true);   // must be done after updateUI()
 
         resetExp();
         updateControls();

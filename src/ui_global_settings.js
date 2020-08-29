@@ -142,7 +142,7 @@ export function updateGlobalSettings() {
         } else {
             $(`#global-${g.id} span.value-0`).removeClass('hidden');
             $(`#global-${g.id} span.value-127`).addClass('hidden');
-    }
+        }
 
     }
 

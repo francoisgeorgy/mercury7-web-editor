@@ -138,7 +138,7 @@ export function fullUpdateDevice() {
     sendSysex(MODEL.getPreset(false));
 
     return false;   // if used in a href onclick
-    }
+}
 
 function sendPC(number) {
 

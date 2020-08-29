@@ -1,4 +1,5 @@
 import store from "storejs";
+import {log} from "./debug";
 
 // const LOCAL_STORAGE_KEY = MODEL.name.toLowerCase() + ".preferences";
 const LOCAL_STORAGE_KEY = "studiocode.mercury7-editor.preferences";
@@ -17,7 +18,7 @@ export let preferences = {
     output_device_id: null,     // web midi port ID
     input2_channel: 0,
     input2_device_id: null,      // web midi port ID
-    enable_midi_in2: 0,
+    // enable_midi_in2: 0,
     theme: "",                  // empty means default theme,
     zoom_level: 1,
     update_URL: SETTINGS_UPDATE_URL.on_randomize_init_load,
@@ -39,6 +40,7 @@ export function loadPreferences() {
 }
 
 export function savePreferences(options = {}) {
+    log('savePreferences', options);
     Object.assign(preferences, preferences, options);
     store(LOCAL_STORAGE_KEY, JSON.stringify(preferences));
 }

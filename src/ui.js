@@ -1,6 +1,6 @@
 import MODEL from "./model";
 import {
-    setPresetSelectDirty,
+    setPresetSelectorDirty,
     setupPresetSelectors
 } from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
@@ -19,7 +19,6 @@ import {init, randomize} from "./presets";
 import {printPreset} from "./ui_dialogs";
 import {initSize, zoomIn, zoomOut} from "./ui_size";
 import {preferences} from "./preferences";
-import {updateUrl} from "./url";
 import {setupGlobalSettings} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
 import {log, TRACE, warn} from "./debug";
@@ -39,7 +38,7 @@ export function handleUserAction(control_type, control_number, value) {
         setAndSendPC(n);
     } else {
         if (n !== MODEL.control_id.exp_pedal) {
-            setPresetSelectDirty();
+            setPresetSelectorDirty();
             setLibraryPresetDirty();
         }
         updateDevice(control_type, n, value, inExpMode());
@@ -182,7 +181,7 @@ export function updateModelAndUI(control_type, control_number, value) {
             updateControls(true);
         }
 
-        setPresetSelectDirty();
+        setPresetSelectorDirty();
         setLibraryPresetDirty();
 
     } else {
@@ -190,10 +189,12 @@ export function updateModelAndUI(control_type, control_number, value) {
     }
 }
 
+/*
 function reloadWithSysexParam() {
     updateUrl();
     return false;   // disable the normal href behavior when called from an onclick event
 }
+*/
 
 function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback) {
 
@@ -227,6 +228,7 @@ function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSe
 
 }
 
+/*
 function setupMidiInput2() {
     if (preferences.enable_midi_in2) {
         showMidiInput2();
@@ -234,6 +236,7 @@ function setupMidiInput2() {
         hideMidiInput2();
     }
 }
+*/
 
 function setupControlsHelp() {
 

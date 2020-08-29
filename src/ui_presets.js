@@ -41,7 +41,7 @@ export function setPresetSelectorClean() {
 /**
  * Show the dirty indicator on the current preset selector
  */
-export function setPresetSelectDirty(force = false) {
+export function setPresetSelectorDirty(force = false) {
     // log("setPresetDirty()");
     if (!dirty_cache || force) {
         log("setPresetDirty()", MODEL.getPresetNumber());
@@ -62,7 +62,7 @@ export function updatePresetSelector() {
     if (n) {
         const e = $(`#pc-${n}`);
         e.addClass("sel");
-        }
+    }
     // unselect any library select:
     markAllLibraryPresetsAsUnselected();
 }

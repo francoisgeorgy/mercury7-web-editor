@@ -20,7 +20,8 @@ import {
     setMidiInputPort
 } from "./midi_in";
 import {getMidiOutputPort, requestGlobalSettings, requestPreset, setMidiOutputPort} from "./midi_out";
-import {hashSysexPresent, initFromUrl, setupUrlSupport} from "./url";
+import * as Utils from "./utils";
+import {initSize} from "./ui_size";
 
 import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
@@ -34,12 +35,6 @@ import "./css/controls.css";
 import "./css/buttons.css";
 import "./css/dialogs.css";
 import "./css/global-settings.css";
-// import "./css/grid-default.css";
-// import "./css/grid-global-settings.css";
-
-import {setPresetSelectDirty} from "./ui_presets";
-import * as Utils from "./utils";
-import {initSize} from "./ui_size";
 
 const browser = detect();
 
@@ -73,26 +68,27 @@ function setupModel() {
  */
 function sync() {
 
+    log('sync()');
+
     if (getMidiInputPort() && getMidiOutputPort()) {
 
-        log('sync()');
+        log('sync() midi in & midi out');
 
         appendMessage("Request global settings.");
         window.setTimeout(requestGlobalSettings, 200);
 
-        if (hashSysexPresent() && preferences.init_from_URL === 1) {
-            log("sync: init from URL");
-
-            initFromUrl();
-
-        } else {
+        // if (hashSysexPresent() && preferences.init_from_URL === 1) {
+        //     log("sync: init from URL");
+        //
+        //     initFromUrl();
+        //
+        // } else {
 
             appendMessage("Request current preset.");
             window.setTimeout(() => {
                 log("sync: requestPreset(true)");
                 requestPreset(true);
             }, 300);
-
 
 /*
             if (MODEL.getPresetNumber() === 0) {
@@ -109,7 +105,7 @@ function sync() {
                 appendMessage(`Select a preset to sync the editor or use the Send command to sync the ${MODEL.name}.`, true);
             }
 */
-        }
+        // }
     }
 
 }
@@ -399,26 +395,27 @@ function deviceConnected(info) {
 
     if (info.port.type === 'input') {
         if ((getMidiInputPort() === null) && (info.port.id === preferences.input_device_id)) {
+            // log("deviceConnected: input device is ");
             /*input_connected =*/ connectInputDevice(preferences.input_device_id);
-        } else {
-            log("deviceConnected: input device ignored");
+        // } else {
+        //     log("deviceConnected: input device ignored");
         }
 
-        if (preferences.enable_midi_in2) {
-            log("deviceConnected: enable input2");
+        // if (preferences.enable_midi_in2) {
+        //     log("deviceConnected: input2 is enabled");
             if ((getMidiInput2Port() === null) && (info.port.id === preferences.input2_device_id)) {
                 connectInput2Device(preferences.input2_device_id);
-            } else {
-                log("deviceConnected: input2 device ignored or not defined by user");
+            // } else {
+            //     log("deviceConnected: input2 device ignored or not defined by user");
             }
-        }
+        // }
     }
 
     if (info.port.type === 'output') {
         if ((getMidiOutputPort() === null) && (info.port.id === preferences.output_device_id)) {
             /*output_connected =*/ connectOutputDevice(preferences.output_device_id);
-        } else {
-            log("deviceConnected: output device ignored or not defined by user");
+        // } else {
+        //     log("deviceConnected: output device ignored or not defined by user");
         }
     }
 
@@ -508,7 +505,7 @@ $(function () {
         $("body").css("background-color", bg);
     }
 
-    setupUrlSupport();
+    // setupUrlSupport();
     // startUrlAutomation();
 
     appendMessage("Waiting for MIDI interface access...");
@@ -518,17 +515,17 @@ $(function () {
 
         if (err) {
 
-            warn("webmidi err", err);
+            warn("WebMidi unavailable", err);
 
             appendMessage("ERROR: WebMidi could not be enabled.");
             appendMessage("-- PLEASE ENABLE MIDI IN YOUR BROWSER --");
 
             // Even we don't have MIDI available, we update at least the UI:
-            initFromUrl(false);
+            // initFromUrl(false);
 
         } else {
 
-            log("webmidi ok");
+            log("WebMidi enabled");
 
             appendMessage("WebMidi enabled.");
 

@@ -42,7 +42,7 @@ export function logOutgoingMidiMessage(type, data) {
         midi_out_messages++;
         // log at max 1000 messages:
         if (midi_out_messages > 1000) $("#midi-messages-out div:last-child", midi_window.document).remove();
-        let s = "";
+        let s;
         switch (type.toUpperCase()) {
             case "CC":
                 s = type + " " + toHexString(data, " ");

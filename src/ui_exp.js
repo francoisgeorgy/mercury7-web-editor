@@ -1,7 +1,7 @@
 import {log} from "./debug";
 import Slider from "svg-slider";
 import MODEL from "./model";
-import {control, control_id} from "./model/cc";
+import {control} from "./model/cc";
 import {knobs} from "./ui_knobs";
 import {fullUpdateDevice, updateDevice} from "./midi_out";
 import {appendMessage} from "./ui_messages";
