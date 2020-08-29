@@ -104,20 +104,6 @@ div.exp_wrapper {
     grid-column: 3;
     align-self: end;
 }
-/*
-#exp-c1 {
-    grid-row: 3;
-    grid-column: 1;
-}
-#exp-c2 {
-    grid-row: 3;
-    grid-column: 2;
-}
-#exp-c3 {
-    grid-row: 3;
-    grid-column: 3;
-}
-*/
 #exp-copy {           /* slider "click to copy" */
     grid-row: 2;
     grid-column: 3;
@@ -194,34 +180,10 @@ div.controls-slider {
     margin-right: 0;
 }
 
-/*
-#cc-29-0 {
-    grid-row: 1 / span 2;
-    grid-column: 1 / span 2;
+#C5 {
+    padding-bottom: 16px;
 }
 
-#cc-29-63 {
-    grid-row: 3 / span 2;
-    grid-column: 1;
+.size-0 #C5 {
+    padding-bottom: 11px;
 }
-
-#cc-29-95 {
-    grid-row: 5 / span 2;
-    grid-column: 1;
-}
-
-#cc-29-127 {
-    grid-row: 7 / span 2;
-    grid-column: 1;
-}
-
-#cc-30-0 {
-    grid-row: 4 / span 2;
-    grid-column: 3;
-}
-
-#cc-30-127 {
-    grid-row: 6 / span 2;
-    grid-column: 3;
-}
-*/

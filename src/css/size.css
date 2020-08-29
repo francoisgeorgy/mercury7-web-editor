@@ -104,6 +104,7 @@
 .size-1 .slider {height: 100px;}
 .size-2 .slider {height: 16vmin;}
 
+.size-0 #cc-4-value {font-size: 0.85rem;}
 .size-1 #cc-4-value {font-size: 20px;}
 
 .size-0 #exp-open {font-size: inherit;}

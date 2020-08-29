@@ -173,6 +173,7 @@ function defineControls() {
     };
     control[control_id.predelay] = { // 22,
         name: "Predelay",
+        human: _percent,
         sysex: {
             offset: 15,
             mask: [0x7F]
@@ -185,6 +186,7 @@ function defineControls() {
     };
     control[control_id.mod_speed] = { // 23,
         name: "Mod Speed",
+        human: _percent,
         init_value: 0,
         sysex: {
             offset: 16,
@@ -226,6 +228,7 @@ function defineControls() {
     };
     control[control_id.attack_time] = { // 26,
         name: "Attack Time",
+        human: _percent,
         init_value: 0,
         sysex: {
             offset: 19,

@@ -118,6 +118,7 @@ export function handleCC(msg, input_num = 1) {
     if (input_num === 2) {
         // If we received a message on input 2, we forward it to the pedal if the pedal supports the message's CC.
         if (MODEL.supportsCC(cc)) {
+            log("forward CC", cc, v);
             updateDevice("cc", cc, v);
         }
     }
