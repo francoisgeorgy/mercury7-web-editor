@@ -285,8 +285,20 @@ export async function writePreset(number, data) {
     08:29:13.038	From Scarlett 18i20 USB	SysEx		Micon Audio Electronics 9 bytes	F0 00 20 10 01 01 03 25 F7
 */
 
-export let fullReadInProgress = false;
-export let autoLockOnImport = false;
+let fullReadInProgress = false;
+let autoLockOnImport = false;
+
+export function isFullReadInProgress() {
+    return fullReadInProgress;
+}
+
+export function setAutoLockOnImport(b) {
+    autoLockOnImport = b;
+}
+
+export function isAutoLockOnImport() {
+    return autoLockOnImport;
+}
 
 export async function requestAllPresets() {
 

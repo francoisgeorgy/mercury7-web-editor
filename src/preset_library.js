@@ -8,7 +8,13 @@ import {SYSEX_END_BYTE, SYSEX_PRESET, validate} from "./model/sysex";
 import {resetExp} from "./ui_exp";
 import {updateControls} from "./ui";
 import {appendMessage} from "./ui_messages";
-import {fullReadInProgress, autoLockOnImport, fullUpdateDevice, getMidiOutputPort, requestAllPresets, writePreset} from "./midi_out";
+import {
+    fullUpdateDevice,
+    getMidiOutputPort,
+    requestAllPresets,
+    writePreset,
+    setAutoLockOnImport, isFullReadInProgress
+} from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
 import {toHexString} from "./utils";
 import {setPresetSelectorDirty} from "./ui_presets";
@@ -191,8 +197,9 @@ function closeImportPresetsDialog() {
 }
 
 async function importPresetsFromDevice() {
-    if (fullReadInProgress) return;
-    autoLockOnImport = $('#read-presets-autolock').is(':checked');
+    if (isFullReadInProgress()) return;
+    // console.log('read-presets-autolock', $('#read-presets-autolock').is(':checked'));
+    setAutoLockOnImport($('#read-presets-autolock').is(':checked'));
     $('#read-presets-cancel-button').hide();
     await requestAllPresets();
     $('#read-presets-go-button').hide();

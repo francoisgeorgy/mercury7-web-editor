@@ -224,7 +224,7 @@ i.preset-delete {
 
 .presets-selectors > div {
     /*background-color: #e4e474;*/
-    background-color: rgba(255, 251, 177, 0.25);
+    background-color: rgba(255, 251, 177, 0.10);
 }
 
 .preset-menu-wrapper {
