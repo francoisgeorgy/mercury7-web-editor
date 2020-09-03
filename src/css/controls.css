@@ -149,6 +149,10 @@ div.controls-slider {
     animation: blinker 2s linear infinite;
 }
 
+.exp-mode {
+    font-style: italic!important;
+}
+
 @keyframes blinker {
     50% {
         text-shadow: 0 0 16px red;

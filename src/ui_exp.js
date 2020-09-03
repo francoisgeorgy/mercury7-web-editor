@@ -31,9 +31,9 @@ export function showExpValues(display_exp_values = false) {
     }
 
     if (display_exp_values) {
-        $(".header.exp").addClass("lowercase");
+        $(".header.exp").addClass("exp-mode");
     } else {
-        $(".header.exp").removeClass("lowercase");
+        $(".header.exp").removeClass("exp-mode");
     }
 
 } // setupKnobs
