@@ -2,7 +2,7 @@ import {log, TRACE, warn} from "./debug";
 import * as WebMidi from "webmidi";
 import MODEL from "./model";
 import {detect} from "detect-browser";
-import {URL_PARAM_BG, URL_PARAM_MARGINS, URL_PARAM_SIZE, VERSION} from "./constants";
+import {URL_PARAM_BG, URL_PARAM_CLEAR_STORAGE, URL_PARAM_MARGINS, URL_PARAM_SIZE, VERSION} from "./constants";
 import {loadPreferences, savePreferences, preferences} from "./preferences";
 import {
     appendMessage,
@@ -35,6 +35,7 @@ import "./css/controls.css";
 import "./css/buttons.css";
 import "./css/dialogs.css";
 import "./css/global-settings.css";
+import store from "storejs";
 
 const browser = detect();
 
@@ -503,6 +504,12 @@ $(function () {
     if (bg) {
         //TODO: check bg validity
         $("body").css("background-color", bg);
+    }
+
+    const cs = Utils.getParameterByName(URL_PARAM_CLEAR_STORAGE);
+    if (cs) {
+        store.clear();
+        alert("All local storage used by the Editor has been deleted.");
     }
 
     // setupUrlSupport();

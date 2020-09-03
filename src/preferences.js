@@ -2,7 +2,7 @@ import store from "storejs";
 import {log} from "./debug";
 
 // const LOCAL_STORAGE_KEY = MODEL.name.toLowerCase() + ".preferences";
-const LOCAL_STORAGE_KEY = "studiocode.mercury7-editor.preferences";
+const LOCAL_STORAGE_KEY = "studiocode.mercury7-editor-15.preferences";
 
 export const SETTINGS_UPDATE_URL = {
     manually: 0,
