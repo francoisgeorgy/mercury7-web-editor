@@ -72,14 +72,15 @@ export function setupPresetsLibrary() {
         toggle.addClass('inactive');
     }
 
-    $('#library-toggle').click(() => {
-        if ($("#library").is(".closed")) {
-            openLibrary()
-        } else {
-            closeLibrary();
-        }
-        return false;
-    });
+    $('#library-toggle').click(toggleLibrary);
+    // $('#library-toggle').click(() => {
+    //     if ($("#library").is(".closed")) {
+    //         openLibrary()
+    //     } else {
+    //         closeLibrary();
+    //     }
+    //     return false;
+    // });
 
     $('#edit-preset-cancel-button').click(cancelEditPreset);
     $('#edit-preset-save-button').click(updatePresetAndCloseDialog);
@@ -126,7 +127,16 @@ function openLibrary() {
     savePreferences({library_open: 1});
 }
 
-function toggleScroll() {
+export function toggleLibrary() {
+    if ($("#library").is(".closed")) {
+        openLibrary()
+    } else {
+        closeLibrary();
+    }
+    return false;
+}
+
+export function toggleScroll() {
     const lib = $('#presets-lib');
     const toggle = $('#library-toggle-scroll');
     if (lib.is('.scrollable')) {

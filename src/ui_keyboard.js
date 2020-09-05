@@ -10,6 +10,7 @@ import {init, randomize} from "./presets";
 import {updateBypassSwitch, updateSwellSwitch} from "./ui_switches";
 import {switchKnobsDisplay} from "./ui_knobs";
 import {expHeel, expToe, showExpValues, toggleExpEditMode} from "./ui_exp";
+import {toggleLibrary, toggleScroll} from "./preset_library";
 
 let kb_enabled = true;
 
@@ -181,6 +182,12 @@ function keyDown(code, alt, shift, meta, ctrl) {
                 break;
             case 37:                // Left arrow
                 presetDec();
+                break;
+            case 75:                // K
+                toggleScroll();
+                break;
+            case 76:                // L
+                toggleLibrary();
                 break;
         }
     }
