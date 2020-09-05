@@ -93,10 +93,10 @@ function keyUp(code) {
             showExpValues(false);
             expHeel();
             break;
-        case 18:                // ALT
-            // $(".header-shortcut").addClass("hidden");
-            // switchKnobsDisplay(false);
-            break;
+        // case 18:                // ALT
+        //     $(".header-shortcut").addClass("hidden");
+        //     switchKnobsDisplay(false);
+        //     break;
         case 27:                // close all opened panel with ESC key
             // closeAppPreferencesPanel();
             // closeGlobalSettingsPanel();
@@ -142,103 +142,27 @@ function keyDown(code, alt, shift, meta, ctrl) {
             showExpValues(true);
             expToe();
             break;
-        case 18:                // ALT
-            // $(".header-shortcut").removeClass("hidden");
-            // switchKnobsDisplay(true);
-            break;
+        // case 18:                // ALT
+        //     $(".header-shortcut").removeClass("hidden");
+        //     switchKnobsDisplay(true);
+        //     break;
     }
 
     //FIXME: map to key's position, not key's value (in order to be isolated from the keyboard layout)
 
     if (!alt && !shift && !meta) {
         switch (code) {
-            case 67:                // C
-                // animateTo(MODEL.control_id.pitch, ctrl ? 63 : 0);
-                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), ctrl ? 63 : 0, animate_callback);
-                break;
-            case 86:                // V
-                // animateTo(MODEL.control_id.pitch, ctrl ? 63 : 127);
-                // animateCC(MODEL.control_id.pitch, MODEL.getControlValue(MODEL.getControl(MODEL.control_id.pitch)), ctrl ? 63 : 127);
-                break;
-            case 70:                // F
-                // animateTo(MODEL.control_id.filter, ctrl ? 63 : 0);
-                break;
-            case 71:                // G
-                // animateTo(MODEL.control_id.filter, ctrl ? 63 : 127);
-                break;
-            case 72:                // H
-                // animateTo(MODEL.control_id.filter_bandwidth, ctrl ? 63 : 0);
-                break;
-            case 74:                // J
-                // animateTo(MODEL.control_id.filter_bandwidth, ctrl ? 63 : 127);
-                break;
-            case 75:                // K    delay level
-                // animateTo(MODEL.control_id.delay_level, ctrl ? 63 : 0);
-                break;
-            case 76:                // L    delay level
-                // animateTo(MODEL.control_id.delay_level, ctrl ? 63 : 127);
-                break;
-            case 89:                // Y    min mix
-                animateTo(MODEL.control_id.mix, ctrl ? 63 : 0);
-                break;
-            case 88:                // X    max mix
-                animateTo(MODEL.control_id.mix, ctrl ? 63 : 127);
-                break;
-            case 8:                 // DEL  min sustain
-                // animateTo(MODEL.control_id.sustain, 0);
-                break;
-            case 66:                // B    min sustain
-                // animateTo(MODEL.control_id.sustain, ctrl ? 63 : 0);
-                break;
-            case 78:                // N    max sustain
-                // animateTo(MODEL.control_id.sustain, ctrl ? 63 : 127);
-                break;
             case 83:                // S    swell
                 toggleSwell();
-                break;
-            case 90:                // Z
-                // animateTo(MODEL.control_id.ring_modulation, ctrl ? 63 : 0);
-                break;
-            case 85:                // U
-                // animateTo(MODEL.control_id.ring_modulation, ctrl ? 63 : 127);
                 break;
             case 32:                // SPACE
                 toggleBypass();
                 break;
-            case 109:               // num keypad "-"
-                // animateTo(MODEL.control_id.modulation, ctrl ? 63 : 0);
-                break;
-            case 107:               // num keypad "+"
-                // animateTo(MODEL.control_id.modulation, ctrl ? 63 : 127);
-                break;
-            case 79:                   // O
-                // const v = MODEL.getControlValue(MODEL.getControl(MODEL.control_id.predelay));
-                // animateFromTo(MODEL.control_id.predelay, v, ctrl ? 63 : v < 63 ? 127 : 0);
-                animateTo(MODEL.control_id.predelay, ctrl ? 63 : 127);
-                break;
             case 82:                // R Randomize
                 randomize();
                 break;
-            case 77:                // M Mono
-                // selectMono();
-                break;
-            case 80:                // P Poly
-                // selectPoly();
-                break;
-            case 65:                // A ARP
-                // selectArp();
-                break;
-            case 68:                // D Dry
-                // selectDry();
-                break;
             case 73:                // I Init
                 init();
-                break;
-            case 81:                // Q Squarewave
-                // selectSquarewave();
-                break;
-            case 87:                // W Sawtooth wave
-                // selectSawtooth();
                 break;
             case 33:                // PageUp
                 setExpMax();
