@@ -42,7 +42,7 @@ export function setPresetSelectorClean() {
  * Show the dirty indicator on the current preset selector
  */
 export function setPresetSelectorDirty(force = false) {
-    // log("setPresetDirty()");
+    log("setPresetDirty()");
     if (!dirty_cache || force) {
         log("setPresetDirty()", MODEL.getPresetNumber());
         $(".preset-id").removeClass("dirty");

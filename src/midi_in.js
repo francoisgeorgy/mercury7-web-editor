@@ -209,6 +209,6 @@ export function handleSysex(data) {
                 appendMessage(valid.message);
         }
 
-}
+    }
 
 }

@@ -13,7 +13,7 @@ import {
     getMidiOutputPort,
     requestAllPresets,
     writePreset,
-    setAutoLockOnImport, isFullReadInProgress
+    setAutoLockOnImport, isFullReadInProgress, isCommOk
 } from "./midi_out";
 import {getCurrentZoomLevel} from "./ui_size";
 import {toHexString} from "./utils";
@@ -60,6 +60,18 @@ export function setupPresetsLibrary() {
         closeLibrary();
     }
 
+    const lib = $('#presets-lib');
+    const toggle = $('#library-toggle-scroll');
+    if (preferences.library_scroll) {
+        log("scroll on");
+        lib.addClass('scrollable');
+        toggle.removeClass('inactive');
+    } else {
+        log("scroll off");
+        lib.removeClass('scrollable');
+        toggle.addClass('inactive');
+    }
+
     $('#library-toggle').click(() => {
         if ($("#library").is(".closed")) {
             openLibrary()
@@ -69,6 +81,7 @@ export function setupPresetsLibrary() {
         return false;
     });
 
+    $('#edit-preset-cancel-button').click(cancelEditPreset);
     $('#edit-preset-save-button').click(updatePresetAndCloseDialog);
 
     $("#menu-copy-to-device").click(openCopyToDeviceDialog);
@@ -119,24 +132,33 @@ function toggleScroll() {
     if (lib.is('.scrollable')) {
         lib.removeClass('scrollable');
         toggle.addClass('inactive');
+        savePreferences({library_scroll: 0});
     } else {
         lib.addClass('scrollable');
         toggle.removeClass('inactive');
+        savePreferences({library_scroll: 1});
     }
 }
 
-export function addPresetToLibrary(preset) {
+export function addPresetToLibrary(preset, select = false) {
+
+    log('addPresetToLibrary', preset, select);
 
     // add into first empty slot
+    let newIndex = -1;
     const i = library.findIndex(e => (e === null) || (typeof e === 'undefined'));
     if (i >= 0) {
         library[i] = preset;
+        newIndex = i;
     } else {
         library.push(preset);
+        newIndex = library.length - 1;
     }
 
     savePresetsInLocalStorage();
     displayPresets();
+
+    if (select) markLibraryPresetAsSelected(newIndex)
 }
 
 function readPresetsFromLocalStorage() {
@@ -175,7 +197,8 @@ function compactTheLibrary() {
 export function updateImportPresetsProgress(min, max, progress) {
     const p = (progress - min + 1) / (max - min + 1) * 100;
     $('#read-presets-progress')
-        .css('background', `linear-gradient(to right, #eeeea1 ${p}%, #111111 ${p}%)`)
+        .css('background', `linear-gradient(to right, #AECDFC ${p}%, #111111 ${p}%)`)
+        .css('color', '#000000')
         .text(progress === max ? '100% - Done, you can close this window' : `${Math.round(p)}%`);  //.text(`${min} ${max} ${progress}`);
 }
 
@@ -185,6 +208,7 @@ function openImportFromDeviceDialog() {
         return;
     }
     $('#read-presets-progress').text('Click READ button to start');
+    $('#read-presets-cancel-button').show()
     $('#read-presets-go-button').show();
     $('#read-presets-close-button').hide();
     read_presets_dialog = lity("#read-presets-dialog");
@@ -198,9 +222,9 @@ function closeImportPresetsDialog() {
 
 async function importPresetsFromDevice() {
     if (isFullReadInProgress()) return;
+    $('#read-presets-cancel-button').hide();
     // console.log('read-presets-autolock', $('#read-presets-autolock').is(':checked'));
     setAutoLockOnImport($('#read-presets-autolock').is(':checked'));
-    $('#read-presets-cancel-button').hide();
     await requestAllPresets();
     $('#read-presets-go-button').hide();
     $('#read-presets-close-button').show();
@@ -218,6 +242,7 @@ function openCopyToDeviceDialog() {
 
     $("#copy-from-id option").remove();
     $("#copy-to-id option").remove();
+    $('#copy-presets-cancel-button').show();
     $('#copy-presets-go-button').show();
     $('#copy-presets-close-button').hide();
     $('#copy-presets-dialog select').on('change', updateCopyToDeviceSummary);
@@ -285,6 +310,8 @@ function updateCopyToDeviceSummary() {
 async function copyToDevice() {
 
     if (copyInProgress) return;
+
+    $('#copy-presets-cancel-button').hide();
 
     if (!isNaN(copyToDeviceFrom) && !isNaN(copyToDeviceTo) && (copyToDeviceFrom >= 0) && (copyToDeviceTo >= 0)) {
 
@@ -435,6 +462,12 @@ function exportSysex(presets) {
 
 let updateSysex = false;
 
+function cancelEditPreset() {
+    if (edit_preset_dialog) edit_preset_dialog.close();
+    edit_preset_dialog = null;
+    $('#edit-preset-dialog input').val("");    // reset
+}
+
 function updatePresetAndCloseDialog() {
 
     const index = parseInt($('#edit-preset-dialog-id').val(), 10);
@@ -452,8 +485,11 @@ function updatePresetAndCloseDialog() {
         library[index].locked = false;
 
         if (updateSysex) {
+            log("update editor preset sysex", index);
             library[index].h = toHexString(MODEL.getPreset());
             updateSysex = false;
+            presetIsDirty = false;
+            hideSaveIcon(index);
         }
 
         $(`#name-${index}`).text(name);
@@ -476,6 +512,10 @@ function openEditPresetDialog(index, saveSysex = false) {
     if (library[index]) {
 
         disableKeyboard();
+
+        $('#edit-preset-message').text(saveSysex ?
+            'This will update the name, description and definition of the preset' :
+            "This will update the name and description only.");
 
         $('#edit-preset-dialog-id').val(index);
         $('#edit-preset-dialog-input').val(library[index].name);
@@ -505,8 +545,10 @@ function lockPreset(index) {
         library[index].locked = true;
         // $(`#preset-${index} i.preset-lock`).removeClass('hidden');
         $(`#preset-${index} i.preset-lock`).removeClass('i-hover hidden');
-        $(`#preset-${index} i.preset-lock-open`).addClass('hidden');
-        $(`#preset-${index} i.preset-lock-open`).removeClass('i-hover');
+        $(`#preset-${index} i.preset-lock-open`).addClass('hidden').removeClass('i-hover');
+        $(`#preset-${index} i.preset-save`).removeClass('i-hover');
+        $(`#preset-${index} i.preset-delete`).removeClass('i-hover');
+        hideSaveIcon(index);
         savePresetsInLocalStorage();
     }
     log(`lockPreset(${index})`, library);
@@ -517,9 +559,14 @@ function unlockPreset(index) {
     log(`unlockPreset(${index})`, library);
     if (library[index]) {
         library[index].locked = false;
-        $(`#preset-${index} i.preset-lock`).removeClass('i-hover');
-        $(`#preset-${index} i.preset-lock`).addClass('hidden');
+        $(`#preset-${index} i.preset-lock`).removeClass('i-hover').addClass('hidden');
         $(`#preset-${index} i.preset-lock-open`).addClass('i-hover');
+        $(`#preset-${index} i.preset-save`).addClass('i-hover');
+        $(`#preset-${index} i.preset-delete`).addClass('i-hover');
+        if (presetIsDirty) {
+            showSaveIcon(index);
+            //$(`#preset-${index} i.preset-save`).removeClass('hidden i-hover');
+        }
         // $(`#preset-${index} i.preset-lock`).addClass('hidden');
         // $(`#preset-${index} i.preset-lock-open`).removeClass('hidden');
         savePresetsInLocalStorage();
@@ -563,7 +610,7 @@ function addCurrentSettingsAsPresetToLibrary() {
     // const h = updateUrl();
     const h = toHexString(MODEL.getPreset());
 
-    addPresetToLibrary({id, name, h, locked: false});
+    addPresetToLibrary({id, name, h, locked: false}, true);
 }
 
 // function addSaveIcon(index) {
@@ -577,8 +624,10 @@ function addCurrentSettingsAsPresetToLibrary() {
 // }
 
 function showSaveIcon(index) {
-    log("showSaveIcon", index);
-    $(`#preset-${index} i.preset-save`).removeClass("hidden");
+    log("showSaveIcon", index, library[index].locked);
+    if (!library[index].locked) {
+        $(`#preset-${index} i.preset-save`).removeClass("hidden i-hover");
+    }
 }
 
 function hideSaveIcon(index = -1) {
@@ -586,7 +635,7 @@ function hideSaveIcon(index = -1) {
     if (index < 0) {
         $(`i.preset-save`).addClass("hidden");
     } else {
-        $(`#preset-${index} i.preset-save`).addClass("hidden");
+        $(`#preset-${index} i.preset-save`).addClass(library[index].locked ? 'hidden' : 'i-hover');
     }
 }
 
@@ -607,7 +656,7 @@ function createPresetDOM(preset, index) {
         }
         let name = preset.name;
         // if (name.length > displayLength) name = name.substring(0, displayLength) + '...';
-        const preset_edit = $(`<i class="fas fa-pen preset-edit i-hover" aria-hidden="true"></i>`).click(
+        const preset_edit = $('<i class="fas fa-pen preset-edit i-hover" aria-hidden="true" title="Edit the name and description of the preset"></i>').click(
             (e) => {
                 openEditPresetDialog(index);
                 e.stopPropagation();
@@ -625,106 +674,35 @@ function createPresetDOM(preset, index) {
                 e.stopPropagation();
             }
         );
-        const preset_delete = $(`<i class="fas fa-trash-alt preset-delete i-hover" aria-hidden="true"></i>`).click(
+        const preset_delete = $(`<i class="fas fa-trash-alt preset-delete hidden ${preset.locked ? '' : 'i-hover'}" aria-hidden="true"></i>`).click(
             (e) => {
                 deletePreset(index)
                 e.stopPropagation();
             });
-
-        const preset_save = $(`<i class="fas fa-save preset-save ${index === currentLibPreset && presetIsDirty ? '' : 'hidden'}" aria-hidden="true"></i>`).click(
+        // const preset_save = $(`<i class="fas fa-save preset-save " aria-hidden="true" title="Update the preset definition"></i>`).click(
+        // const preset_save = $(`<i class="fas fa-save preset-save ${index === currentLibPreset && presetIsDirty ? '' : 'hidden'}" aria-hidden="true" title="Update the preset definition"></i>`).click(
+        const preset_save = $(`<i class="fas fa-save preset-save ${preset.locked ? 'hidden' : 'i-hover'}" aria-hidden="true" title="Update the preset definition"></i>`).click(
             (e) => {
                 savePreset(index);
                 e.stopPropagation();
             }
         );
 
-        // const preset_info = preset.description ? $(`<i class="fas fa-info-circle preset-info" aria-hidden="true"></i>`).click(
-        //     (e) => {
-        //         e.stopPropagation();
-        //     }
-        // ) : '';
-
-        dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
+        dom = $(`<div/>`, {id: `preset-${index}`, "class": `preset preset-editor ${isCommOk() ? 'comm-ok' : ''}`, "draggable": "true"}).click(() => usePreset(index))
             .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name))
             .append($(`<div/>`, {"class": "preset-icons"})
                 .append(preset_edit)
                 .append(preset_delete)
                 .append(preset_lock)
                 .append(preset_unlock)
-                .append(preset_save));
+                .append(preset_save)
+            );
                 // .append(preset_info));
-
-        // let icons = $(`<div/>`, {"id": `preset-icons-${index}`, "class": "preset-icons"})
-        //     .append(preset_edit)
-        //     .append(preset_delete)
-        //     .append(preset_lock)
-        //     .append(preset_unlock);
-        //
-        // if (preset.dirty) {
-        //     const preset_save = $(`<i class="fas fa-save preset-save" aria-hidden="true"></i>`).click(
-        //         (e) => {
-        //             lockPreset(index);
-        //             e.stopPropagation();
-        //         }
-        //     );
-        //     icons.append(preset_save);
-        // }
-        //
-        // dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
-        //     .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name))
-        //     .append(icons);
 
     } else {
         dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"})
             .append($(`<div class="preset-name"></div>`).html('&nbsp;'));
     }
-
-    /*
-        if (preset) {
-            let displayLength;
-            switch (getCurrentZoomLevel()) {
-                case 1: displayLength = 18; break;
-                case 2: displayLength = 20; break;
-                default: displayLength = 16;
-            }
-            let name = preset.name;
-            if (name.length > displayLength) name = name.substring(0, displayLength) + '...';
-            const preset_edit = $(`<i class="fas fa-pen preset-edit i-hover" aria-hidden="true"></i>`).click(
-                (e) => {
-                    editPreset(index);
-                    e.stopPropagation();
-                }
-            );
-            const preset_lock = $(`<i class="fas fa-lock-open preset-lock-open ${preset.locked ? 'hidden' : 'i-hover'}" aria-hidden="true"></i>`).click(
-                (e) => {
-                    lockPreset(index);
-                    e.stopPropagation();
-                }
-            );
-            const preset_unlock = $(`<i class="fas fa-lock preset-lock ${preset.locked ? '' : 'hidden'}" aria-hidden="true"></i>`).click(
-                (e) => {
-                    unlockPreset(index);
-                    e.stopPropagation();
-                }
-            );
-            const preset_delete = $(`<i class="fas fa-trash-alt preset-delete i-hover" aria-hidden="true"></i>`).click(
-                (e) => {
-                    deletePreset(index)
-                    e.stopPropagation();
-                });
-            dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"}).click(() => usePreset(index))
-                    .append($('<div class="preset-name-wrapper">')
-                        .append($(`<div/>`, {id: `name-${index}`, "class": "preset-name"}).text(name)))
-                    .append(preset_edit)
-                    .append(preset_lock)
-                    .append(preset_unlock)
-                    .append(preset_delete);
-        } else {
-            dom = $(`<div/>`, {id: `preset-${index}`, "class": 'preset preset-editor', "draggable": "true"})
-                    .append($('<div class="preset-name-wrapper">')
-                        .append($(`<div class="preset-name"></div>`).html('&nbsp;')));
-        }
-    */
 
     return dom;
 }
@@ -734,10 +712,9 @@ function createPresetDOM(preset, index) {
  */
 function displayPresets() {
 
-    log("displayPresets");
+    log("displayPresets", currentLibPreset);
 
-    // const lib = $(`<div/>`, {id: "presets-lib", "class": "presets-lib flex-grow scrollable"});
-    const lib = $(`<div/>`, {id: "presets-lib", "class": "presets-lib flex-grow"});
+    const lib = $(`<div/>`, {id: "presets-lib", "class": `presets-lib flex-grow ${preferences.library_scroll ? 'scrollable' : ''}`});
 
     library.forEach((preset, index) => lib.append(createPresetDOM(preset, index)));
 
@@ -784,7 +761,7 @@ let presetIsDirty = false;
 
 function markLibraryPresetAsSelected(index) {
     markAllLibraryPresetsAsUnselected();
-    $(`#preset-${$.escapeSelector(index)}`).addClass("on sel");
+    $(`#preset-${$.escapeSelector(index)}`).addClass('sel on');
     currentLibPreset = index;
 }
 

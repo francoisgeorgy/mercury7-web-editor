@@ -27,6 +27,7 @@ export let preferences = {
     display_infos: 1,       // if 0 (NO), the controls' description is never displayed
                             // if 1 (YES), the controls' description is displayed when the mouse if over the control's name
     library_open: 0,        // 0 = close, 1 = open
+    library_scroll: 0,      // 0 = off, 1 = on
     tooltips: 0
 };
 

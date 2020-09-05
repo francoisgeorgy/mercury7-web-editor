@@ -334,6 +334,10 @@ export async function requestAllPresets() {
 
 let presetReceived = false;
 
+export function isCommOk() {
+    return presetReceived;
+}
+
 export function confirmPresetReceived() {
     log('confirmPresetReceived: set presetReceived=true');
     presetReceived = true;
@@ -348,6 +352,9 @@ function wasPresetReceived() {
     }
 }
 
+/**
+ * Set a timer to check if a preset was received as expected
+ */
 function checkPresetReceived() {
     presetReceived = false;
     // after 200 ms we check that we have received the preset
