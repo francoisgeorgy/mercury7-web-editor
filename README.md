@@ -3,150 +3,247 @@ Mercury7 editor
 
 Control your Meris Mercury7 pedal with your web browser. View all the pedal's settings at once.
 
-![Mercury7 Editor screenshot](/images/screenshots/editor_480px.jpg "Mercury7 Editor screenshot")
+![Mercury7 Editor screenshot](/images/doc/mercury7-editor-v15.jpg "Mercury7 Editor screenshot")
 
 [Open the editor](https://studiocode.dev/mercury7/editor/)
-
-Note: some screenshots are from the Enzo editor. The Mercury7 and Enzo editors share the same features.
 
 
 Requirements
 ============
 
-- A browser that [supports](https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess#Browser_compatibility) the [Web MIDI API](http://webaudio.github.io/web-midi-api/). Currently, 
+- A browser that [supports](https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess#Browser_compatibility) the [WebMIDI standard](/resources/webmidi). Currently, 
 only **Chrome** and **Opera** support this standard. 
-- A [Meris MIDI I/O](https://www.meris.us/product/midi-i-o/) interface.
-- A MIDI interface in your computer. This can be a homestudio audio interface or, if your computer support Bluetooth, a MIDI Bluetooth adapter plugged into the Meris MIDI I/O interface. 
+- A compatible MIDI interface. The editor has been successfully tested with:
+    - [Meris MIDI I/O](https://www.meris.us/product/midi-i-o/) interface
+    - [Disaster Area](https://www.disasterareaamps.com/) MIDI-Baby
 
+
+### Changes from the previous version (1.0):
+
+- The preset in the URL is not supported anymore. 
+- The "history" window (messages) has been discarded*.
+- The Controls' description are not displayed anymore*.
+
+(*) this may come back in a future version.
+
+The version 1.0 is still available at [studiocode.dev/mercury7-editor-v10/](/mercury7-editor-v10/).
 
 Setup
 =====
 
-1. Set the Mercury7's EXP/MIDI connector for MIDI communication.
-2. Set the Mercury7's MIDI mode to MIDI OUT. 
-3. Set the Mercury7's MIDI PORT.
-4. Connect the Mercury7 with the MIDI I/O interface. Use a stereo (TRS) jack cable.
-5. Connect the MIDI I/O interface to your computer.
-6. Open https://studiocode.dev/mercury7/editor 
-7. Allow the browser to access your MIDI devices.
-8. In the top-right of the editor, select the MIDI input and output devices corresponding to the MIDI I/O and the MIDI port corresponding to your Mercury7 MIDI port setting.
-9. Move a knob on your Mercury7, the corresponding control in the editor must react accordingly.
-10. Play some sound through the Mercury7 and move a knob in the editor. The sound should change as if you have moved the same control on the Mercury7. 
-11. Enjoy your Mercury7!
+1. Configure the Mercury7 for MIDI communication. Consult the Mercury7 user manual for the exact procedure.
+    1. Set the Mercury7's EXP/MIDI jack for MIDI communication.
+    2. Set the Mercury7's MIDI mode to MIDI OUT. 
+    3. Choose a MIDI channel and set it.
+2. Connect the Mercury7 with the MIDI interface. Be sure to use a stereo (TRS) jack cable.
+3. Connect the MIDI interface to your computer.
+4. Open [studiocode.dev/mercury7-editor](https://studiocode.dev/mercury7-editor/)
+5. Authorize the browser to access your MIDI devices.
+6. In the editor, select the MIDI input, output and channel. 
+    - You can ignore the "in 2" input for the moment.
+7. Move a knob on your Mercury7, the corresponding control in the editor must react accordingly.
+8. Play some sound through the Mercury7 and move a knob in the editor. The sound should change as if you have moved the same control on the Mercury7. 
+9. Enjoy your Mercury7!
 
-Note: if you can switch presets from the editor but nothing happens when you move a control, that means the input and output devices are correct but that the MIDI channel is incorrect.
 
-MIDI on the Mercury7
-----------------
+![doc-mercury7-anim-6.gif](/images/doc/doc-mercury7-anim-2.gif)
 
-If you can't get the MIDI communication working, check the following on the Mercury7:
 
-- The Global Settings EXP MODE is set to MIDI
-- The Global Settings MIDI is set to MIDI OUT
-- Choose a Global Settings MIDI CHANNEL.  
-- The cable between the Mercury7 and the MIDI I/O interface is TRS (stereo).
-- The MIDI I/O interface is powered on.
-- The Mercury7 is powered on.
-- The TSR cable is connected between one of the 4 MIDI I/O jack and the Mercury7's EXP/MIDI connector.
-- The MIDI I/O interface is connected to your PC.
-- The MIDI editor uses the same channel as the Mercury7's MIDI channel defined in the Global Settings.
+### MIDI input no 2
 
-Check the [Meris Mercury7 User Manual](https://www.meris.us/wp-content/uploads/2017/03/Meris-Mercury7-Manual-v2.pdf) and 
-the [Meris MIDI I/O User Manual](https://www.meris.us/wp-content/uploads/2018/03/Meris_MIDI_IO_Full_Manual_v1b.pdf) 
-for more informations and instructions about how to set the Mercury7's Global Settings.
+The second MIDI input can be used, for example, to connect an expression pedal or a MIDI controller.
 
-MIDI in the browser
--------------------
+The editor will automatically forward to the Mercury7 the messages it receives on this second MIDI input. It will however ignore the messages that Mercury7 does not support.
 
-You must use a browser that supports the [Web MIDI](https://www.midi.org/17-the-mma/99-web-midi) API specifications. 
+You can also use this second input to check the configuration of an external MIDI controler even without a pedal connected to the editor. 
+The received messages will update the editor's controls and thus you'll be able to check that the messages sent by your external controller are valid.
+  
 
-Currently, only the following browsers [support](https://caniuse.com/#feat=midi) the Web MIDI API:
+### Settings auto-save
 
-- Chrome (Mac, Linux, Windows) 
-- Opera (Mac, Linux, Windows)
+The configuration of the editor is automatically saved in the browser's _local storage_. As long as you use the same browser, you just have to configure the editor once.  
 
-Web MIDI is not supported under iOS (iPad, iPhone). The editor may work under Android but I did not test it.
 
-Scroll down to [MIDI in the browser](#MIDI-in-the-browser) to get more information about how to check and setup MIDI in your browser.
+### Troubleshooting
 
-MIDI in the editor
+If you can switch presets from the editor but nothing happens when you move a control, that means the input and output devices are correct but that the MIDI channel is incorrect.
+
+Consult the **Troubleshooting** chapter at the end of this page if you still have problems making your Mercury7 and the editor work together.
+
+The page [resources/meris-pedals-checklist](/resources/meris-pedals-checklist/) could also help you.
+
+See also the [WebMIDI](/resources/webmidi) page if you struggle with the WebMIDI configuration in your browser. 
+  
+
+Editor User Interface
+=====================
+
+MIDI communication
+----
+
+The "**in**" and "**out**" texts light up when a MIDI message is send or received.
+
+If the Editor is able to communicate with Mercury7, the preset selector will have a light background. 
+In case the Editor is not able to communicate with Mercury7, the preset selector will have a dark background. 
+
+**Communication with Mercury7 OK:** 
+
+![](/images/doc/doc-mercury7-preset-comm-ok.png)
+
+**No communication with Mercury7:**
+
+![](/images/doc/doc-mercury7-preset-comm-ko.png)
+
+
+Tooltips:
+---------
+
+Tooltips (little informational text box) can be displayed for most of the User Interface (UI) commands. 
+
+Click the <i class="far fa-comment-alt"></i> icon to enable/disable the tooltips:
+
+![doc-mercury7-anim-6.gif](/images/doc/doc-mercury7-anim-7.gif)
+
+
+
+Global settings:
 ------------------
 
-Once you have your Mercury7 connected to the MIDI I/O interface, you must configure the editor:
+The Global Settings are locked by default. This is to prevent any unwanted change. 
 
-1. Select the input device 
-2. Select the output device
-3. Select the MIDI channel
+Click the lock icon (<i class="fas fa-lock-open" aria-hidden="true"></i> or <i class="fas fa-lock icon-btn" aria-hidden="true"></i>) to enable/disable the Global Settings editing.
+
+![doc-mercury7-anim-6.gif](/images/doc/doc-mercury7-anim-5.gif)
+
+### Important if you have more than one Meris pedal: 
+
+If you have more than one Meris pedal connected to the same_ MIDI interface, it is recommended you do not change the Global Settings while more than one pedal is connected and powered-up. 
+
+The Global Settings MIDI messages do not distinguish between different pedals and all the pedals connected to the same MIDI interface will receive and apply the Global Settings messages.
+
+To work around this limitation:
+1. disconnect or power-down any pedals that you do not want to change.
+2. modify the global settings of the pedal that is connected.
+3. reconnect the other pedals.
+
+
+Init and randomize:
+------------------
+
+The INIT command resets all the control to some handy predefined values. A future version of the Editor will allow you to choose the default values.
+
+The RANDOMIZE command sets all the controls to a random value.
+
+The INIT and RANDOMIZE commands affect both the normal and the EXP values. 
+
+![doc-mercury7-anim-6.gif](/images/doc/doc-mercury7-anim-6.gif)
+
+
+Add current settings to the Library:
+------------------
+
+You can quickly save your current settings to the Library with the ADD TO LIB command. You can give your preset a name. 
+If you leave the name empty, the preset will automatically be named with the current date & time.
+
+You can rearange the Library Presets by drag & dropping them.
+
+![doc-mercury7-anim-6.gif](/images/doc/doc-mercury7-anim-3.gif)
+
+
+Library scrolling:
+------------------
+
+The <i class="fas fa-arrows-alt-v"></i> icon enable/disable the vertical scrolling of the Library. This is useful when the Library contains more than 16 presets.
+
+When the Library is open, the first 16 presets are always visible.
+
+
+Preset modified:
+------------------
+
+As soon as you change a control, the current preset selector display a dot to remind you that the current settings do not reflect the saved preset anymore.
+
+![doc-mercury7-anim-12.gif](/images/doc/doc-mercury7-anim-8.gif)
+
+If you had selected a preset from the Library and you have modified a control, the Library Preset will show a save icon. Click this save icon to update the Library Preset.
+
+![](/images/doc/doc-mercury7-preset-update-icon.png)
+
+
+How to set EXP values:
+------------------
+
+To define the values corresponding to the TOE DOWN position of the EXP pedal, click the "toe" button. As long as the "toe" button is clicked, you modify and view the EXP values.
+
+Keyboard shortcut: pressing the SHIFT key on your keyboard is the same as clicking the "toe" button.
+
+![doc-mercury7-anim-5.gif](/images/doc/doc-mercury7-set-exp.gif)
+
+
+Presets Library
+==============
+
+The Presets Library is a simple tool to manage more than the 16 Mercury7 presets.
+
+It is important to keep in mind that the Library stores the presets in the browser's _local storage_. It is therefore a good idea to export
+them as SysEx files if you want to share them across browsers or if you don't want to lose them in case you clear all your browsing data.
+
+A futur version of the Editor will save the Library Presets in the cloud and offer better management features. 
+           
+### Import Mercury7 presets:
+
+This will read the 16 presets stored in Mercury7 memory and save them in the Presets Library. 
+
+### Import sysex files:
+
+You can import presets stored in files (sysex files, usually with .syx extension). 
+
+If you import several files at once, the order you select the files is the order they will appear in the Library. You can sort them in the Library by drag-and-dropping them.
+
+### Write presets in Mercury7:
+
+You can write up to 16 presets in Mercury7. A popup window will allow you to choose the range of presets you want to write in Mercury7. 
     
-The editor's preferences (settings) are saved in your browser's _Local Storage_.
+If you want to save them in a specific order, you have to first sort the presets in Library (wih drag & drop).
 
-
-Presets
-=======
-
-Preset selection
-----------------
-
-The square buttons 1 to 16 on the top left of the editor allow you to directly select one of the sixteen editor settings.
-
-|   |   | 
-|---|---|
-| ![Preset clean](/images/screenshots/preset-sel-off-clean.jpg) | No communication with the Mercury7. Preset not modified since loaded. |
-| ![Preset clean](/images/screenshots/preset-sel-off-dirty.jpg) | No communication with the Mercury7. Preset has been modified since loaded. |
-| ![Preset clean](/images/screenshots/preset-sel-on-clean.jpg) | Communication with the Mercury7 OK. Preset not modified since received. |
-| ![Preset clean](/images/screenshots/preset-sel-on-dirty.jpg) | Communication with the Mercury7 OK. Preset has been modified since received. |
-
-A normal (or slightly dark) background indicates that the editor is _not_ able to communicate with the Mercury7. 
-
-A yellow background indicates that the editor is able to communicate with the Mercury7.
-
-No dot in the preset selector means that the preset has not been modified since it has been loaded from a file or received from the Mercury7.
-
-A dot in the preset selector means that the preset has been modified since it has been loaded from a file or received from the Mercury7. In that
-case the dot means that the values in the editor (and in Mercury7 when communication is working) are different from the values _stored_ in 
-Mercury7 memory (or saved in the preset file, when loaded from a file). 
-
-If you want to keep your current values and _store_ them in the Mercury7 _memory_ then you have to use the SAVE command from the menu. See next
-chapter.
-
-
-Saving presets
---------------
+### Export presets as file:
     
-1. Select a preset,
-2. Twist the knobs, have fun, make a great sound,
-3. Save the preset
+You can export all the Library Presets as a single zip file. 
 
-From the [Meris online FAQ](https://www.meris.us/support/): 
-> To save a preset, press one of the footswitches on the preset switch, modify your sound, then hold ALT to save."
+At the moment, you cannot export only one single preset, or a selection of presets, from the Library. This will be available in a future version.
+
+Loading a preset from the Library
+---------------------------------
+
+When you select a preset in the Library, it is sent to the Mercury7 and replace the current _live_ values of the controls. It does not replace the preset _stored in memory_. 
+If you want to _keep_ the preset in Mercury7, you have to save it in Mercury7 memory. This is described in the next chapter.
     
-Note: you can not save to preset number different than the current number. 
+Save a single Library Preset to Mercury7
+------------------------------------
 
-To save the preset, use the SAVE menu option in the editor or press and hold the ALT button on the Mercury7. 
+1. Select the preset in the Library.
+2. Click the SAVE command in the Editor header.
 
-![save command](/images/screenshots/save_command.jpg)
-
-Note: if you save the preset on the Mercury7 (with ALT button), then you have to select the preset again in the editor
-to make sure it remains in sync with the Mercury7.    
-    
-Loading presets
----------------
-
-Presets can be stored in files (binary .syx files) and, with this editor, presets can also be stored as URLs. 
-
-When you load a preset, it is sent to the Mercury7 and replace the current _live_ values. It does not replace the preset _stored in memory_. If you want to keep the preset you loaded
-in the Mercury7, then you need to store it, either by using the menu SAVE command of this editor or by pressing and holding the ALT button on the Mercury7.  
+Instead of clicking the SAVE button you can also press and hold the ALT button on the Mercury7.
         
+Library preset icons
+-------------------
+
+![](/images/doc/doc-mercury7-preset-icons.png)
+
+Click the <i class="fas fa-pen"></i> Pen icon to edit the name or the description only.  
+
+Click the <i class="fas fa-trash-alt"></i> Trash to delete the preset. A locked preset must first be unlocked in order to be deleted.
+
+Click the <i class="fas fa-lock-open"></i> Lock Open icon (that appears when you hover over the preset) to protect the preset against modification or deletion.  
+
+Click the <i class="fas fa-lock"></i> Lock Closed icon to unlock the preset.  
+
+Click the <i class="fas fa-save"></i> Save icon to update the preset. You can also edit the name or the description. This will overwrite the preset with the current controls' values.
+                     
         
 Expression pedal
 ================
-
-Press the Tab key on your keyboard or click "down" near the EXP slider in the editor to toggle between the two sets of values stored in a preset.
-
-When you edit the second set of values, the control's name are written in _lowercase_. They are written in _uppercase_ when you edit the default set of value.
-
-EXP slider
-----------
 
 The EXP slider allows you to simulate an expression pedal connected to the Mercury7.
 
@@ -160,237 +257,124 @@ The value displayed next to the slider is:
 
 ### How to set the values for the EXP pedal
 
-1. Set the _normal_ values, for the _toe up_ position of the pedal.
-2. Click the "**down**" button next to the EXP slider to enter the EXP edit mode
-3. Click the "copy" button next to the EXP slider (this button is only displayed when "**down**" is pressed)
-4. Set the _second_ values, those used for the _toe down_ position of the pedal.
-5. Click the "**down**"" button next to the EXP slider to quit the EXP edit mode
+1. Press and hold the shift key on your compter keyboard. The Editor will show the EXP values.
+2. While you hold the shift key, any change you do will alter the EXP value.
 
-Now, when you move the EXP slider you must see the controls' values morph between the normal and second values you set.
+You can also set the Editor in EXP mode by pressing the TAB key on your computer keyboard or by clicking the "toe" button in the Editor.  
 
-Do not forget to save these values in Mercury7 preset memory if you like them. Use the menu SAVE command.
+While the Editor is in EXP mode, a "copy" button will be displayed below the "toe" button. Use this "copy" button to copy the normal values
+to the EXP values. 
 
-### EXP in detail
+While the Editor is in EXP mode, the control's name are displayed in _italic_.
 
-For each of its knobs, the Mercury7 stores two values: 
-- the first one is the default one and is used when the expression pedal is at 0 or when no expression pedal is connected. 
-- the second value is the one ued when the expression pedal is at its maximum. 
+When you are done, click the "toe" button again, or press your computer TAB key, to get back to the normal values.
 
-When you move the expression pedal between its min and max position, the Mercury7 will morph the values between those two sets of values.
+![todo](/images/mercury7/exp_edit_mode1.jpg)
 
-Please read the [Meris Mercury7 User Manual](https://www.meris.us/wp-content/uploads/2017/03/Meris-Mercury7-Manual-v2.pdf), section 3, for more informations.
+### Check your EXP config:
 
-This editor lets you define the values for the two positions of the expression pedal.   
+Move the "EXP" slider to morph the controls between the normal and EXP values.
 
-By default, the first set of values is always used. To edit the second sets of values you have to click on EXP **down** button:
+Note: the editor will interpolate the values to show you what the Mercury7 is probably doing. 
+The editor does a linear interpolation and maybe Mercury7 does a different kind of interpolation, so the interpolated value may displayed by the Editor be different from the real value Mercury7 will use.  
 
-![todo](/images/screenshots/exp_edit_mode1.jpg)
-
-The **down** text will be highlighted and also all the knobs names will change to lowercase. This shows you that you are now editing the second set of values.
-
-Note: you can also use your keyboard TAB key to toggle between the two sets of values.
-
-When you are editing the second set of of values, you can use the **copy** button to copy the first set of value to the second set.  
-
-To switch back to the default set of value, simply click **down** again. The **down** text must change back to black and the knobs names must change back to uppercase.
-
-You can now use the EXP slider to smoothly morph between the two sets of values. The editor will interpolate the values to show you what the Mercury7 is probably doing. 
-But there is no guarantee about that. The editor does a linear interpolation. Maybe Mercury7 does a different kind of interpolation.
-
-If you want to use this with a real expression pedal connected to the Enzo (and thus without MIDI), do not forget to save your preset with the menu's SAVE command. 
-
-
-MIDI Input 2
-============
-
-You can enable a second MIDI input in the editor's preferences. 
-
-When enabled, this second input can be very useful to test the pedal's configuration with an external MIDI controler. 
-
-All messages received by this second input are forwarded to the selected MIDI output if the message if supported by the pedal. 
-
-You can also use this second input to check the configuration of an external MIDI controler even without a pedal connected to the editor. 
-The received messages will update the editor's controls and thus you'll be able to check that your external controler send valid messages.
-
-
-URL update
-==========
-
-The editor can update its URL to include a representation of the current settings. This is like appending a hexadecimal SysEx to the URL.
-
-![SysEx as URL hash](/images/screenshots/url_hash.jpg "SysEx as URL hash")
-
-When you access an URL containing such a parameter, the editor will use it to set the value of the knobs and switches. It will also
-send these values to the Mercury7.
-
-So you can use URLs as _preset bookmarks_!
-
-Opening the editor with a URL containing a preset
--------------------------------------------------
-
-If you already have the Mercury7 running with a nice preset and you connect it to the editor, maybe you don't want the editor to overwrite
-this preset because you open it with such a URL. To avoid this case, in the editor preferences, you can choose the behavior you
-prefer:
-
-![Preference for start mode](/images/screenshots/pref-init.jpg "Preference for start mode")
-    
-Automatic update of the URL
----------------------------
-
-You can manually update the URL with the URL command in the menu or you can let the editor automatically update it. You can
-set this in the editor preferences:
-
-![Preference URL](/images/screenshots/pref-url.jpg "Preference URL")
-
-The REC button also lets you start at will the auto-updating of the URL.
-
-![REC button](/images/screenshots/rec.jpg "REC button")
-
-REC is automatically stopped if you use your browser's history. 
-
-Use REC to record all your changes and later on travel back in time!
-
-
-Menu commands
-=============
-
-| icon | command | direction  | description  |
-|---|---|---|---|
-|   | Init | editor --> Mercury7 | Set convenient "default" values. |
-|   | Randomize  | editor --> Mercury7 | Set random values for all controls. |
-|   | Send  | editor --> Mercury7 | Send the editor's current values to Mercury7 (does not _save_ in Mercury7's _memory_). |
-|   | Save  | editor --> Mercury7 | Tell the Mercury7 to save in its memory the editor's current values (updates the current stored preset). |
-|   | URL  | editor only | Update the editor's URL with the current values. This makes a "_bookmarkable preset_". |
-|   | Print  | editor only | Open a popup window with the currents settings displayed for printing (or saving as PDF). |
-|   | Load  | editor --> Mercury7 | Load a preset from a sysex file and send the values to the Mercury7. |
-|   | Download  | editor only | Download the current editor's values as a sysex file. |
-|   | Midi  | editor <--> Mercury7 | Open a popup displaying all the MIDI messages exchanged between the editor and the Mercury7. |
-|   | Global  | editor <--> Mercury7 | Display and edit the Global Settings of the Mercury7. |
-|   | Prefs  | editor only | Display and edit the editor's preferences. |
-|   | Help  | editor only | Display a summary of the editor usage. |
-|   | About  | editor only | Display version and credits about the editor. |
-
+Please read the [Meris Mercury7 User Manual](https://www.meris.us/wp-content/uploads/2017/03/Meris_Mercury7_full_Manual-v4.pdf), section 5, for more information.
    
-Synchronizing Mercury7 and the editor
-=================================
 
-**IMPORTANT:** please keep in mind that the editor only has the possibility to read the _saved_ preset from Mercury7. It can not read the _current_ values ​​of the controls. 
-These values may be different from the one saved in memory (saved as a preset).
+Keyboard shortcuts
+==================
 
-Also, do not forget that each time you access a "Alt/2nd layer" value, the preset is saved (see Mercury7 User Manual Section 7, page 9). 
+| keyboard key | function                    |
+|--------------|-----------------------------|
+| SPACE BAR    | toggle BYPASS               |
+| Shift        | show EXP values             |
+| Tab          | switch to EXP values        |
+| I            | Init                        |
+| R            | Randomize                   |
+| Up arrow     | slowly move EXP to "toe" position; press Up again to stop the animation |
+| Down arrow   | slowly move EXP to "heel" position; press Dowm again to stop the animation |
+| PageUp       | set EXP to "toe" position |
+| PageDown     | set EXP to "heel" position |
+| Left arrow   | previous PRESET             |
+| Right arrow  | next PRESET                 |
+| S            | toggle SWELL        |
+| L            | open/close the Library        |
+| K            | enable/disable the Library scrolling        |
 
-It is therefore recommended to always select a preset from the editor as first action after having opened it. After that, 
-unless the MIDI connection is interrupted, the Mercury7 and the editor should always remain in sync.
+
+Startup options
+===============
+
+These URL parameters are available:
+
+**`size=<window-size>`**
+
+This will force the window size of the editor. 
     
-Synchronizing with Sysex
-------------------------
+`window-size` can be:
 
-The editor can receive SysEx from the Mercury7. You can use this possibility to update the editor with the current preset of the Mercury7.
-You have two possibilities to synchronize the editor with the Mercury7:
+- `0` or `S` or `small` for the small window 
+- `1` or `M` or `normal` for the default window 
+- `2` or `L` or `large` for the full width window     
+    
+**`m=<margins>`**
+    
+This will set the external margins of the editor window.
 
-1. Select a preset from the editor.
-2. Or, from the Mercury7, send the preset as Sysex Data (see _Mercury7 User Manual_ 6). 
-To do that, press the Bypass LED switch while holding the ALT button. The editor will tell you when it has received a 
-preset as SysEx.
+`<margins>` must be a valid CSS margin definition. Use `%20` to represent the _space_ char in the value.     
+    
+**`bg=<color>`**
 
-![SysEx received](/images/screenshots/sysex-received.jpg "SysEx received")
+This will set the background color of the browser window. By default the color is `#111111`;
 
-Note: while you hold the ALT switch, the Mercury7 will save the preset before sending it. 
+`<color>` must be a valid CSS color definition.     
+
+**`deletedata=1`**
+
+Clear all the data saved by the Editor in the browser's _local storage_.
+  
+
+Clearing the data saved in the browser
+======================================
+
+The Editor uses the browser's Local Storage to store the preferences and the Presets Library's presets.
+
+To clear all the Editor's data, start the editor with the `deletedata=1` parameter in the URL. 
+    
+Example: [https://studiocode.dev/mercury7-editor/?deletedata=1](/mercury7-editor/?deletedata=1)
+
+
+Troubleshooting
+===============
+
+Mercury7 and the Editor are not in sync
+-----------------------------------
+
+If you think the Editor is out of sync with Mercury7 anymore:
  
-Out of sync
------------
+- Select a preset in the Editor.
+- If the above step did not solve the problem, refresh the page in your browser (F5 or Ctrl-R in Window, Cmd-R in OSX).
+- If the editor is still out of sync, check the MIDI configuration. See the next chapter.
 
-The editor can become out-of-sync with the Mercury7 in that situation:
 
-1. The editor is not yet connected to Mercury7.
-2. On the Mercury7 a preset has been loaded.
-3. On the Mercury7, some values have been modified.
-4. The editor is started.
-    a. The editor will read the current preset (from the Mercury7 _memory_)
-    b. Mercury7 will send the value saved in memory for the current preset. It will not send the _current_ values of the knobs and buttons. 
+MIDI on the Mercury7
+----------------
     
-To avoid this problem:
+If you can't get the MIDI communication working, check the following on the Mercury7:
 
-- Option 1: select a preset in the editor. This will select the preset in the Mercury7. Unsaved settings will be lost. 
-- Option 2: save the current preset (with the WRITE command in the editor or the ALT switch in Mercury7) then select this preset from
-the editor. No settings will be lost and the editor will be in sync.   
+- The Global Settings EXP MODE is set to MIDI
+- The Global Settings MIDI is set to MIDI OUT
+- Choose a Global Settings MIDI CHANNEL.  
+- The cable between the Mercury7 and the MIDI interface is TRS (stereo).
+- The MIDI interface is powered on.
+- The Mercury7 is powered on.
+- The TSR cable is connected between the 4 MIDI interface jack and the Mercury7's EXP/MIDI jack.
+- The MIDI interface is connected to your PC.
+- The MIDI editor uses the same channel as the Mercury7's MIDI channel defined in the Global Settings.
 
-
-MIDI in the browser
-===================
-
-If you can't get the MIDI communication working, check the following on the browser:
-
-- You use a browser that supports the [Web MIDI](https://www.midi.org/17-the-mma/99-web-midi) API specifications. 
-Currently, only the following browsers [support](https://caniuse.com/#feat=midi) the Web MIDI API:
-
-    - Chrome (Mac, Linux, Windows) 
-    - Opera (Mac, Linux, Windows)
-
-    Web MIDI is not support under iOS (iPad, iPhone). It may work under Android but I did not test it.
-
-- The Web MIDI is not blocked by the browser. See below for information about this feature in Chrome.
-
-### Web MIDI in Chrome
-
-The first time you access a web page that uses the WebMIDI API, the browser will ask you for permission.
-
-![Chrome asks for MIDI permission](/images/screenshots/chrome-midi-ask.jpg "Chrome asks for MIDI permission")
-
-You need to click "Allow" to authorize the editor to use the Web MIDI API.
-
-If you refuse access, the editor will display the following message:
-
-![MIDI access refused](/images/screenshots/message-midi-blocked.jpg "MIDI access refused")
-
-    Waiting for MIDI interface access...
-    ERROR: WebMidi could not be enabled.
-           
-You can change the permission at any time:
-
-![Chrome change MIDI permission](/images/screenshots/chrome-midi-allow.jpg "Chrome change MIDI permission")
-
-#### MIDI icon in the URL
-
-Chrome display an icon in the URL to remind you that you are on a page that have access to MIDI. You can click this icon to access the MIDI permission settings.
-
-![Chrome MIDI icon in URL](/images/screenshots/chrome-midi-url-icon.jpg "Chrome MIDI icon in URL")
-
-![Chrome MIDI icon in URL](/images/screenshots/chrome-midi-url-icon-dialog.jpg "Chrome MIDI icon in URL")
-
-    
-#### MIDI configuration in the browser settings:    
-    
-You can also access the MIDI permissions via the browser Settings page. 
-
-In Chrome, follow this path: Menu Settings / Advanced / Content settings / MIDI devices    
-
-You can also open the Settings page and search for "MIDI".
-
-
-Bluetooth MIDI
-==============
-
-A small Bluetooth MIDI adapter such as the [Quicco Sound mi.1](https://www.thomann.de/intl/quicco_sound_mi.1_wireless_midi_adapter.htm) 
-or [Yamaha MD-BT01](https://www.thomann.de/intl/yamaha_md_bt01_wireless_midi_adapter.htm) is a very convenient way to connect the 
-MIDI I/O interface to your computer. 
-
-![Quicco Sound mi.1](/images/quicco_sound_mi1-33.jpg "Quicco Sound mi.1")
-
-![Yamaha MD-BT01](/images/yamaha_md_bt01-33.jpg "Yamaha MD-BT01")
-
-If you have a Mac, use the Audio MIDI Setup application. 
-
-![Mac Audio Setup Application](/images/screenshots/mac-audio-setup.jpg "Mac Audio Setup Application")
-
-
---TODO: photo MIDI I/O with adapter--
-
- 
-MIDI tools
-==========
-
-If you use a Mac, check out the tools available at https://www.snoize.com/. 
+Check the [Meris Mercury7 User Manual](https://www.meris.us/wp-content/uploads/2017/03/Meris_Mercury7_full_Manual-v4.pdf) and 
+the [Meris MIDI I/O User Manual](https://www.meris.us/wp-content/uploads/2018/03/Meris_MIDI_IO_Full_Manual_v1b.pdf) 
+for more informations and instructions about how to set the Mercury7's Global Settings.
 
 
 Limitations of this editor
@@ -400,10 +384,7 @@ This editor will _not_ work in Firefox, Safari, IE or Edge because these browser
 
 The editor will not work under iOS (iPad, iPhone). 
 
-This editor has mainly been tested with Chrome on a MacBook pro running the latest OS release. Some tests have been 
-done with success with Chrome under Linux Mint 17.1 and with Chrome under Windows 10. 
-
-Still under active development. Feel free to log bugs/issues.  
+This editor has mainly been tested with Chrome under OSX 10.14. Some tests have been done with success with Chrome under Linux Mint 17.1 and with Chrome under Windows 10. 
 
 
 Known issues
@@ -440,3 +421,7 @@ To contribute your bug fixes, new features, etc.:
 1. Fork the project.
 2. Create a pull-request.
 
+
+----
+
+If you like this application, you can [![Buy Me A Coffee](https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png)](https://www.buymeacoffee.com/c6dVm4Q)
