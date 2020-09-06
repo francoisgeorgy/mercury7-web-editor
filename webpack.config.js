@@ -44,15 +44,17 @@ module.exports = {
                 AutoIncreaseVersion: false
             }
         }),
-        new CopyWebpackPlugin([
-            { from: "./src/midi.html" },
-            { from: "./src/print/preset-template.html", to: "templates"},
-            { from: "./src/css/midi.css", to: "css" },
-            { from: "./src/img/favicon-16x16.png" },
-            { from: "./src/img/favicon-32x32.png" },
-            { from: "./src/img/favicon-96x96.png" },
-            { from: "./src/img/editor-1-0.jpg", to: "img" }
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [
+            {from: "./src/midi.html"},
+            {from: "./src/print/preset-template.html", to: "templates"},
+            {from: "./src/css/midi.css", to: "css"},
+            {from: "./src/img/favicon-16x16.png"},
+            {from: "./src/img/favicon-32x32.png"},
+            {from: "./src/img/favicon-96x96.png"},
+            {from: "./src/img/mercury7-editor-v15.jpg", to: "img"},
+            {from: "./src/img/mercury7-editor-v15.png", to: "img"}
+        ]}),
         new HtmlWebpackPlugin({
             chunks: ["app_bundle"],
             hash: true,
@@ -66,9 +68,9 @@ module.exports = {
             inject: "head",
             template: "./src/print/print.html",
             filename: "./print.html" //relative to root of the application
-        }),
-        new ZipPlugin({
-            filename: 'mercury7_editor.zip',
+        // }),
+        // new ZipPlugin({
+        //     filename: 'mercury7_editor.zip',
         })
     ],
     performance: {

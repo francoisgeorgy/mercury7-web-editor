@@ -196,12 +196,12 @@ function decodeGlobals(data, globals) {
  * @param data
  * @returns {*}
  */
-export function decodeSysex(data) {
+export function decodeSysex(data, ignorePresetID = false) {
     const valid = validate(data);
     switch (valid.type) {
         case SYSEX_PRESET:
             log("decodeSysex: sysex is preset data");
-            decodeMeta(data);
+            if (!ignorePresetID) decodeMeta(data);
             decodeControls(data, control);
             return {
                 type: SYSEX_PRESET,

@@ -32,7 +32,7 @@ export function updateSelectDeviceList() {
 
     present = false;
     s = $("#midi-input2-device");
-    s.empty().append($("<option>").val("").text("- select -"));
+    s.empty().append($("<option>").val("").text("not used"));
     // noinspection JSUnresolvedVariable
     s.append(
         WebMidi.inputs.map((port) => {

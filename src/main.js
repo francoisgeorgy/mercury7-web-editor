@@ -2,7 +2,7 @@ import {log, TRACE, warn} from "./debug";
 import * as WebMidi from "webmidi";
 import MODEL from "./model";
 import {detect} from "detect-browser";
-import {URL_PARAM_BG, URL_PARAM_SIZE, VERSION} from "./constants";
+import {URL_PARAM_BG, URL_PARAM_CLEAR_STORAGE, URL_PARAM_MARGINS, URL_PARAM_SIZE, VERSION} from "./constants";
 import {loadPreferences, savePreferences, preferences} from "./preferences";
 import {
     appendMessage,
@@ -19,17 +19,23 @@ import {
     setMidiInput2Port,
     setMidiInputPort
 } from "./midi_in";
-import {getMidiOutputPort, requestPreset, setMidiOutputPort} from "./midi_out";
-import {hashSysexPresent, initFromUrl, setupUrlSupport, startUrlAutomation} from "./url";
+import {getMidiOutputPort, requestGlobalSettings, requestPreset, setMidiOutputPort} from "./midi_out";
+import * as Utils from "./utils";
+import {initSize} from "./ui_size";
+
 import "./css/lity.min.css";    // CSS files order is important
 import "./css/themes.css";
 import "./css/main.css";
-import "./css/zoom.css";
-import "./css/grid-default.css";
-import "./css/grid-global-settings.css";
-import {setPresetDirty, updatePresetSelector} from "./ui_presets";
-import * as Utils from "./utils";
-import {initZoom} from "./ui_zoom";
+import "./css/header.css";
+import "./css/size.css";
+import "./css/config.css";
+import "./css/info-panel.css";
+import "./css/presets.css";
+import "./css/controls.css";
+import "./css/buttons.css";
+import "./css/dialogs.css";
+import "./css/global-settings.css";
+import store from "storejs";
 
 const browser = detect();
 
@@ -63,25 +69,44 @@ function setupModel() {
  */
 function sync() {
 
+    log('sync()');
+
     if (getMidiInputPort() && getMidiOutputPort()) {
 
-        if (hashSysexPresent() && preferences.init_from_URL === 1) {
-            log("sync: init from URL");
+        log('sync() midi in & midi out');
 
-            initFromUrl();
+        appendMessage("Request global settings.");
+        window.setTimeout(requestGlobalSettings, 200);
 
-        } else {
+        // if (hashSysexPresent() && preferences.init_from_URL === 1) {
+        //     log("sync: init from URL");
+        //
+        //     initFromUrl();
+        //
+        // } else {
+
+            appendMessage("Request current preset.");
+            window.setTimeout(() => {
+                log("sync: requestPreset(true)");
+                requestPreset(true);
+            }, 300);
+
+/*
             if (MODEL.getPresetNumber() === 0) {
                 log("sync: no preset yet, will request preset in 200ms");
                 // we wait 100ms before sending a read preset request because we, sometimes, receive 2 connect events. TODO: review connection events management
                 appendMessage("Request current preset.");
-                window.setTimeout(requestPreset, 200);
+                window.setTimeout(() => {
+                    log("sync: requestPreset(true)");
+                    requestPreset(true);
+                }, 300);
             } else {
                 log("sync: preset is > 0, set preset dirty");
                 setPresetDirty();
                 appendMessage(`Select a preset to sync the editor or use the Send command to sync the ${MODEL.name}.`, true);
             }
-        }
+*/
+        // }
     }
 
 }
@@ -148,7 +173,7 @@ function connectInputPort(input) {
 
     log(`%cconnectInputPort: ${input.name} is now listening on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
     setCommunicationStatus(true);
-    updatePresetSelector();
+    // updatePresetSelector();
     appendMessage(`Input ${input.name} connected on channel ${preferences.midi_channel}.`);
 }
 
@@ -157,6 +182,11 @@ function connectInput2Port(input) {
     log(`connectInput2Port(${input.id})`);
 
     if (!input) return;
+
+    if (!preferences.input2_channel) {
+        log(`connectInput2Port(${input.id}): abort because channel if not defined`);
+        return;
+    }
 
     setMidiInput2Port(input);
 
@@ -181,7 +211,7 @@ function disconnectInputPort() {
         p.removeListener();    // remove all listeners for all channels
         setMidiInputPort(null);
         setCommunicationStatus(false);
-        updatePresetSelector();
+        // updatePresetSelector();
         appendMessage(`Input disconnected.`);
     }
 }
@@ -290,7 +320,7 @@ function connectOutputPort(output) {
     log("connectOutputPort");
     setMidiOutputPort(output);
     log(`%cconnectOutputPort: ${output.name} can now be used to send data on channel ${preferences.midi_channel}`, "color: orange; font-weight: bold");
-    updatePresetSelector();
+    // updatePresetSelector();
     appendMessage(`Output ${output.name} connected on channel ${preferences.midi_channel}.`);
 }
 
@@ -300,7 +330,7 @@ function disconnectOutputPort() {
         log("disconnectOutputPort()");
         setMidiOutputPort(null);
         log("disconnectOutputPort: connectOutputPort: midi_output can not be used anymore");
-        updatePresetSelector();
+        // updatePresetSelector();
         appendMessage(`Output disconnected.`);
     }
 }
@@ -366,26 +396,27 @@ function deviceConnected(info) {
 
     if (info.port.type === 'input') {
         if ((getMidiInputPort() === null) && (info.port.id === preferences.input_device_id)) {
+            // log("deviceConnected: input device is ");
             /*input_connected =*/ connectInputDevice(preferences.input_device_id);
-        } else {
-            log("deviceConnected: input device ignored");
+        // } else {
+        //     log("deviceConnected: input device ignored");
         }
 
-        if (preferences.enable_midi_in2) {
-            log("deviceConnected: enable input2");
+        // if (preferences.enable_midi_in2) {
+        //     log("deviceConnected: input2 is enabled");
             if ((getMidiInput2Port() === null) && (info.port.id === preferences.input2_device_id)) {
                 connectInput2Device(preferences.input2_device_id);
-            } else {
-                log("deviceConnected: input2 device ignored or not defined by user");
+            // } else {
+            //     log("deviceConnected: input2 device ignored or not defined by user");
             }
-        }
+        // }
     }
 
     if (info.port.type === 'output') {
         if ((getMidiOutputPort() === null) && (info.port.id === preferences.output_device_id)) {
             /*output_connected =*/ connectOutputDevice(preferences.output_device_id);
-        } else {
-            log("deviceConnected: output device ignored or not defined by user");
+        // } else {
+        //     log("deviceConnected: output device ignored or not defined by user");
         }
     }
 
@@ -437,6 +468,7 @@ $(function () {
     loadPreferences();
 
     setupModel();
+
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice, setMidiInput2Channel, connectInput2Device);
 
     const s = Utils.getParameterByName(URL_PARAM_SIZE);
@@ -459,8 +491,13 @@ $(function () {
                 z = 2; break;
         }
         if (z !== preferences.zoom_level) {
-            initZoom(z);
+            initSize(z);
         }
+    }
+
+    const margins = Utils.getParameterByName(URL_PARAM_MARGINS);
+    if (margins) {
+        $("#wrapper").css("margin", margins);
     }
 
     const bg = Utils.getParameterByName(URL_PARAM_BG);
@@ -469,8 +506,14 @@ $(function () {
         $("body").css("background-color", bg);
     }
 
-    setupUrlSupport();
-    startUrlAutomation();
+    const cs = Utils.getParameterByName(URL_PARAM_CLEAR_STORAGE);
+    if (cs) {
+        store.clear();
+        alert("All local storage used by the Editor has been deleted.");
+    }
+
+    // setupUrlSupport();
+    // startUrlAutomation();
 
     appendMessage("Waiting for MIDI interface access...");
 
@@ -479,17 +522,17 @@ $(function () {
 
         if (err) {
 
-            warn("webmidi err", err);
+            warn("WebMidi unavailable", err);
 
             appendMessage("ERROR: WebMidi could not be enabled.");
             appendMessage("-- PLEASE ENABLE MIDI IN YOUR BROWSER --");
 
             // Even we don't have MIDI available, we update at least the UI:
-            initFromUrl(false);
+            // initFromUrl(false);
 
         } else {
 
-            log("webmidi ok");
+            log("WebMidi enabled");
 
             appendMessage("WebMidi enabled.");
 

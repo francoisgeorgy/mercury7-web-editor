@@ -80,6 +80,10 @@ const _algorithm = function (v) {
     }
 };
 
+export const _ms = function (v) {
+    return (v * 10);    // + "ms";
+};
+
 function defineControls() {
     control[control_id.exp_pedal] = { // 4,
         name: "Expression pedal",
@@ -89,7 +93,7 @@ function defineControls() {
     control[control_id.space_decay] = { // 16,
         name: "Space Decay",
         init_value: 63,
-        human: _percent,
+        human: _ms,
         sysex: {
             offset: 9,
             mask: [0x7F]
@@ -130,7 +134,7 @@ function defineControls() {
     };
     control[control_id.lo_freq] = { // 19,
         name: "Low Frequency",
-        human: _percent,
+        // human: _percent,
         init_value: 102,
         sysex: {
             offset: 12,
@@ -159,7 +163,7 @@ function defineControls() {
     };
     control[control_id.hi_freq] = { // 21,
         name: "High Frequency",
-        human: _percent,
+        // human: _percent,
         init_value: 102,
         sysex: {
             offset: 14,
@@ -173,6 +177,7 @@ function defineControls() {
     };
     control[control_id.predelay] = { // 22,
         name: "Predelay",
+        human: _ms,
         sysex: {
             offset: 15,
             mask: [0x7F]
@@ -185,6 +190,7 @@ function defineControls() {
     };
     control[control_id.mod_speed] = { // 23,
         name: "Mod Speed",
+        // human: _percent,
         init_value: 0,
         sysex: {
             offset: 16,
@@ -226,6 +232,7 @@ function defineControls() {
     };
     control[control_id.attack_time] = { // 26,
         name: "Attack Time",
+        human: _ms,
         init_value: 0,
         sysex: {
             offset: 19,

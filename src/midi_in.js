@@ -1,8 +1,13 @@
 import {showMidiInActivity} from "./ui_midi_activity";
-import {presetSet} from "./ui_presets";
+import {selectPreset, updatePresetSelector} from "./ui_presets";
 import {logIncomingMidiMessage} from "./ui_midi_window";
-import {getLastSendTime, updateDevice} from "./midi_out";
-import {updateModelAndUI, updateUI} from "./ui";
+import {
+    confirmPresetReceived,
+    getLastSendTime,
+    isAutoLockOnImport, isFullReadInProgress,
+    updateDevice
+} from "./midi_out";
+import {updateControls, updateModelAndUI} from "./ui";
 import {log} from "./debug";
 import MODEL from "./model";
 import {
@@ -10,11 +15,11 @@ import {
     monitorMessage
 } from "./ui_messages";
 import {toHexString} from "./utils";
-import {SYSEX_GLOBALS, SYSEX_PRESET} from "./model/sysex";
+import {SYSEX_GLOBALS, SYSEX_PRESET, validate} from "./model/sysex";
 import {updateGlobalSettings} from "./ui_global_settings";
 import {resetExp} from "./ui_exp";
-import {updateUrl} from "./url";
-import {preferences, SETTINGS_UPDATE_URL} from "./preferences";
+import {addPresetToLibrary} from "./preset_library";
+import {device_name} from "./model/constants";
 
 let midi_input = null;
 
@@ -81,11 +86,11 @@ export function handlePC(msg, input_num = 1) {
     showMidiInActivity(input_num);
 
     const pc = msg[1];
-
     logIncomingMidiMessage("PC", [pc]);
 
-    presetSet(pc)
-
+    if (!isFullReadInProgress()) {
+        selectPreset(pc)
+    }
 }
 
 /**
@@ -118,6 +123,7 @@ export function handleCC(msg, input_num = 1) {
     if (input_num === 2) {
         // If we received a message on input 2, we forward it to the pedal if the pedal supports the message's CC.
         if (MODEL.supportsCC(cc)) {
+            log("forward CC", cc, v);
             updateDevice("cc", cc, v);
         }
     }
@@ -154,24 +160,55 @@ export function handleSysex(data) {
 
     log("%chandleSysex: SysEx received", "color: yellow; font-weight: bold", toHexString(data, ' '));
     showMidiInActivity(1);
-    const valid = MODEL.setValuesFromSysEx(data);
-    switch (valid.type) {
-        case SYSEX_PRESET:
-            resetExp();
-            updateUI();
-            // noinspection JSBitwiseOperatorUsage
-            if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
-                updateUrl();
-            }
-            // setPresetClean();
-            appendMessage(`Preset ${MODEL.meta.preset_id.value} sysex received.`);
-            break;
-        case SYSEX_GLOBALS:
-            updateGlobalSettings();
-            appendMessage(`Global config settings received.`);
-            break;
-        default:
-            appendMessage(valid.message);
+
+    if (isFullReadInProgress()) {
+
+        log("fullReadInProgress");
+
+        const valid = validate(data);
+        if (valid.type === SYSEX_PRESET) {
+
+            let id = data[8];
+
+            data[4] = 0;
+            data[8] = 0;
+
+            let n = `${device_name} ${id}`;
+            addPresetToLibrary({
+                // id: n.replace('.', '_'), // jQuery does not select if the ID contains a dot
+                id: n,
+                name: n,
+                h: toHexString(data),
+                locked: isAutoLockOnImport()
+            })
+        }
+
+    } else {
+
+        confirmPresetReceived();
+
+        const valid = MODEL.setValuesFromSysEx(data);
+        switch (valid.type) {
+            case SYSEX_PRESET:
+                resetExp();
+                // updateUI();
+                updatePresetSelector();
+                updateControls();
+                // noinspection JSBitwiseOperatorUsage
+                // if (preferences.update_URL & SETTINGS_UPDATE_URL.on_randomize_init_load) {
+                //     updateUrl();
+                // }
+                // setPresetClean();
+                appendMessage(`Preset ${MODEL.meta.preset_id.value} sysex received.`);
+                break;
+            case SYSEX_GLOBALS:
+                updateGlobalSettings();
+                appendMessage(`Global config settings received.`);
+                break;
+            default:
+                appendMessage(valid.message);
+        }
+
     }
 
 }

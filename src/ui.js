@@ -1,5 +1,8 @@
 import MODEL from "./model";
-import {updatePresetSelector, setPresetDirty, setupPresetSelectors} from "./ui_presets";
+import {
+    setPresetSelectorDirty,
+    setupPresetSelectors
+} from "./ui_presets";
 import {knobs, setupKnobs} from "./ui_knobs";
 import {
     setupMomentarySwitches,
@@ -8,30 +11,22 @@ import {
     updateMomentaryStompswitch,
     updateOptionSwitch, updateSwellSwitch
 } from "./ui_switches";
-import {fullUpdateDevice, savePreset, sendPC, updateDevice} from "./midi_out";
+import {fullUpdateDevice, savePreset, setAndSendPC, updateDevice} from "./midi_out";
 import {VERSION} from "./constants";
 import {setCommunicationStatus} from "./ui_messages";
-import {setupKeyboard} from "./ui_keyboard";
+import {enableKeyboard, setupKeyboard} from "./ui_keyboard";
 import {init, randomize} from "./presets";
-import {loadPresetFromFile, readFile} from "./read_file";
-import {openCreditsDialog, printPreset} from "./ui_dialogs";
-import {openMidiWindow} from "./ui_midi_window";
-import {initZoom, zoomIn, zoomOut} from "./ui_zoom";
+import {printPreset} from "./ui_dialogs";
+import {initSize, zoomIn, zoomOut} from "./ui_size";
 import {preferences} from "./preferences";
-import {toggleUrlAutomation, updateUrl} from "./url";
-import {setupGlobalSettings, toggleGlobalSettingsPanel} from "./ui_global_settings";
+import {setupGlobalSettings} from "./ui_global_settings";
 import "webpack-jquery-ui/effects";
-import {
-    setupAppPreferences,
-    toggleAppPreferencesPanel,
-    hideMidiInput2,
-    showMidiInput2
-} from "./ui_app_prefs";
 import {log, TRACE, warn} from "./debug";
-import {downloadLastSysEx} from "./download";
-import {openHelpPanel, setupHelpPanel} from "./ui_help";
 import {setupExp, updateExpSlider} from "./ui_exp";
 import {inExpMode} from "./ui_exp";
+import {setLibraryPresetDirty, setupPresetsLibrary} from "./preset_library";
+import {setupTooltips} from "./tooltips";
+
 
 /**
  * Handles a change made by the user in the UI.
@@ -40,10 +35,11 @@ export function handleUserAction(control_type, control_number, value) {
     log(`handleUserAction(${control_type}, ${control_number}, ${value})`);
     const n = parseInt(control_number, 10);
     if (control_type === 'pc') {
-        sendPC(n);
+        setAndSendPC(n);
     } else {
         if (n !== MODEL.control_id.exp_pedal) {
-            setPresetDirty();
+            setPresetSelectorDirty();
+            setLibraryPresetDirty();
         }
         updateDevice(control_type, n, value, inExpMode());
     }
@@ -143,11 +139,13 @@ export function updateControls(onlyTwoValuesControls = false) {
 /**
  * Update the UI from the MODEL controls values.
  */
+/*
 export function updateUI() {
     updatePresetSelector();
     updateControls();
     log("updateUI done");
 }
+*/
 
 /**
  * Update MODEL and associated on-screen control from CC value.
@@ -183,17 +181,20 @@ export function updateModelAndUI(control_type, control_number, value) {
             updateControls(true);
         }
 
-        setPresetDirty();
+        setPresetSelectorDirty();
+        setLibraryPresetDirty();
 
     } else {
         log(`the MODEL does not support this control: ${num}`)
     }
 }
 
+/*
 function reloadWithSysexParam() {
     updateUrl();
     return false;   // disable the normal href behavior when called from an onclick event
 }
+*/
 
 function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback) {
 
@@ -227,6 +228,7 @@ function setupSelects(channelSelectionCallback, inputSelectionCallback, outputSe
 
 }
 
+/*
 function setupMidiInput2() {
     if (preferences.enable_midi_in2) {
         showMidiInput2();
@@ -234,47 +236,101 @@ function setupMidiInput2() {
         hideMidiInput2();
     }
 }
+*/
 
 function setupControlsHelp() {
+
     $(".header.infos").hover(
         function() {
-            if (!preferences.display_infos) return;
+
             const cc = parseInt($(this).attr("data-infos"), 10);
+
+            //TODO: lock for randomizer
+            //$(`.control-lock.control-${cc}`).removeClass('hidden');
+
+/*
+ * TODO: enable #info-panel
+
+            if ($('#info-panel').is('.closed')) return;
+
+            // if (!preferences.display_infos) return;
+            // const cc = parseInt($(this).attr("data-infos"), 10);
             if (!Number.isInteger(cc)) {
                 log(`setupControlsHelp: invalid CC: ${cc}`);
                 return;
             }
-            log(cc);
             $("#control-infos").html("<b>" + MODEL.control[cc].name + "</b> : " + MODEL.control[cc].infos.replace("\n", "<br />"));
-            // $("#control-infos").text(MODEL.control[cc].name + " : " + MODEL.control[cc].infos);
+*/
+
         },
         function() {
-            if (!preferences.display_infos) return;
-            $("#control-infos").text("");
+
+            //TODO: lock for randomizer
+            $('.control-lock').addClass('hidden');
+
+/*
+ * TODO: enable #info-panel
+
+            // if (!preferences.display_infos) return;
+            if ($('#info-panel').is('.closed')) return;
+            $("#control-infos").text("");   //.hide();
+*/
+
         }
     );
+
 }
 
+/*
+function setupControlsLocks() {
+
+    $(".header.infos").hover(
+        function() {
+            $('.control-lock').removeClass('hidden');
+        },
+        function() {
+            $('.control-lock').addClass('hidden');
+        }
+    );
+
+}
+*/
+
+
 function setupMenu() {
+
     log("setupMenu()");
+
+    $(document).on('lity:close', function(event, instance) {
+        // console.log('Lightbox closed');
+        enableKeyboard();
+    });
+
+
     $("#menu-randomize").click(randomize);
     $("#menu-init").click(init);
-    // $("#menu-read").click(() => requestPreset());       //TODO: create function
-    $("#menu-send").click(() => {fullUpdateDevice(); return false});
     $("#menu-save").click(savePreset);
-    $("#menu-get-url").click(reloadWithSysexParam);
     $("#menu-print-preset").click(printPreset);
-    $("#menu-load-preset").click(loadPresetFromFile);
-    $("#menu-download-sysex").click(downloadLastSysEx);
-    $("#menu-midi").click(openMidiWindow);
-    $("#menu-global").click(toggleGlobalSettingsPanel);
-    $("#menu-prefs").click(toggleAppPreferencesPanel);
-    $("#menu-help").click(openHelpPanel);
-    $("#menu-about").click(openCreditsDialog);
-    $("#menu-zoom-in").click(zoomIn);
-    $("#menu-zoom-out").click(zoomOut);
-    $("#url-auto-toggle").click(toggleUrlAutomation);
-    $("#preset-file").change(readFile);     // in load-preset-dialog
+
+    $("#menu-send").click(fullUpdateDevice);
+    // $("#menu-read").click(requestPreset);    // useless as the device can only send "saved" data, not the current live ones
+
+    // $("#menu-init").click(function () {  //DEBUG
+    //     console.log('resize');
+    //     window.resizeTo(1000, 800);
+    //     window.resizeTo(
+    //         width + (1000 - document.body.offsetWidth),
+    //         height + (800 - document.body.offsetHeight)
+    //     );
+    // });
+    // $("#menu-get-url").click(reloadWithSysexParam);
+    // $("#menu-midi").click(openMidiWindow);
+    // $("#menu-prefs").click(toggleAppPreferencesPanel);
+    // $("#menu-help").click(openHelpPanel);
+    // $("#menu-about").click(openCreditsDialog);
+    $("#menu-size-in").click(zoomIn);
+    $("#menu-size-out").click(zoomOut);
+    // $("#url-auto-toggle").click(toggleUrlAutomation);
 }
 
 /**
@@ -286,9 +342,9 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
 
     $("span.version").text(VERSION);
 
-    initZoom(preferences.zoom_level);
+    initSize(preferences.zoom_level);
 
-    setupMidiInput2();
+    //setupMidiInput2();    //v1.5: always shown
     setCommunicationStatus(false);
     setupPresetSelectors(handleUserAction);
     setupKnobs(handleUserAction);
@@ -296,16 +352,20 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupMomentarySwitches(tapDown, tapRelease);
     setupExp(handleUserAction);
     setupGlobalSettings();
-    setupAppPreferences(input2SelectionCallback);
-    setupHelpPanel();
+    // setupAppPreferences(input2SelectionCallback);
+    // setupHelpPanel();
     setupControlsHelp();
     setupMenu();
+    setupTooltips();
+    setupPresetsLibrary();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback);
     setupKeyboard();
+
 
     if (TRACE) console.groupEnd();
 }
 
+/*
 export function showDefaultPanel() {
     $("#main").removeClass("settings-view").addClass("main-default");
 }
@@ -313,3 +373,5 @@ export function showDefaultPanel() {
 export function hideDefaultPanel() {
     $("#main").removeClass("main-default").addClass("settings-view");
 }
+*/
+

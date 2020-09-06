@@ -1,0 +1,82 @@
+<div id="load-presets-dialog" class="dialog lity-hide">
+    <h2>Load preset(s) from file(s)</h2>
+    <div class="dialog-instructions">
+        Select one or several files containing an Mercury7 preset in sysex format (.syx file):
+    </div>
+    <div class="mt-10">
+        <input type="checkbox" id="load-presets-autolock" /> lock the imported presets
+    </div>
+    <div class="mt-10">
+<!--        <div>-->
+        <input type="file" id="preset-file" multiple="true" placeholder="preset file(s)" />
+<!--
+        </div>
+        <div class="mt-10">
+        <button type="button" class="small-button" id="load-factory-presets-button">Load factory presets</button>
+        </div>
+-->
+    </div>
+    <div id="load-presets-error" style="margin-top:10px;color:red">
+    </div>
+</div>
+
+<div id="edit-preset-dialog" class="dialog lity-hide">
+    <input type="hidden" id="edit-preset-dialog-id" value="" />
+    <h2>Preset name:</h2>
+    <div class="mt-10">
+        <input type="text" id="edit-preset-dialog-input" />
+    </div>
+    <h2>Description:</h2>
+    <div class="mt-10">
+        <textarea id="edit-preset-dialog-description" rows="5">
+        </textarea>
+    </div>
+    <h2 id="edit-preset-message" style="" class="mt-10"></h2>
+    <div style="text-align: right" class="mt-10">
+        <button type="button" id="edit-preset-cancel-button">Cancel</button>
+        <button type="button" id="edit-preset-save-button">Save</button>
+    </div>
+</div>
+
+<div id="copy-presets-dialog" class="dialog lity-hide">
+    <h2>Copy presets to Mercury7</h2>
+    <div class="mt-10">
+        Copy from
+        <select id="copy-from-id">
+        </select>
+        to
+        <select id="copy-to-id">
+        </select>
+    </div>
+    <div class="bold-400 mt-10">The following presets will be copied into Mercury7:</div>
+    <div id="copy-presets-summary" class="mt-10">
+    </div>
+    <div style="text-align: right" class="mt-10">
+        <button type="button" id="copy-presets-cancel-button">Cancel</button>
+        <button type="button" id="copy-presets-go-button">Copy</button>
+        <button type="button" id="copy-presets-close-button" class="hidden">Close</button>
+    </div>
+</div>
+
+<div id="read-presets-dialog" class="dialog lity-hide">
+    <h2>Read all presets from Mercury7</h2>
+    <div id="read-presets-progress" class="mt-10 progress-bar"></div>
+    <div class="mt-10">
+        <input type="checkbox" id="read-presets-autolock" /> lock the imported presets
+    </div>
+    <div style="text-align: right" class="mt-10">
+        <button type="button" id="read-presets-cancel-button">Cancel</button>
+        <button type="button" id="read-presets-go-button">Read</button>
+        <button type="button" id="read-presets-close-button" class="hidden">Close</button>
+    </div>
+</div>
+
+<div id="please-connect-dialog" class="dialog lity-hide">
+    <h2>Please connect the Mercury7</h2>
+    <div class="mt-10">
+        You need to select the MIDI input port and MIDI output port to which the Mercury7 is connected.
+    </div>
+    <div style="text-align: right" class="mt-10">
+        <button type="button" id="please-connect-close-button">Close</button>
+    </div>
+</div>

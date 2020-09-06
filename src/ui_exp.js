@@ -31,12 +31,31 @@ export function showExpValues(display_exp_values = false) {
     }
 
     if (display_exp_values) {
-        $(".header.exp").addClass("lowercase");
+        $(".header.exp").addClass("exp-mode");
     } else {
-        $(".header.exp").removeClass("lowercase");
+        $(".header.exp").removeClass("exp-mode");
     }
 
 } // setupKnobs
+
+export function expToe(showCopyButton = false) {
+    $("#exp-close-bt").addClass("on");
+    $("#cc-4-value").hide();
+    if (showCopyButton) $("#exp-copy").show();
+
+    // EXP
+    //     MODEL.interpolateExpValues(value);
+        updateExpSlider(127);
+        // updateControls(true);
+
+}
+
+export function expHeel() {
+    $("#exp-close-bt").removeClass("on");
+    $("#exp-copy").hide();
+    $("#cc-4-value").show();
+    updateExpSlider(0);
+}
 
 export function toggleExpEditMode() {
 
@@ -46,9 +65,10 @@ export function toggleExpEditMode() {
 
         log("editExpValues: in EXP mode, switch to normal mode");
 
-        $("#exp-close-bt").removeClass("on");
-        $("#exp-copy").hide();
-        $("#cc-4-value").show();
+        // $("#exp-close-bt").removeClass("on");
+        // $("#exp-copy").hide();
+        // $("#cc-4-value").show();
+        expHeel();
 
         updateDevice("cc", MODEL.control_id.exp_pedal, 0);
 
@@ -59,9 +79,10 @@ export function toggleExpEditMode() {
 
         log("editExpValues: in normal mode, switch to EXP mode");
 
-        $("#exp-close-bt").addClass("on");
-        $("#cc-4-value").hide();
-        $("#exp-copy").show();
+        // $("#exp-close-bt").addClass("on");
+        // $("#cc-4-value").hide();
+        // $("#exp-copy").show();
+        expToe(true);
 
         updateDevice("cc", MODEL.control_id.exp_pedal, 127);
 

@@ -1,0 +1,15 @@
+.globals-grid {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr 1fr auto;
+    justify-items: center;
+}
+
+.global-setting-toggle {
+    color: var(--menu-text);
+}
+
+.global-setting-toggle.enabled {
+    color: var(--menu-link);
+    cursor: pointer;
+    text-transform: capitalize;
+}

@@ -3,11 +3,6 @@ import meta from "./meta.js";
 import {global_conf, global_id} from "./global_conf";
 import * as sysex from "./sysex";
 
-/**
- *
- * @returns {number}
- * @param number
- */
 const getControl = function (number) {
     return control[number];
 };

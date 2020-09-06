@@ -1,5 +1,5 @@
 import {log} from "./debug";
-import {handleUserAction} from "./ui";
+import {handleUserAction, updateControl} from "./ui";
 
 export function updateSwellSwitch(value) {
     log("updateSwellSwitch", value);
