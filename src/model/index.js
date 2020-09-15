@@ -38,7 +38,6 @@ const supportsCC = function (control_number) {
  * return the updated control object
  */
 const setControlValue = function () {
-    // console.log("BS2.setControlValue", ...arguments);
     let c;
     if (arguments.length === 2) {
 

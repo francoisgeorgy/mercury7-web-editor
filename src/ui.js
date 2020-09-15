@@ -361,7 +361,6 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback);
     setupKeyboard();
 
-
     if (TRACE) console.groupEnd();
 }
 

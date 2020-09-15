@@ -466,9 +466,7 @@ $(function () {
     log(`${MODEL.name} editor ${VERSION}`);
 
     loadPreferences();
-
     setupModel();
-
     setupUI(setMidiChannel, connectInputDevice, connectOutputDevice, setMidiInput2Channel, connectInput2Device);
 
     const s = Utils.getParameterByName(URL_PARAM_SIZE);
