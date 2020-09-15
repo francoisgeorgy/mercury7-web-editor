@@ -5,6 +5,7 @@ import {log, warn} from "../debug";
 import {toHexString} from "../utils";
 import {GROUP_ID, MODEL_ID, SYSEX_CMD} from "./constants";
 import {global_conf} from "./global_conf";
+import MODEL from "./index";
 
 export const SYSEX_START_BYTE = 0xF0;
 export const SYSEX_END_BYTE = 0xF7;
@@ -126,7 +127,9 @@ export function validate(data) {
  * @param data
  */
 function decodeMeta(data) {
+    log("decodeMeta", data);
     meta.preset_id.value = data[meta.preset_id.sysex.offset]
+    log("decodeMeta: meta.preset_id.value", meta.preset_id.value);
 }
 
 /**
@@ -197,11 +200,17 @@ function decodeGlobals(data, globals) {
  * @returns {*}
  */
 export function decodeSysex(data, ignorePresetID = false) {
+
+    log("decodeSysex: MODEL.getPresetNumber", MODEL.getPresetNumber());
+    log("decodeSysex: ignorePresetID", ignorePresetID);
+
     const valid = validate(data);
     switch (valid.type) {
         case SYSEX_PRESET:
             log("decodeSysex: sysex is preset data");
-            if (!ignorePresetID) decodeMeta(data);
+            if (!ignorePresetID) {
+                decodeMeta(data);
+            }
             decodeControls(data, control);
             return {
                 type: SYSEX_PRESET,
