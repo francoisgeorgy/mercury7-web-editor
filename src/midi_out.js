@@ -250,8 +250,10 @@ export function requestPreset(check = false) {
 
 export function savePreset() {
     log("savePreset");
+    // if (MODEL.getPresetNumber() < 1) {
+    // }
+    if (!window.confirm(`Save current preset in Mercury7 memory slot #${MODEL.getPresetNumber()} ?`)) return;
     sendSysexCommand(SYSEX_CMD.preset_write);
-    // cleanPreset();
     setPresetSelectorClean();
 }
 
