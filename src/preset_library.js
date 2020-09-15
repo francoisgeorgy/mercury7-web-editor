@@ -634,6 +634,7 @@ function addCurrentSettingsAsPresetToLibrary() {
 // }
 
 function showSaveIcon(index) {
+    if (!library[index]) return;
     log("showSaveIcon", index, library[index].locked);
     if (!library[index].locked) {
         $(`#preset-${index} i.preset-save`).removeClass("hidden i-hover");
