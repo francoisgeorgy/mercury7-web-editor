@@ -1,6 +1,6 @@
 {
     "name": "mercury7-web-editor",
-    "version": "1.5.2",
+    "version": "1.5.3",
     "main": "main.js",
     "repository": "https://github.com/francoisgeorgy/mercury7-web-editor.git",
     "author": "François Georgy <francois.georgy@gmail.com>",
