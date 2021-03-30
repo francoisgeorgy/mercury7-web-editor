@@ -8,7 +8,7 @@ import MODEL from "./model";
 import {presetDec, presetInc, selectPreset} from "./ui_presets";
 import {init, randomize} from "./presets";
 import {updateBypassSwitch, updateSwellSwitch} from "./ui_switches";
-import {switchKnobsDisplay} from "./ui_knobs";
+import {displayRawValues} from "./ui_knobs";
 import {expHeel, expToe, showExpValues, toggleExpEditMode} from "./ui_exp";
 import {toggleLibrary, toggleScroll} from "./preset_library";
 
@@ -94,10 +94,10 @@ function keyUp(code) {
             showExpValues(false);
             expHeel();
             break;
-        // case 18:                // ALT
+        case 18:                // ALT
         //     $(".header-shortcut").addClass("hidden");
-        //     switchKnobsDisplay(false);
-        //     break;
+            displayRawValues(false);
+            break;
         case 27:                // close all opened panel with ESC key
             // closeAppPreferencesPanel();
             // closeGlobalSettingsPanel();
@@ -143,10 +143,10 @@ function keyDown(code, alt, shift, meta, ctrl) {
             showExpValues(true);
             expToe();
             break;
-        // case 18:                // ALT
+        case 18:                // ALT
         //     $(".header-shortcut").removeClass("hidden");
-        //     switchKnobsDisplay(true);
-        //     break;
+            displayRawValues(true);
+            break;
     }
 
     //FIXME: map to key's position, not key's value (in order to be isolated from the keyboard layout)

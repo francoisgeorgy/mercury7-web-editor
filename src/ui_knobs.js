@@ -55,9 +55,9 @@ export function setupKnobs(userActionCallback) {
 /**
  *
  */
-export function switchKnobsDisplay(display_raw_value = false) {
+export function displayRawValues(display_raw_value = false) {
 
-    log("switchKnobsDisplay()");
+    log("displayRawValues()");
 
     for (const id in knobs) {
         if (knobs.hasOwnProperty(id)) {

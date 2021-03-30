@@ -3,7 +3,7 @@ import {
     setPresetSelectorDirty,
     setupPresetSelectors
 } from "./ui_presets";
-import {knobs, setupKnobs} from "./ui_knobs";
+import {displayRawValues, knobs, setupKnobs} from "./ui_knobs";
 import {
     setupMomentarySwitches,
     setupSwitches, tapDown, tapRelease,
@@ -360,6 +360,13 @@ export function setupUI(channelSelectionCallback, inputSelectionCallback, output
     setupPresetsLibrary();
     setupSelects(channelSelectionCallback, inputSelectionCallback, outputSelectionCallback, input2ChannelSelectionCallback, input2SelectionCallback);
     setupKeyboard();
+
+    $(window).blur(function(){
+        displayRawValues(false);    // when switching window with Alt-Tab
+    });
+    // $(window).focus(function(){
+    //     console.log("window focus");
+    // });
 
     if (TRACE) console.groupEnd();
 }
