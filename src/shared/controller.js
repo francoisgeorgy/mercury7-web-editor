@@ -60,6 +60,12 @@ export function updateControl(control_type, control_number, value, mappedValue) 
             return;
         }
 
+        //FIXME: move this code into mercury7 specific folder
+        if (/*control_type === "cc" &&*/ num === 28) {    //TODO: replace this hack with better code
+            updateSwellSwitch(value);
+            return;
+        }
+
         let c = $(`#${id}`);
 
         if (c.length) { // jQuery trick to check if element was found

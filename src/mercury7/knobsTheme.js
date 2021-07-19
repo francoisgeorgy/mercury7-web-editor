@@ -19,12 +19,12 @@ export const KNOB_THEME_DEFAULT = {
     cursor_radius: 24,
     cursor_length: 14,
     cursor_width: 6,
-    cursor_color_init: "#f8f812",
-    cursor_color: "#f8f812",
+    cursor_color_init: "#e8f1ff",
+    cursor_color: "#e8f1ff",
 
     track: true,
-    track_color_init: "#f8f812",
-    track_color: "#f8f812",
+    track_color_init: "#e8f1ff",
+    track_color: "#e8f1ff",
     track_radius: 36,
     track_width: 5,
     class_track : "knob-track",
@@ -57,11 +57,11 @@ export const MIXER_SLIDER_SCHEME = {
     width: 40,
     markers_length: 44,
     markers_width: 2,
-    markers_color: "#999",
+    markers_color: "#b3a1f1",      // --sw-color
     cursor_height: 12,
     cursor_width: 26,
-    cursor_color: "#f8f812",
-    track_color: "#f8f812",
+    cursor_color: "#e8f1ff",
+    track_color: "#e8f1ff",
     track_bg_color: "#333",
     format: v => MODEL.control[MODEL.control_id.exp_pedal].human(v)
 };

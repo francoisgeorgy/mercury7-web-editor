@@ -2,16 +2,18 @@ import {control_id} from "@device/model/cc";
 import {control} from "@model";
 import {GROUP_ID, MODEL_ID} from "@model/sysex";
 
-export const SYNTH_MODES = {
-    dry: 0,
-    mono: 63,
-    arp: 95,
-    poly: 127
+export const PITCH_VECTOR = {
+    off: 0,
+    octave_down: 63,
+    pitch_up: 95,
+    pitch_down: 96,
+    fifth_up: 100,
+    octave_up: 127
 };
 
-export const WAVESHAPES = {
-    sawtooth: 0,
-    square: 127
+export const ALGORITHM = {
+    ultraplate: 0,
+    cathedra: 127
 };
 
 /**
@@ -26,37 +28,52 @@ export function getDataForPreset() {
 
     let i = 0;
 
-    data[i++] = control[control_id.pitch].raw_value;                // 9
-    data[i++] = control[control_id.filter].raw_value;
+    // if (complete) {
+    //     data[i++] = SYSEX_START_BYTE;                               // 0
+    //     data[i++] = 0x00;
+    //     data[i++] = 0x20;
+    //     data[i++] = 0x10;
+    // }
+    //
+    // data[i++] = 0;    // We set device ID to 0 in order to get a sysex dump that can be sent to any Enzo.
+    // data[i++] = meta.group_id.value;
+    // data[i++] = meta.model_id.value;
+    //
+    // data[i++] = 0x26; // Enzo always sent this value when sending a sysex.
+    //
+    // data[i++] = meta.preset_id.value;                               // 8
+
+    data[i++] = control[control_id.space_decay].raw_value;          // 9
+    data[i++] = control[control_id.modulate].raw_value;             // 10
     data[i++] = control[control_id.mix].raw_value;
-    data[i++] = control[control_id.sustain].raw_value;
-    data[i++] = control[control_id.filter_envelope].raw_value;
-    data[i++] = control[control_id.modulation].raw_value;
-    data[i++] = control[control_id.portamento].raw_value;
-    data[i++] = control[control_id.filter_type].raw_value;
-    data[i++] = control[control_id.delay_level].raw_value;
-    data[i++] = control[control_id.ring_modulation].raw_value;
-    data[i++] = control[control_id.filter_bandwidth].raw_value;
-    data[i++] = control[control_id.delay_feedback].raw_value;
+    data[i++] = control[control_id.lo_freq].raw_value;
+    data[i++] = control[control_id.pitch_vector].raw_value;
+    data[i++] = control[control_id.hi_freq].raw_value;
+    data[i++] = control[control_id.predelay].raw_value;
+    data[i++] = control[control_id.mod_speed].raw_value;            // 16
+    data[i++] = control[control_id.pitch_vector_mix].raw_value;
+    data[i++] = control[control_id.density].raw_value;
+    data[i++] = control[control_id.attack_time].raw_value;
+    data[i++] = control[control_id.vibrato_depth].raw_value;        // 20
     data[i++] = control[control_id.bypass].raw_value;
-    data[i++] = control[control_id.envelope_type].raw_value;
-    data[i++] = control[control_id.synth_mode].raw_value;
-    data[i++] = control[control_id.synth_waveshape].raw_value;
-    data[i++] = control[control_id.tempo].raw_value;
+    data[i++] = control[control_id.swell].raw_value;
+    data[i++] = control[control_id.algorithm].raw_value;            // 23
+    data[i++] = 0;                                                  // 24 (always 0)
+    data[i++] = 0;                                                  // 25 (always 0)
 
     // values 2 (EXP)
-    data[i++] = control[control_id.pitch].raw_value2;               // 26
-    data[i++] = control[control_id.filter].raw_value2;
+    data[i++] = control[control_id.space_decay].raw_value2;         // 26
+    data[i++] = control[control_id.modulate].raw_value2;
     data[i++] = control[control_id.mix].raw_value2;
-    data[i++] = control[control_id.sustain].raw_value2;
-    data[i++] = control[control_id.filter_envelope].raw_value2;
-    data[i++] = control[control_id.modulation].raw_value2;
-    data[i++] = control[control_id.portamento].raw_value2;
-    data[i++] = control[control_id.filter_type].raw_value2;
-    data[i++] = control[control_id.delay_level].raw_value2;
-    data[i++] = control[control_id.ring_modulation].raw_value2;
-    data[i++] = control[control_id.filter_bandwidth].raw_value2;
-    data[i++] = control[control_id.delay_feedback].raw_value2;      // 37
+    data[i++] = control[control_id.lo_freq].raw_value2;
+    data[i++] = control[control_id.pitch_vector].raw_value2;
+    data[i++] = control[control_id.hi_freq].raw_value2;
+    data[i++] = control[control_id.predelay].raw_value2;            // 32
+    data[i++] = control[control_id.mod_speed].raw_value2;
+    data[i++] = control[control_id.pitch_vector_mix].raw_value2;    // 34
+    data[i++] = control[control_id.density].raw_value2;
+    data[i++] = control[control_id.attack_time].raw_value2;
+    data[i++] = control[control_id.vibrato_depth].raw_value2;       // 37
 
     // if (complete) data[i] = SYSEX_END_BYTE;                         // 38
 

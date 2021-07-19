@@ -69,7 +69,7 @@ a {
 /* TODO: default default bg-color for #main-grid */
 #main-grid {
     background-color: #0059d7;
-    background: url("../img/bg-logo-opacity5.png"), linear-gradient(to right, #60a2ff, #0059d7 1%, #0059d7 99%, #60a2ff);
+    background: url("img/bg-logo-opacity5.png"), linear-gradient(to right, #60a2ff, #0059d7 1%, #0059d7 99%, #60a2ff);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

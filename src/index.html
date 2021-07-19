@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="theme-color" content="#000000">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <meta name="description" content="Control your Meris Mercury7 effect pedal directly from your web browser." />
@@ -14,19 +15,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image:alt" content="An editor for the Meris Mercury7 effect pedal.">
     <title>Mercury7 Editor by StudioCode.dev</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="img/midi-192.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700|Roboto+Condensed:300,400,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <script src="https://cdn.usefathom.com/script.js" site="XIWNXTFQ"  excluded-domains="localhost" defer></script>
+    <!--    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500,700|Roboto+Condensed:300,400,700" rel="stylesheet" />-->
+<!--    <script src="https://cdn.usefathom.com/script.js" site="XIWNXTFQ"  excluded-domains="localhost" defer></script>-->
 </head>
 <body class="size-1">
-
     <div id="wrapper">
-
         <div id="main-grid" class="main-default">
-
             <div class="mg-border-left mg-top-row mg-row-border-bottom py-5"></div>
             <div id="header" class="span-6 mg-top-row py-5 mg-row-border-bottom">
                 <div class="flex-row app-title">
@@ -38,19 +38,13 @@
                 <%= require('html-loader!./partials/menu.html') %>
             </div>
             <div class="mg-border-right mg-top-row mg-row-border-bottom py-5"></div>
-
             <%= require('html-loader!./partials/config.html') %>
-<!--            <%= require('html-loader!./partials/info-panel.html') %>-->
             <%= require('html-loader!./partials/presets.html') %>
             <%= require('html-loader!./partials/controls.html') %>
             <%= require('html-loader!./partials/global-settings.html') %>
-
         </div>
-
     </div>
-
     <%= require('html-loader!./partials/dialogs.html') %>
     <%= require('html-loader!./partials/svg-gradients.html') %>
-
 </body>
 </html>

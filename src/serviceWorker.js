@@ -8,8 +8,8 @@ const assets = [
     "./app_bundle.js",
     "./print_bundle.js",
     "./favicon-32x32.png",
-    "./img/enzo-editor-v15.jpg",
-    "./img/enzo-editor-v15.png",
+    "./img/mercury7-editor-v15.jpg",
+    "./img/mercury7-editor-v15.png",
     "https://use.fontawesome.com/releases/v5.6.3/css/all.css",
     "https://use.fontawesome.com/releases/v5.6.3/webfonts/fa-solid-900.woff2",
     "https://use.fontawesome.com/releases/v5.6.3/webfonts/fa-regular-400.woff2"

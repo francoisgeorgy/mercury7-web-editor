@@ -3,10 +3,18 @@ import {updateDevice} from "@midi/midiOut";
 import MODEL from "@model";
 import {handleUserAction, updateControl} from "@shared/controller";
 
-/**
- *
- * @param value
- */
+//FIXME: move this code into mercury7 specific folder
+export function updateSwellSwitch(value) {
+    log("updateSwellSwitch", value);
+    if (value === 0) {
+        $("#cc-28-0").addClass("sw-off");
+        $("#cc-28-127").removeClass("sw-off");
+    } else {
+        $("#cc-28-127").addClass("sw-off");
+        $("#cc-28-0").removeClass("sw-off");
+    }
+}
+
 export function updateBypassSwitch(value) {
     log("updateBypassSwitch", value);
     if (value === 0) {
@@ -24,6 +32,7 @@ export function updateBypassSwitch(value) {
  * @param value
  */
 export function updateOptionSwitch(id, value) {
+    // "radio button"-like behavior
     log(`updateOptionSwitch(${id}, ${value})`);
     let e = $("#" + id);
     if (!e.is(".on")) {   // if not already on...
@@ -48,13 +57,14 @@ export function updateMomentaryStompswitch(id, value) {
     }
 }
 
-
+//FIXME: device (enzo) specific code
 let tap_timestamp = 0;
 
 /**
  *
  * @param id
  */
+//FIXME: device (enzo) specific code
 export function tapDown(id) {
 
     //TODO: compute tempo on an average of at least 3 values

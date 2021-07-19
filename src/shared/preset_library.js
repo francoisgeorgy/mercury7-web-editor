@@ -213,7 +213,8 @@ function compactTheLibrary() {
 export function updateImportPresetsProgress(min, max, progress) {
     const p = (progress - min + 1) / (max - min + 1) * 100;
     $('#read-presets-progress')
-        .css('background', `linear-gradient(to right, #eeeea1 ${p}%, #111111 ${p}%)`)
+        .css('background', `linear-gradient(to right, #AECDFC ${p}%, #111111 ${p}%)`)
+        .css('color', '#000000')
         .text(progress === max ? '100% - Done, you can close this window' : `${Math.round(p)}%`);  //.text(`${min} ${max} ${progress}`);
 }
 

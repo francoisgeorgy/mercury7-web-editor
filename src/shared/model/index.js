@@ -35,6 +35,10 @@ export const _4_steps = function (v) {
     }
 };
 
+export const _ms = function (v) {
+    return (v * 10);    // + "ms";
+};
+
 export const _tempo_ms = function (v) {
     return (v * 10);    // + "ms";
 };
