@@ -1,11 +1,11 @@
-import MODEL from "../model/index.js";
-import * as Utils from "../utils.js";
+import MODEL from "@model";
+import * as Utils from "@shared/utils";
 import * as Mustache from "mustache";
 import {hexy} from "hexy";
 import "./print.css";
-import {URL_PARAM_SYSEX} from "./../constants";
-import {log} from "../debug";
-import {SYSEX_END_BYTE, SYSEX_PRESET} from "../model/sysex";
+import {log} from "@utils/debug";
+import {SYSEX_END_BYTE, SYSEX_PRESET} from "@model/sysex";
+import {URL_PARAM_SYSEX} from "@shared/url";
 
 function renderControlName(control_number) {
     return MODEL.control[control_number].name;

@@ -3,7 +3,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const WebpackAutoInject = require("webpack-auto-inject-version");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ZipPlugin = require('zip-webpack-plugin');
+const path = require('path');
+
 
 module.exports = {
     entry: {
@@ -31,6 +32,17 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        // extensions: ['js', 'ts'],
+        alias: {
+            '@': path.resolve(__dirname, 'src'),
+            '@midi': path.resolve(__dirname, 'src/shared/midi'),
+            '@shared': path.resolve(__dirname, 'src/shared'),
+            '@utils': path.resolve(__dirname, 'src/shared/utils'),
+            '@model': path.resolve(__dirname, 'src/shared/model'),
+            '@device': path.resolve(__dirname, 'src/mercury7')
+        },
+    },
     plugins: [
         new CleanWebpackPlugin(),
         new webpack.ProvidePlugin({
@@ -46,14 +58,18 @@ module.exports = {
         }),
         new CopyWebpackPlugin({
             patterns: [
-            {from: "./src/midi.html"},
-            {from: "./src/print/preset-template.html", to: "templates"},
-            {from: "./src/css/midi.css", to: "css"},
-            {from: "./src/img/favicon-16x16.png"},
-            {from: "./src/img/favicon-32x32.png"},
-            {from: "./src/img/favicon-96x96.png"},
-            {from: "./src/img/mercury7-editor-v15.jpg", to: "img"},
-            {from: "./src/img/mercury7-editor-v15.png", to: "img"}
+            {from: "./public/midi.html"},
+            {from: "./src/serviceWorker.js"},
+            {from: "./public/manifest.json"},
+            {from: "./public/print/preset-template.html", to: "templates"},
+            {from: "./public/css/midi.css", to: "css"},
+            {from: "./public/img/midi-192.png", to: "img"},
+            {from: "./public/img/midi-512.png", to: "img"},
+            {from: "./public/img/favicon-16x16.png"},
+            {from: "./public/img/favicon-32x32.png"},
+            {from: "./public/img/favicon-96x96.png"},
+            {from: "./public/img/mercury7-editor-v15.jpg", to: "img"},
+            {from: "./public/img/mercury7-editor-v15.png", to: "img"}
         ]}),
         new HtmlWebpackPlugin({
             chunks: ["app_bundle"],

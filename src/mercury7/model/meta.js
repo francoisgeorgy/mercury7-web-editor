@@ -1,4 +1,4 @@
-import {GROUP_ID, MODEL_ID} from "./constants";
+import {GROUP_ID, MODEL_ID} from "@model/sysex";
 
 export default {
     signature: {

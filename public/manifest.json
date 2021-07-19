@@ -1,0 +1,28 @@
+{
+    "short_name": "Mercury7 Editor",
+    "name": "Meris Mercury7 Editor by StudioCode.dev",
+    "description": "Control your Meris Mercury7 effect pedal directly from your web browser.",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "img/midi-192.png",
+            "type": "image/png",
+            "purpose": "maskable any",
+            "sizes": "192x192"
+        },
+        {
+            "src": "img/midi-512.png",
+            "type": "image/png",
+            "purpose": "maskable any",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/mercury7-editor/index.html",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+}

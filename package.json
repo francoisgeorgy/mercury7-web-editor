@@ -1,6 +1,6 @@
 {
     "name": "mercury7-web-editor",
-    "version": "1.6.0",
+    "version": "1.8.0",
     "main": "main.js",
     "repository": "https://github.com/francoisgeorgy/mercury7-web-editor.git",
     "author": "François Georgy <francois.georgy@gmail.com>",
@@ -28,6 +28,7 @@
         "zip-webpack-plugin": "^3.0.0"
     },
     "dependencies": {
+        "@fontsource/roboto-condensed": "^4.5.0",
         "detect-browser": "^5.1.1",
         "file-saver": "^2.0.2",
         "hexy": "^0.3.0",
