@@ -42,7 +42,8 @@ html {
     --preset-icon: #61410c;    /* TODO */
 
     --bt-color: #cec5ff;
-    --bt-bg-color: rgba(255, 251, 177, 0.25);
+    /*--bt-bg-color: rgba(255, 251, 177, 0.25);*/
+    --bt-bg-color: rgba(0, 61, 148, 0.3);
     --bt-border: #71acff;
     --bt-hover-color: #ffffff;
     --bt-hover-bg-color: #4f98ff;
@@ -67,17 +68,15 @@ html {
 
     --option-panel-header-color: #e8f1ff;
     --option-panel-header-border: #ccc;
-    --global-setting-enabled-color: blue;    /* TODO */
+    --global-setting-enabled-color: blue;
 
-    --preset-sel-bg-color: #ff00001A;    /* TODO */
-    --preset-descr-bg-color: lightgoldenrodyellow;    /* TODO */
-    --preset-selector-bg-color: rgba(255, 251, 177, 0.25);    /* TODO */
-    --preset-editor-over-bg-color: white;    /* TODO */
+    --preset-sel-bg-color: #ff00001A;
+    --preset-descr-bg-color: rgba(0, 61, 148, 0.3);
+    --preset-selector-bg-color: rgba(0, 61, 148, 0.3);
+    --preset-editor-over-bg-color: white;
 
-    --progress-bar-border: 1px solid black;    /* TODO */
-    --progress-bar-bg-color: #f1d09c;    /* TODO */
-
-    --config-bg-color: #eeeea1;    /* TODO */
+    --progress-bar-border: 1px solid black;
+    --progress-bar-bg-color: #f1d09c;
 }
 
 a {

@@ -47,7 +47,7 @@
     },
     "scripts": {
         "dev": "webpack --mode development",
-        "start": "webpack-dev-server --open --mode development",
+        "start": "webpack-dev-server --port 8090 --open --mode development",
         "build": "webpack --mode production",
         "lint": "eslint --fix src/. && echo 'Lint complete.'",
         "test": "echo \"Error: no test specified\" && exit 1",
