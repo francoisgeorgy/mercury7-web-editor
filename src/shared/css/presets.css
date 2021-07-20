@@ -1,0 +1,308 @@
+#presets {
+    display: flex;
+    flex-direction: row;
+}
+
+.presets-left-col {
+    flex-grow: 1;
+}
+
+.presets-right-col {
+
+}
+
+.presets-selectors {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-gap: 3px;
+}
+
+/*.presets-selectors > div {*/
+.preset-id {
+    text-align: center;
+    position: relative;
+}
+
+.dirty-dot {
+    display: none;
+    position: absolute;
+    right: 4px;
+    top: -6px;
+    font-size: 120%;
+}
+
+.preset.dirty .dirty-dot {
+    display: block;
+}
+
+.presets-lib {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /*grid-template-columns: repeat(8, 1fr);*/
+    grid-gap: 3px;
+    /*padding: 5px 0;*/
+    align-content: start;
+    align-items: stretch;
+}
+
+.size-0 .presets-lib.scrollable {
+    max-height: 98px;
+}
+
+.size-2 .presets-lib.scrollable {
+    max-height: 12vw;
+}
+
+.scrollable {
+    max-height: 106px;
+    /*overflow-y: auto;*/
+    overflow-y: scroll;
+}
+
+/*https://stackoverflow.com/questions/7492062/css-overflow-scroll-always-show-vertical-scroll-bar : */
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+.preset-editor {
+    display: flex;
+    align-items: center;
+    min-height: 1.25rem;
+    text-align: left;
+    flex-direction: row!important;
+    /*padding: 2px 4px;*/
+    padding-left: 4px;
+    padding-right: 4px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.size-0 .preset-editor {
+    /*padding: 2px 2px;*/
+    padding-left: 2px;
+    padding-right: 2px;
+    /*font-size: 0.6rem;*/
+}
+.size-1 .preset-editor {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    /*font-size: 1rem;*/
+}
+.size-2 .preset-editor {
+    min-height: 2.4vw;
+}
+/*.preset-editor.sel {*/
+/*}*/
+
+.preset-editor .preset-name-wrapper {
+    flex-grow: 1;
+    /*overflow-x: hidden;*/
+    /*display: flex;*/
+}
+
+.preset-name {
+    /*max-width: 80%;*/
+    overflow-x: hidden;
+    flex-grow: 1;
+}
+
+.preset-icons {
+    /*position: absolute;*/
+    /*right: 3px;*/
+    /*top: 2px;*/
+    display: flex;
+    /*background-color: inherit;*/
+}
+
+.preset-descr {
+    position: absolute;
+    top: 2px;
+    left: 10px;
+    height: 40px;
+    z-index: 10000;
+    background-color: var(--preset-descr-bg-color);
+}
+
+.preset-editor:hover i.i-hover {
+    display: block;
+}
+.preset-editor:hover i {
+    color: var(--menu-link);
+}
+
+.preset-editor i {
+    font-size: 87.5%;
+    margin-top: 2px;
+    margin-left: 3px;
+    color: var(--preset-icon);
+}
+.preset-editor i.i-hover {
+    display: none;
+}
+.preset-editor i.preset-save {
+    color: var(--menu-link);
+}
+
+i.preset-edit {
+    /*padding: 0 5px 0 5px;*/
+}
+
+i.preset-delete {
+    /*margin-top: 3px;*/
+    /*padding: 0 1px 0 3px;*/
+}
+
+.size-2 i.preset-delete {
+    /*margin-top: 5px;*/
+}
+
+/*.presets-selectors > div,*/
+/*.presets-lib > div {*/
+.preset {
+    border: 1px solid #777;
+    /*overflow-x: hidden;*/
+    white-space: nowrap;
+}
+
+.presets-menu {
+    width: 150px;
+    padding: 0 0 0 10px;
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+}
+
+.size-0 .presets-menu {
+    width: 100px;
+}
+
+.size-2 .presets-menu {
+    width: 14vw;
+}
+
+.presets-menu-top {
+    padding-top: 2px;
+}
+
+.presets-menu-bottom {
+    padding-top: 1px;
+}
+
+.preset-name-wrapper {
+    margin-left: 5px;
+    font-size: 1rem;
+}
+
+.presets-lib .preset-name-wrapper {
+    margin-left: 0;
+}
+
+.size-0 .preset-name-wrapper {
+    margin: 2px 0 0px 2px;
+    font-size: 0.75rem;
+}
+
+.size-2 .preset-name-wrapper {
+    /*margin: 2px 0 2px 5px;*/
+    font-size: 1rem;
+}
+
+.size-2 .preset-name-wrapper {
+    margin: 2px 0 2px 5px;
+    font-size: 1.7vw;
+}
+
+.size-0 .preset-delete {
+    margin-left: 0;
+    /*margin-right: 2px;*/
+}
+
+.presets-selectors > div {
+    /*background-color: #e4e474;*/
+    background-color: var(--preset-selector-bg-color);
+}
+
+.preset-menu-wrapper {
+    margin-top: 5px;
+}
+.size-0 .preset-menu-wrapper {
+    margin-top: 3px;
+}
+.size-2 .preset-menu-wrapper {
+    margin-top: 0;
+}
+
+.preset-menu-wrapper .menu-entry {
+    margin-bottom: 5px;
+}
+
+.lib-menu-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.preset-id {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.size-0 .preset-id {
+    padding: 2px 0;
+    font-size: 1rem;
+}
+.size-1 .preset-id {
+    padding: 4px 4px 2px 4px;
+    font-size: 1.25rem;
+}
+
+
+/*.size-1 .presets-lib .preset {*/
+/*    padding: 2px 4px;*/
+/*}*/
+
+/*.size-2 .preset {padding: 8px 0; font-size: 2rem;}*/
+/*.size-2 .preset {font-size: 3.5vmin;}*/
+.size-0 .preset,
+.size-0 .presets-menu {
+    font-size: 0.875rem;
+}
+
+.size-2 .preset,
+.size-2 .presets-menu {
+    font-size: 2vw;
+}
+
+/*.size-0 .preset > span {right: 2px; top: -4px; font-size: 120%;}*/
+/*
+.size-1 .preset > span {
+    right: 2px;
+    top: -8px;
+    font-size: 120%;
+}
+*/
+/*.size-2 .preset > span {right: 4px; top: -8px; font-size: 120%;}*/
+
+[draggable] {
+    user-select: none;
+}
+
+.preset-editor.over {
+    /*border: 3px dotted #666;*/
+    border-style: dashed;
+    background-color: var(--preset-editor-over-bg-color);
+}
+
+.progress-bar {
+    /*min-height: 20px;*/
+    padding: 4px 8px;
+    width: 100%;
+    border: var(--progress-bar-border);
+    background-color: var(--progress-bar-bg-color);
+    font-weight: 400;
+}

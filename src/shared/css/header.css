@@ -1,0 +1,127 @@
+#header {
+    /*background: transparent !important;*/
+    /*border-top-color: transparent !important;*/
+    /*border-left-color: transparent !important;*/
+    /*border-right-color: transparent !important;*/
+
+    display: flex;
+    /*align-items: flex-end;*/
+    justify-content: space-between;
+    color: var(--header-text);
+    /*padding-top: 7px;*/
+}
+
+/*
+#header h1 {
+    font-weight: 300;
+    color: var(--title-text);
+    padding: 0;
+    margin: 0;
+}
+*/
+
+/*
+.by-studiocode {
+    margin-left: 5px;
+}
+*/
+
+/*
+#header > div.neon,
+#header > div.menu {
+    flex-grow: 2;
+    margin-bottom: 0.25rem;
+    align-self: start!important;
+}
+*/
+
+.app-title {
+    color: var(--header-shortcut-text);
+}
+
+.app-title a {
+    color: var(--menu-text);
+}
+
+.neon {
+    color: var(--neon);
+    /*font-family: Roboto, sans-serif;*/
+    /*font-weight: bold;*/
+}
+
+#header > .menu {
+    /*text-align: center;*/
+}
+
+/*#header a {*/
+/*    color: var(--menu-link);*/
+/*}*/
+
+.menu.middle {
+    flex-grow: 2;
+    display: flex;
+    /*justify-content: center;*/
+    justify-content: space-evenly;
+    margin: 0 40px;
+}
+
+/*
+.menu.middle > div {
+    margin: 0;
+}
+*/
+
+.size-2 .menu.middle {
+    margin: 0;
+}
+
+@media screen and (min-width: 1024px) {
+    .size-2 .menu.middle {
+        margin: 0 10px;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .size-2 .menu.middle {
+        margin: 0 20px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .size-2 .menu span.menu-text {display: none;}
+}
+
+
+.menu.right {
+    display: flex;
+}
+
+.menu-bold {
+    font-weight: 700;
+}
+
+.size-2 .menu-bold {
+    font-weight: 400;
+}
+
+#menu-help {
+    margin-right: 10px;
+}
+
+.size-1 .help-icon,
+.size-2 .help-icon {
+    display: none;
+}
+
+.size-0 .menu {font-size: 0.85rem;}
+.size-1 .menu {font-size: 1rem;}
+/*.size-2 .menu {font-size: 1.25rem;}*/
+/*.size-2 .menu {font-size: 2.5vh;}*/
+/*.size-2 .menu {font-size: calc(6px + 1.0vw);}*/
+.size-2 .menu {font-size: 2vw;}
+
+.size-0 .menu .menu-entry {margin-left: 10px;}
+.size-1 .menu .menu-entry {margin-left: 5px;}
+.size-2 .menu .menu-entry {margin-left: 10px;}
+
+.size-0 .menu .menu-text {display: none;}

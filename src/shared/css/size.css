@@ -1,0 +1,137 @@
+/* default */
+#wrapper {
+    width: 1040px;
+    margin: 20px auto 0 auto;
+    /*padding: 0 10px 10px 10px;*/
+    padding: 0;
+}
+
+.size-0 #wrapper {
+    width: 700px;
+    margin: 10px auto 0 auto;
+    /*padding: 0 10px 10px 10px;*/
+}
+
+.size-1 #wrapper {
+    width: 1040px;
+    margin: 20px auto 0 auto;
+    /*padding: 0 10px 10px 10px;*/
+}
+
+.size-2 #wrapper {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    /*padding: 0;*/
+}
+
+body.pwa #wrapper {
+    margin: 0 auto!important;
+}
+
+.mg-top-row {
+    padding-top: 7px;
+    padding-bottom: 5px;
+}
+
+.size-2 .mg-top-row {
+    padding-top: 12px;
+    padding-bottom: 10px;
+}
+
+.mg-bottom-row {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.size-2 .mg-bottom-row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.size-2 .app-title {
+    font-size: 2vw;
+}
+
+.size-2 select {
+    font-size: 1.5vw;
+}
+
+.size-2 #title { padding: 4px 4px 0 4px; }
+.size-2 #title .neon {font-size: 2.4vmin;}
+
+.size-0 #options {font-size: 0.85rem;}
+.size-1 #options {font-size: 1rem;}
+.size-2 #options {font-size: 2.5vmin;}
+
+.size-2 .options-panel {font-size: 2vw;}
+
+.size-2 .close-panel-action {font-size: 3vmin;}
+
+.size-2 .options-panel button {font-size: 3vmin;}
+
+.size-0 .options-panel .header {font-size: 1.25rem;}
+.size-1 .options-panel .header {font-size: 2rem;}
+.size-2 .options-panel .header {font-size: 4vmin;}
+
+.size-0 .close-panel-action { bottom: 0; }
+.size-1 .close-panel-action { bottom: 4px; }
+.size-2 .close-panel-action { bottom: 4px; }
+
+.size-2 .settings-rows {margin-bottom: 0;}
+
+.size-0 #global-settings {
+    font-size: 0.875rem;
+}
+
+.size-2 .g0 {margin: 2vh 0;}
+
+.size-0 #REC-text {display: none;}
+
+.size-0 .controls-options-grid { margin-top: 5px; grid-gap: 3px 3px; }
+.size-1 .controls-options-grid { margin-top: 10px; grid-gap: 5px 5px; }
+.size-2 .controls-options-grid { margin-top: 1vh; grid-gap: 0.5vh 0.5vh; }
+
+.size-0 .options { margin-top: 5px;  }
+.size-1 .options { margin-top: 10px; }
+.size-2 .options { margin-top: 15px; }
+
+.size-0 .bt {margin: 0; padding: 1px 0; font-size: 0.85rem;}
+.size-1 .bt {margin: 0; padding: 3px 0 2px 0; font-size: 1.25rem; }
+.size-2 .bt {margin: 0; padding: 3px 0 2px 0; font-size: 2vw;}
+
+.size-0 .btx {margin: 0; padding: 1px 2px; font-size: inherit;}
+.size-1 .btx {margin: 0; padding: 2px 4px 1px 4px; font-size: inherit;}
+.size-2 .btx {margin: 0; padding: 2px 4px 1px 4px; font-size: 2vw;}
+
+.size-0 .slider {height: 65px;}
+.size-1 .slider {height: 100px;}
+.size-2 .slider {height: 16vmin;}
+
+.size-0 #cc-4-value {font-size: 0.85rem;}
+.size-1 #cc-4-value {font-size: 20px;}
+.size-2 #cc-4-value {font-size: 2vw;}
+
+.size-0 #exp-open {font-size: inherit;}
+.size-1 #exp-open {font-size: inherit;}
+.size-2 #exp-open {font-size: 2vw;}
+
+.size-0 div.exp_wrapper {margin-top: 0px;}
+.size-1 div.exp_wrapper {margin-top: 5px;}
+.size-2 div.exp_wrapper {margin-top: 1vh;}
+
+.size-0 .stompswitch {font-size: 3rem; margin-top: 20px;}
+.size-1 .stompswitch {font-size: 4rem; margin-top: 30px;}
+.size-2 .stompswitch {font-size: 8vw; margin-top: 4vh;}
+
+.size-0 .header {font-size: 0.9rem;}
+.size-1 .header {font-size: 1.25rem;}
+.size-2 .header {font-size: 2vw;}
+
+.size-0 .knob {height: 80px; margin: 0;}
+.size-1 .knob {width: 125px; margin: 0;}
+.size-2 .knob {width: 10vw; margin: 0;}
+
+.size-0 .knob-value {font-size: 135%;}
+.size-1 .knob-value {font-size: 125%;}
+.size-2 .knob-value {font-size: 125%;}

@@ -1,0 +1,91 @@
+
+.dialog {
+    overflow:auto;
+    background-color: #fdb53e;
+    border: 2px solid #222;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+    border-radius:4px;
+    padding: 5px 15px 15px 15px;
+    /*min-width: 45vw;*/
+    /*max-width: 80vw;*/
+    /*color: #ddd;*/
+    color: black;
+    font-weight: 300;
+    /*line-height: 140%;*/
+}
+
+.size-0 .dialog {
+    padding: 10px;
+}
+
+.size-0 .lity-container {width: 600px;  }
+.size-1 .lity-container {width: 600px;  }
+.size-2 .lity-container {
+    min-width: 700px;
+    max-width: 50vw;
+}
+
+.dialog-instructions {
+    margin: 10px 0;
+}
+
+.dialog a {
+    /*color: var(--dialog-link);*/
+}
+
+/*noinspection CssUnusedSymbol*/
+.lity-container {
+    vertical-align: top;
+    margin-top: 60px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.lity-close {
+    position: absolute!important;
+    /*color: #aaa!important;*/
+    color: #000;
+    text-shadow: none!important;
+}
+
+.lity {
+    background: var(--dialog-bg-color);
+}
+
+.dialog h2 {
+    margin-top: 10px;
+}
+
+/*.panel h2, .panel h3 {*/
+.dialog h2, .dialog h3 {
+    font-size: 1.25rem;
+    font-weight: normal;
+    margin-bottom: 0.25rem;
+}
+
+.dialog button {
+    font-size: 1rem;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.dialog input[type=file] {
+    font-size: 1rem;
+}
+
+.dialog .small-button {
+    font-size: 0.75rem;
+    color: var(--dialog-small-button-color);
+}
+
+#edit-preset-dialog input {
+    font-size: 1rem;
+    padding: 5px;
+    width: 100%;
+}
+
+#edit-preset-dialog textarea {
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+    padding: 5px;
+    width: 100%;
+}
