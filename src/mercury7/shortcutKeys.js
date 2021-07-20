@@ -42,7 +42,7 @@ function animateTo(cc, to) {
 
 
 // noinspection JSUnusedLocalSymbols
-function keyUp(code) {
+export function keyUp(code) {
 
     if (!kb_enabled) return;
 
@@ -58,7 +58,7 @@ function keyUp(code) {
     }
 }
 
-function keyDown(code, alt, shift, meta, ctrl) {
+export function keyDown(code, alt, shift, meta, ctrl) {
 
     if (!kb_enabled) return;
 

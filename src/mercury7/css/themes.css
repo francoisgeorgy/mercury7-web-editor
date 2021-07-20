@@ -68,7 +68,7 @@ html {
 
     --option-panel-header-color: #e8f1ff;
     --option-panel-header-border: #ccc;
-    --global-setting-enabled-color: blue;
+    --global-setting-enabled-color: #fff;
 
     --preset-sel-bg-color: #ff00001A;
     --preset-descr-bg-color: rgba(0, 61, 148, 0.3);
@@ -77,18 +77,27 @@ html {
 
     --progress-bar-border: 1px solid black;
     --progress-bar-bg-color: #f1d09c;
+
+    --read-preset-progress-color: #000000;
+    --read-preset-progress-bg1: #AECDFC;
+    --read-preset-progress-bg2: #111111;
 }
 
 a {
     color: var(--menu-link);
 }
 
+.app-title {
+    color: var(--header-shortcut-text);
+}
+
+.app-title a {
+    color: var(--menu-text);
+}
+
 .glow {
-    /*color: #ddf6ff!important;*/
-    color: yellow!important;
-    /*color: #f9d000!important;*/
-    text-shadow: 0 0 12px lightyellow;
-    /*text-shadow: 0 0 8px #798c0e;*/
+    color: #ddf6ff!important;
+    text-shadow: 0 0 12px #ffffff;
 }
 
 #main-grid {
@@ -114,19 +123,6 @@ a {
 .knob-bg {
     fill: url("#grad2");
     stroke: #000;
-}
-
-/*noinspection CssUnusedSymbol*/
-.knob-value {
-    font-family: "Roboto", sans-serif;
-    font-weight: 300;
-    stroke: none;
-    fill: var(--knob-value);
-}
-
-/*noinspection CssUnusedSymbol*/
-.knob-cursor {
-    stroke-linecap: butt;
 }
 
 .slider-value {

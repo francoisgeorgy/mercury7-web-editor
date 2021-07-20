@@ -35,14 +35,6 @@
 }
 */
 
-.app-title {
-    color: var(--header-shortcut-text);
-}
-
-.app-title a {
-    color: var(--menu-text);
-}
-
 .neon {
     color: var(--neon);
     /*font-family: Roboto, sans-serif;*/

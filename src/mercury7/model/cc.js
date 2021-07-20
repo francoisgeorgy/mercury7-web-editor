@@ -2,7 +2,7 @@ import {_0_100, _2_steps, _percent, _ms, control} from "@model";
 
 export const control_id = {
     exp_pedal: 4,
-    bypass: 14,
+    bypass: 14,             // RIGHT footswitch
     space_decay: 16,
     modulate: 17,
     mix: 18,
@@ -15,7 +15,7 @@ export const control_id = {
     density: 25,
     attack_time: 26,
     vibrato_depth: 27,
-    swell: 28,
+    swell: 28,              // LEFT footswitch
     algorithm: 29
 };
 

@@ -9,7 +9,7 @@
 }
 
 .global-setting-toggle.enabled {
-    color: var(--menu-link);
+    color: var(--global-setting-enabled-color);
     cursor: pointer;
     text-transform: capitalize;
 }

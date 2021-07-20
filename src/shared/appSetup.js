@@ -20,7 +20,7 @@ import {
     setMidiInput2Channel
 } from "@midi";
 import {enableKeyboard, setupKeyboard} from "@shared/keyboardSupport";
-import {customSetupUI} from "@device/customSetup";
+import {customSetup} from "@device/customSetup";
 
 export const VERSION = "[AIV]{version}[/AIV]";
 
@@ -104,7 +104,7 @@ export function setupUI() {
     setupPresetSelectors(handleUserAction);
     setupKnobs(handleUserAction);
     setupSwitches(handleUserAction);
-    setupMomentarySwitches(tapDown, tapRelease);    // ENZO SPECIFIC; FIXME: add device specific method
+    // setupMomentarySwitches(tapDown, tapRelease);    // ENZO SPECIFIC; FIXME: add device specific method
     setupExp(handleUserAction);
     setupGlobalSettings();
     setupControlsHelp();
@@ -114,7 +114,7 @@ export function setupUI() {
     setupSelects();
     setupKeyboard();
 
-    customSetupUI();
+    customSetup();
 
     $(window).blur(function(){
         displayRawValues(false);    // when switching window with Alt-Tab

@@ -146,3 +146,16 @@ div.exp_wrapper {
         text-shadow: 0 0 16px red;
     }
 }
+
+/*noinspection CssUnusedSymbol*/
+.knob-value {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    stroke: none;
+    fill: var(--knob-value);
+}
+
+/*noinspection CssUnusedSymbol*/
+.knob-cursor {
+    stroke-linecap: butt;
+}

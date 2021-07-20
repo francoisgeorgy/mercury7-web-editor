@@ -4,7 +4,7 @@ import {detect} from "detect-browser";
 import {loadPreferences, preferences} from "@shared/preferences";
 import {setupUI, VERSION} from "@shared/appSetup";
 import {initMidi} from "@midi";
-// import * as serviceWorker from "./serviceWorker";
+import * as serviceWorker from "./serviceWorker";
 import {handleUrlParameters} from "@shared/url";
 import "@fontsource/roboto-condensed/300.css";
 import "@fontsource/roboto-condensed/400.css";
@@ -29,7 +29,6 @@ import "./shared/css/global-settings.css";
 //==================================================================================================================
 // Setup the worker for the offline support (PWA):
 
-/*
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", function() {
         navigator.serviceWorker
@@ -42,11 +41,9 @@ if ("serviceWorker" in navigator) {
             .catch(err => console.error("service worker not registered", err))
     })
 }
-*/
 
 //==================================================================================================================
 // Check if the browser is supported:
-
 
 const browser = detect();
 
