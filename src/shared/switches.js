@@ -53,7 +53,8 @@ export function setupSwitches(userActionCallback) {
     //
     // "radio button"-like behavior:
     //
-    $("div.bt").click(function() {
+    // $("div.bt").click(function() {
+    $("div.bt").mousedown(function() {
         // log(`click on ${this.id}`);
         if (!this.classList.contains("on")) {   // if not already on...
             $(this).siblings(".bt").removeClass("on");
@@ -64,7 +65,8 @@ export function setupSwitches(userActionCallback) {
     //
     // toggle stompswitches:
     //
-    $(".sw").click(function() {
+    // $(".sw").click(function() {
+    $(".sw").mousedown(function() {
         this.classList.add("sw-off");
         $(this).siblings(".sw").removeClass("sw-off");
         userActionCallback(...this.id.split("-"));
