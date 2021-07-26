@@ -104,7 +104,6 @@ export function setupUI() {
     setupPresetSelectors(handleUserAction);
     setupKnobs(handleUserAction);
     setupSwitches(handleUserAction);
-    // setupMomentarySwitches(tapDown, tapRelease);    // ENZO SPECIFIC; FIXME: add device specific method
     setupExp(handleUserAction);
     setupGlobalSettings();
     setupControlsHelp();
