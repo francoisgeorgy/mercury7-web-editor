@@ -2,7 +2,6 @@ const cacheName = "mercury7-editor"
 const assets = [
     "./",
     "./index.html",
-    "./midi.html",
     "./print.html",
     "./css/midi.css",
     "./app_bundle.js",

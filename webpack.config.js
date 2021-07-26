@@ -58,7 +58,6 @@ module.exports = {
         }),
         new CopyWebpackPlugin({
             patterns: [
-            {from: "./public/midi.html"},
             {from: "./src/serviceWorker.js"},
             {from: "./public/manifest.json"},
             {from: "./public/print/preset-template.html", to: "templates"},
