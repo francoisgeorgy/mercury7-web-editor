@@ -62,13 +62,11 @@ module.exports = {
             {from: "./public/manifest.json"},
             {from: "./public/print/preset-template.html", to: "templates"},
             {from: "./public/css/midi.css", to: "css"},
-            {from: "./public/img/midi-192.png", to: "img"},
-            {from: "./public/img/midi-512.png", to: "img"},
             {from: "./public/img/favicon-16x16.png"},
             {from: "./public/img/favicon-32x32.png"},
-            {from: "./public/img/favicon-96x96.png"},
-            {from: "./public/img/mercury7-editor-v15.jpg", to: "img"},
-            {from: "./public/img/mercury7-editor-v15.png", to: "img"}
+            {from: "./public/img/apple-touch-icon.png"},
+            {from: "./public/img/icon-192x192.png"},
+            {from: "./public/img/icon-512x512.png"}
         ]}),
         new HtmlWebpackPlugin({
             chunks: ["app_bundle"],
