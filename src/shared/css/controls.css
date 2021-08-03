@@ -18,11 +18,11 @@
     display: grid;
     grid-template-columns: 20px repeat(6, 1fr) 20px;
     align-content: center;
-    /*background-color: lightgoldenrodyellow;*/
-    /*background-image: url("../img/bg-logo-opacity5.png"), linear-gradient(to right, #ffa, #fdb53e 1%, #fdb53e 99%, #ffa);*/
-    /*background-repeat: no-repeat;*/
-    /*background-position: center;*/
-    /*background-size: contain;*/
+}
+
+.cell {
+    padding-left: 10px;
+    padding-right:10px;
 }
 
 .controls-row {
@@ -77,6 +77,7 @@ div.controls {
 div.exp_wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    /*grid-column-gap: 5px;*/
 }
 
 #exp-a1 {

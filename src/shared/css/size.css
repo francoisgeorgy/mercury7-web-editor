@@ -97,12 +97,16 @@ body.pwa #wrapper {
 .size-2 .options { margin-top: 15px; }
 
 .size-0 .bt {margin: 0; padding: 1px 0; font-size: 0.85rem;}
-.size-1 .bt {margin: 0; padding: 3px 0 2px 0; font-size: 1.25rem; }
+.size-1 .bt {margin: 0; padding: 3px 0 2px 0; font-size: 1.2rem;}
 .size-2 .bt {margin: 0; padding: 3px 0 2px 0; font-size: 2vw;}
 
 .size-0 .btx {margin: 0; padding: 1px 2px; font-size: inherit;}
 .size-1 .btx {margin: 0; padding: 2px 4px 1px 4px; font-size: inherit;}
 .size-2 .btx {margin: 0; padding: 2px 4px 1px 4px; font-size: 2vw;}
+
+.size-0 .tgl {margin: 0; padding: 1px 0; font-size: 0.85rem;}
+.size-1 .tgl {margin: 0; padding: 3px 0 2px 0; font-size: 1.2rem;}
+.size-2 .tgl {margin: 0; padding: 3px 0 2px 0; font-size: 2vw;}
 
 .size-0 .slider {height: 65px;}
 .size-1 .slider {height: 100px;}

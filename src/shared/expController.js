@@ -108,6 +108,7 @@ export function setupExp(userActionCallback) {
     });
 
     $("#exp-close-bt").click(toggleExpEditMode);
+
     $("#exp-copy")
         .mousedown(function() {
             this.classList.add("on");

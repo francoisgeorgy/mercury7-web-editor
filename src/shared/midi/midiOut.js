@@ -12,6 +12,7 @@ import {inExpMode} from "@shared/expController";
 import {getMidiInputPort, suppressSysexEcho} from "@midi/midiIn";
 import {updateImportPresetsProgress} from "@shared/preset_library";
 import {updateControls} from "@shared/controller";
+import {customUpdateUI} from "@device/controller";
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
@@ -32,7 +33,7 @@ export function setMidiOutputPort(port) {
 
 
 // const previous_values = new Array(127);
-const monitors = new Array(127);
+// const monitors = new Array(127);
 
 /*
 function updatePreviousValues() {
@@ -44,6 +45,7 @@ function updatePreviousValues() {
 }
 */
 
+/*
 function monitorCC(control_number) {
     clearTimeout(monitors[control_number]);
     monitors[control_number] = setTimeout(() => {
@@ -51,6 +53,7 @@ function monitorCC(control_number) {
         log(`monitor send CC ${control_number} = ${v}`);
     }, 200)
 }
+*/
 
 
 let last_send_time = performance.now();     // for echo suppression
@@ -64,9 +67,10 @@ export function getLastSendTime() {
  * @param control
  * @param monitor
  */
-export function sendCC(control, monitor = true) {
+// export function sendCC(control, monitor = true) {
+export function sendCC(control) {
 
-    if (monitor) monitorCC(control.cc_number);   // TODO: check that control exists
+    // if (monitor) monitorCC(control.cc_number);   // TODO: check that control exists
 
     // If we edit the EXP value then we send value2
 
@@ -115,6 +119,8 @@ export function updateDevice(control_type, control_number, value_float, in_exp_m
         updateExpSlider(value);
         updateControls(true);
     }
+
+    customUpdateUI(control_type, control_number);
 }
 
 // let fullUpdateRunning = false;

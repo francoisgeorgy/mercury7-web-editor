@@ -8,6 +8,7 @@ import {knobs} from "@shared/knobs";
 import {updateBypassSwitch, updateMomentaryFootswitch, updateOptionSwitch} from "@shared/switches";
 import {updateLeftFootswitch} from "@device/footswitches";
 import {CC_EXPRESSION_PEDAL, CC_LEFT_FOOTSWITCH, CC_RIGHT_FOOTSWITCH} from "@model";
+import {customUpdateUI} from "@device/controller";
 
 /**
  * Handles a change made by the user in the UI.
@@ -111,6 +112,7 @@ export function updateControls(onlyTwoValuesControls = false) {
         } else {
             updateControl(c.cc_type, i, MODEL.getControlValue(c), MODEL.getMappedControlValue(c));
         }
+        customUpdateUI(c.cc_type, i);
     }
     if (TRACE) console.groupEnd();
 } // updateControls()
@@ -142,7 +144,9 @@ export function updateModelAndUI(control_type, control_number, value) {
         MODEL.setControlValue(control_type, num, value);
 
         // update the UI:
-        updateControl(control_type, num, value);
+        // updateControl(control_type, num, value);
+        const c = MODEL.control[num];
+        updateControl(control_type, num, MODEL.getControlValue(c), MODEL.getMappedControlValue(c));
 
         if (num === MODEL.control_id.exp_pedal) {
             MODEL.interpolateExpValues(value);
@@ -151,6 +155,8 @@ export function updateModelAndUI(control_type, control_number, value) {
 
         setPresetSelectorDirty();
         setLibraryPresetDirty();
+
+        customUpdateUI(control_type, control_number);
 
     } else {
         log(`the MODEL does not support this control: ${num}`)

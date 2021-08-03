@@ -50,7 +50,7 @@ export function setupKnobs(userActionCallback) {
         });
     }
 
-} // setupKnobs
+}
 
 /**
  *
@@ -65,4 +65,4 @@ export function displayRawValues(display_raw_value = false) {
         }
     }
 
-} // setupKnobs
+}

@@ -106,13 +106,16 @@ export const setControlValue = function () {
         // args are control_type, control_number, value, and bool value2
 
         let ca; // controls array
+
         if (arguments[0] === "cc") {                // [0] is control type
             ca = control;
         } else {
             console.error("setControlValue: invalid control_type", arguments);
             return null;
         }
+
         if (ca[arguments[1]]) {                     // [1] is control number
+
             let value = arguments[2];               // [2] is control value
             const v = typeof value === "number" ? value : parseInt(value);
             c = ca[arguments[1]];
