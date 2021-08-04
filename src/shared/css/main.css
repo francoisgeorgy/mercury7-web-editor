@@ -39,7 +39,7 @@ a {
 
 .grid-2x1 {
     display: grid;
-    grid-template-rows: auto auto;
+    grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr;
     justify-items: center;
 }

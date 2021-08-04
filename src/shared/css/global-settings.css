@@ -11,5 +11,5 @@
 .global-setting-toggle.enabled {
     color: var(--global-setting-enabled-color);
     cursor: pointer;
-    text-transform: capitalize;
+    /*text-transform: capitalize;*/
 }

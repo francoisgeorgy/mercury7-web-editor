@@ -1,6 +1,6 @@
 {
     "name": "mercury7-web-editor",
-    "version": "1.8.1",
+    "version": "1.8.2",
     "main": "main.js",
     "repository": "https://github.com/francoisgeorgy/mercury7-web-editor.git",
     "author": "François Georgy <francois.georgy@gmail.com>",
@@ -43,11 +43,17 @@
         "svg-knob": "^1.8.3",
         "svg-slider": "^1.3.2",
         "webmidi": "^2.5.1",
-        "webpack-jquery-ui": "^2.0.1"
+        "webpack-jquery-ui": "^2.0.1",
+        "workbox-cacheable-response": "^6.1.5",
+        "workbox-expiration": "^6.1.5",
+        "workbox-precaching": "^6.1.5",
+        "workbox-routing": "^6.1.5",
+        "workbox-strategies": "^6.1.5",
+        "workbox-webpack-plugin": "^6.1.5"
     },
     "scripts": {
         "dev": "webpack --mode development",
-        "start": "webpack-dev-server --port 8090 --open --mode development",
+        "start": "webpack-dev-server --port 8092 --open --mode development",
         "build": "webpack --mode production",
         "lint": "eslint --fix src/. && echo 'Lint complete.'",
         "test": "echo \"Error: no test specified\" && exit 1",

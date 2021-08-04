@@ -28,21 +28,7 @@ export function getDataForPreset() {
 
     let i = 0;
 
-    // if (complete) {
-    //     data[i++] = SYSEX_START_BYTE;                               // 0
-    //     data[i++] = 0x00;
-    //     data[i++] = 0x20;
-    //     data[i++] = 0x10;
-    // }
-    //
-    // data[i++] = 0;    // We set device ID to 0 in order to get a sysex dump that can be sent to any Enzo.
-    // data[i++] = meta.group_id.value;
-    // data[i++] = meta.model_id.value;
-    //
-    // data[i++] = 0x26; // Enzo always sent this value when sending a sysex.
-    //
-    // data[i++] = meta.preset_id.value;                               // 8
-
+    // Toe Up values
     data[i++] = control[control_id.space_decay].raw_value;          // 9
     data[i++] = control[control_id.modulate].raw_value;             // 10
     data[i++] = control[control_id.mix].raw_value;
@@ -55,13 +41,15 @@ export function getDataForPreset() {
     data[i++] = control[control_id.density].raw_value;
     data[i++] = control[control_id.attack_time].raw_value;
     data[i++] = control[control_id.vibrato_depth].raw_value;        // 20
+
+    // Non exp values
     data[i++] = control[control_id.bypass].raw_value;
     data[i++] = control[control_id.swell].raw_value;
     data[i++] = control[control_id.algorithm].raw_value;            // 23
     data[i++] = 0;                                                  // 24 (always 0)
     data[i++] = 0;                                                  // 25 (always 0)
 
-    // values 2 (EXP)
+    // Toe Down values
     data[i++] = control[control_id.space_decay].raw_value2;         // 26
     data[i++] = control[control_id.modulate].raw_value2;
     data[i++] = control[control_id.mix].raw_value2;
@@ -74,10 +62,6 @@ export function getDataForPreset() {
     data[i++] = control[control_id.density].raw_value2;
     data[i++] = control[control_id.attack_time].raw_value2;
     data[i++] = control[control_id.vibrato_depth].raw_value2;       // 37
-
-    // if (complete) data[i] = SYSEX_END_BYTE;                         // 38
-
-    // log(data, meta.preset_id.value);
 
     return data;
 }

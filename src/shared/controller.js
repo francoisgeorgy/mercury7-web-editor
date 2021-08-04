@@ -78,7 +78,7 @@ export function updateControl(control_type, control_number, value, mappedValue) 
                 if (c.is(".bt")) {
                     log(`updateControl(${control_type}, ${num}, ${value}) .bt`);
 
-                    updateOptionSwitch(id + "-" + mappedValue, mappedValue);
+                    updateOptionSwitch(id + "-" + mappedValue);
 
                 } else if (c.is(".momentary-switch")) {
                     log(`updateControl(${control_type}, ${num}, ${value}) momentary-switch`);
@@ -161,4 +161,5 @@ export function updateModelAndUI(control_type, control_number, value) {
     } else {
         log(`the MODEL does not support this control: ${num}`)
     }
+
 }

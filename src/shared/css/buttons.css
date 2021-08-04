@@ -10,13 +10,15 @@
 }
 
 div.bt,     /* "radio button"-like switches */
-div.btx {   /* EXP close button */
+div.btx,    /* EXP close button */
+div.tgl {   /* toggle */
     text-align: center;
 }
 
 .preset,
 .bt,
-.btx {
+.btx,
+.tgl {
     cursor: pointer;
     color: var(--bt-color);
     border: 1px solid var(--bt-border);
@@ -25,14 +27,16 @@ div.btx {   /* EXP close button */
 
 .preset:hover,
 .bt:hover,
-.btx:hover {
+.btx:hover,
+.tgl:hover {
     color: var(--bt-hover-color);
     border: 1px solid var(--bt-hover-color);
     background-color: var(--bt-hover-bg-color)!important;
 }
 
 .bt.on,
-.btx.on {
+.btx.on,
+.tgl.on {
     background-color: var(--bt-on-bg-color)!important;
     color: var(--bt-on-color)!important;
     text-shadow: none;

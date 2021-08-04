@@ -36,8 +36,8 @@ export function updateMomentaryFootswitch(id, value) {
  * @param id
  * @param value
  */
-export function updateOptionSwitch(id, value) {
-    log(`updateOptionSwitch(${id}, ${value})`);
+export function updateOptionSwitch(id) {
+    log(`updateOptionSwitch(${id})`);
     let e = $("#" + id);
     if (!e.is(".on")) {   // if not already on...
         e.siblings(".bt").removeClass("on");

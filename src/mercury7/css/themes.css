@@ -18,9 +18,10 @@ html {
     --messages-border: #999;
 
     --value: #f9d000;
+    --dialog-bg-color: #0059d7;
     --dialog-link: #fff;
-    --dialog-bg-color: rgba(0, 0, 0, 0.80);
     --dialog-small-button-color: #333;
+    --lity-bg-color: rgba(0, 0, 0, 0.80);
     --panel-link: blue;
 
     --knob-back-border: #999;
@@ -42,7 +43,6 @@ html {
     --preset-icon: #61410c;    /* TODO */
 
     --bt-color: #cec5ff;
-    /*--bt-bg-color: rgba(255, 251, 177, 0.25);*/
     --bt-bg-color: rgba(0, 61, 148, 0.3);
     --bt-border: #71acff;
     --bt-hover-color: #ffffff;

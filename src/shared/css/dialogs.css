@@ -6,12 +6,8 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, 1);
     border-radius:4px;
     padding: 5px 15px 15px 15px;
-    /*min-width: 45vw;*/
-    /*max-width: 80vw;*/
-    /*color: #ddd;*/
     color: black;
     font-weight: 300;
-    /*line-height: 140%;*/
 }
 
 .size-0 .dialog {
@@ -42,13 +38,12 @@
 /*noinspection CssUnusedSymbol*/
 .lity-close {
     position: absolute!important;
-    /*color: #aaa!important;*/
     color: #000;
     text-shadow: none!important;
 }
 
 .lity {
-    background: var(--dialog-bg-color);
+    background: var(--lity-bg-color);
 }
 
 .dialog h2 {
