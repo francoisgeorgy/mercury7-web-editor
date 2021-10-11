@@ -8,7 +8,7 @@ export function updateSelectDeviceList() {
 
     let present = false;
     let s = $("#midi-input-device");
-    s.empty().append($("<option>").val("").text("- select -"));
+    s.empty().append($("<option>").val("").text("select MIDI input..."));
     // noinspection JSUnresolvedVariable
     s.append(
         WebMidi.inputs.map((port) => {
@@ -20,7 +20,7 @@ export function updateSelectDeviceList() {
 
     present = false;
     s = $("#midi-output-device");
-    s.empty().append($("<option>").val("").text("- select -"));
+    s.empty().append($("<option>").val("").text("select MIDI output..."));
     // noinspection JSUnresolvedVariable
     s.append(
         WebMidi.outputs.map((port) => {
