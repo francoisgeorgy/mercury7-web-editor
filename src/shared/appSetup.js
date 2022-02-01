@@ -9,7 +9,7 @@ import {preferences} from "@shared/preferences";
 import {printPreset} from "@shared/dialogs";
 import {setupExp} from "@shared/expController";
 import {setupGlobalSettings} from "@shared/globalSettings";
-import {setupMomentarySwitches, setupSwitches, tapDown, tapRelease} from "@shared/switches";
+import {setupSwitches} from "@shared/switches";
 import {setupPresetsLibrary} from "@shared/preset_library";
 import {setupTooltips} from "@shared/tooltips";
 import {
@@ -48,7 +48,7 @@ function setupControlsHelp() {
 
     $(".header.infos").hover(
         function() {
-            const cc = parseInt($(this).attr("data-infos"), 10);
+            // const cc = parseInt($(this).attr("data-infos"), 10);
             //TODO: lock for randomizer
             //$(`.control-lock.control-${cc}`).removeClass('hidden');
         },

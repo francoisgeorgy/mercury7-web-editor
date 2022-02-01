@@ -34,7 +34,6 @@ export function updateMomentaryFootswitch(id, value) {
 /**
  * "radio button"-like behavior
  * @param id
- * @param value
  */
 export function updateOptionSwitch(id) {
     log(`updateOptionSwitch(${id})`);

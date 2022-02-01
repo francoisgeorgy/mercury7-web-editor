@@ -1,3 +1,4 @@
+import {log} from "@utils/debug";
 
 export function updateLeftFootswitch(value) {
     log("updateLeftFootswitch", value);

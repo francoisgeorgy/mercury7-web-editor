@@ -19,6 +19,7 @@ html {
 
     --value: #f9d000;
     --dialog-bg-color: #0059d7;
+    --dialog-text: #ddd;
     --dialog-link: #fff;
     --dialog-small-button-color: #333;
     --lity-bg-color: rgba(0, 0, 0, 0.80);
@@ -76,7 +77,7 @@ html {
     --preset-editor-over-bg-color: white;
 
     --progress-bar-border: 1px solid black;
-    --progress-bar-bg-color: #f1d09c;
+    --progress-bar-bg-color: #333;
 
     --read-preset-progress-color: #000000;
     --read-preset-progress-bg1: #AECDFC;

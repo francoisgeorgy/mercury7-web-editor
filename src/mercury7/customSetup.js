@@ -1,5 +1,3 @@
-import MODEL from "@model";
-import {updateControl} from "@shared/controller";
 import {TRACE} from "@shared/utils/debug";
 
 export function customSetup() {

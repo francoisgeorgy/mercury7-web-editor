@@ -3,7 +3,7 @@ import {control} from "@model";
 import {toHexString} from "@utils";
 import {global_conf} from "@device/model/global_conf";
 import {getDataForPreset} from "@device/model/sysex";
-import {log} from "../utils/debug";
+import {log} from "@utils/debug";
 
 export const SYSEX_START_BYTE = 0xF0;
 export const SYSEX_END_BYTE = 0xF7;
@@ -239,6 +239,7 @@ export function decodeGlobals(data, globals) {
 /**
  * Set values from a SysEx dump
  * @param data
+ * @param ignorePresetID
  * @returns {*}
  */
 export function decodeSysex(data, ignorePresetID = false) {

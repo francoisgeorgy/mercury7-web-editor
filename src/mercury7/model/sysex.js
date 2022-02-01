@@ -18,7 +18,6 @@ export const ALGORITHM = {
 
 /**
  * Create a SysEx dump data structure
- * @param complete If false do not include the sysex header and footer bytes nor the manufacturer ID
  * @returns {Uint8Array}
  */
 // export function getPreset(complete = true) {

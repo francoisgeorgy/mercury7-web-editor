@@ -1,5 +1,4 @@
 import MODEL from "@model";
-import {control_id} from "@model";
 import {SYSEX_CMD, SYSEX_START_BYTE} from "@model/sysex";
 import {log} from "@utils/debug";
 import {preferences} from "@shared/preferences";
@@ -9,7 +8,7 @@ import {setPresetSelectorClean} from "@shared/presets";
 import {toHexString} from "@utils";
 import {updateExpSlider} from "@shared/expController";
 import {inExpMode} from "@shared/expController";
-import {getMidiInputPort, suppressSysexEcho} from "@midi/midiIn";
+import {suppressSysexEcho} from "@midi/midiIn";
 import {updateImportPresetsProgress} from "@shared/preset_library";
 import {updateControls} from "@shared/controller";
 import {customUpdateUI} from "@device/controller";
@@ -65,7 +64,6 @@ export function getLastSendTime() {
 /**
  * Send a control value to the connected device.
  * @param control
- * @param monitor
  */
 // export function sendCC(control, monitor = true) {
 export function sendCC(control) {
