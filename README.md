@@ -1,3 +1,11 @@
+> [!NOTE]  
+> **Project Status: Archived**
+>
+> This project is no longer being actively maintained or updated. While the repository remains available for reference and use, I do not plan to make further changes or provide ongoing support.
+> 
+> Thank you for your interest and understanding!
+
+
 Mercury7 editor
 ===============
 
